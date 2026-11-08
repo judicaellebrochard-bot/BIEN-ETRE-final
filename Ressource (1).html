@@ -1,0 +1,1997 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Ressource</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout : une colonne calme, vues par onglets (haut sur ordinateur, barre basse sur téléphone), cartes seulement pour les blocs à manipuler */
+:root{
+  --bg:#EAF0EC; --surface:#F8FAF8; --surface-2:#DDE6E1; --ink:#15221E; --muted:#56685F; --line:#C9D5CF;
+  --accent:#1E6B58; --accent-ink:#FFFFFF; --accent-soft:#D0E6DD;
+  --water:#2C73B0; --water-soft:#D4E4F2; --energy:#B97C12; --stress:#7E52AB; --pain:#BB4A38; --sleep:#3E52A3;
+  --font-display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --font-body:'Atkinson Hyperlegible',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1715; --surface:#16211E; --surface-2:#21302B; --ink:#E4EDE9; --muted:#98AAA2; --line:#2B3B35;
+  --accent:#5EC0A4; --accent-ink:#06211A; --accent-soft:#1C3a31;
+  --water:#6AADE6; --water-soft:#163049; --energy:#E2AD4C; --stress:#B794DD; --pain:#EA806D; --sleep:#8E9EF0;
+  color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#0F1715; --surface:#16211E; --surface-2:#21302B; --ink:#E4EDE9; --muted:#98AAA2; --line:#2B3B35;
+  --accent:#5EC0A4; --accent-ink:#06211A; --accent-soft:#1C3a31;
+  --water:#6AADE6; --water-soft:#163049; --energy:#E2AD4C; --stress:#B794DD; --pain:#EA806D; --sleep:#8E9EF0;
+  color-scheme:dark }
+/* Couleurs d'ambiance au choix (Réglages) */
+:root[data-accent="lagon"]{--accent:#1D6A97;--accent-soft:#D2E4F0}
+:root[data-accent="prune"]{--accent:#7A4786;--accent-soft:#EBDDF0}
+:root[data-accent="ambre"]{--accent:#9E5418;--accent-soft:#F3E2D0}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"])[data-accent="lagon"]{--accent:#6BB8E6;--accent-ink:#06202F;--accent-soft:#173247}
+  :root:not([data-theme="light"])[data-accent="prune"]{--accent:#C79BD5;--accent-ink:#24122B;--accent-soft:#33223A}
+  :root:not([data-theme="light"])[data-accent="ambre"]{--accent:#E8A066;--accent-ink:#2B1706;--accent-soft:#3A2717}}
+:root[data-theme="dark"][data-accent="lagon"]{--accent:#6BB8E6;--accent-ink:#06202F;--accent-soft:#173247}
+:root[data-theme="dark"][data-accent="prune"]{--accent:#C79BD5;--accent-ink:#24122B;--accent-soft:#33223A}
+:root[data-theme="dark"][data-accent="ambre"]{--accent:#E8A066;--accent-ink:#2B1706;--accent-soft:#3A2717}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 96px}
+.wrap{max-width:980px;margin:0 auto}
+h1,h2,h3{font-family:var(--font-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:1.45rem;font-weight:700}
+h3{font-size:1.05rem;font-weight:700}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.eyebrow{font-size:.74rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:700}
+
+/* En-tête */
+.sync i{width:8px;height:8px;border-radius:50%;background:var(--muted);display:inline-block}
+.sync[data-s="ok"] i{background:var(--accent)} .sync[data-s="warn"] i{background:var(--energy)} .sync[data-s="err"] i{background:var(--pain)}
+
+/* Navigation */
+nav.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:18px 0 22px}
+nav.tabs a{display:flex;align-items:center;gap:7px;padding:10px 14px;color:var(--muted);text-decoration:none;font-weight:700;border-bottom:3px solid transparent;margin-bottom:-1px;border-radius:8px 8px 0 0}
+nav.tabs a:hover{color:var(--ink);background:var(--surface-2)}
+nav.tabs a[aria-current="page"]{color:var(--accent);border-bottom-color:var(--accent)}
+nav.tabs svg{width:18px;height:18px}
+@media (max-width:700px){
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;margin:0;background:var(--surface);border-bottom:0;border-top:1px solid var(--line);
+    justify-content:space-around;gap:0;padding:4px max(6px,env(safe-area-inset-right,0px)) calc(4px + env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-left,0px))}
+  nav.tabs a{flex-direction:column;gap:2px;font-size:.7rem;padding:6px 4px;border-bottom:0;border-radius:10px;flex:1;text-align:center}
+  nav.tabs a[aria-current="page"]{background:var(--accent-soft)}
+  nav.tabs svg{width:22px;height:22px}
+}
+
+/* Blocs */
+.stack{display:flex;flex-direction:column;gap:28px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:22px;align-items:start}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.solo{max-width:640px;width:100%}
+.linkcard{flex-direction:row;align-items:center;justify-content:space-between;text-decoration:none;color:inherit}
+.linkcard:hover{border-color:var(--accent)}
+.linkcard .arrow{font-size:1.6rem;color:var(--accent);font-weight:700}
+.card > header{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.banner{background:var(--accent-soft);border-radius:var(--r);padding:12px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 16px;cursor:pointer;font-weight:700;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.small{padding:5px 12px;font-size:.88rem}
+.btn:disabled{opacity:.5;cursor:default}
+.linkbtn{background:none;border:0;color:var(--accent);font-weight:700;cursor:pointer;padding:0}
+
+/* Résumé du jour */
+.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.summary > a{background:var(--surface);padding:14px 16px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:2px;min-width:0}
+.summary > a:hover{background:var(--surface-2)}
+.summary b{font-family:var(--font-display);font-size:1.6rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.summary small{color:var(--muted);font-size:.82rem}
+@media (max-width:620px){.summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Curseurs */
+.metric{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center}
+.metric label{font-weight:700}
+.metric output{font-family:var(--font-display);font-weight:700;font-size:1.15rem;font-variant-numeric:tabular-nums;min-width:3.2ch;text-align:right;color:var(--c)}
+.metric output.empty{color:var(--muted);font-weight:500;font-size:.9rem}
+.metric input[type=range]{grid-column:1 / -1;width:100%;accent-color:var(--c);height:28px}
+.metric .scale{grid-column:1 / -1;display:flex;justify-content:space-between;font-size:.75rem;color:var(--muted);margin-top:-4px}
+.metric.unset input[type=range]{opacity:.55}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-weight:700;font-size:.92rem}
+input[type=text],input[type=number],select,textarea{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 11px;width:100%}
+textarea{resize:vertical;min-height:84px}
+
+/* Eau */
+.water{display:grid;grid-template-columns:70px 1fr;gap:18px;align-items:center}
+.tube{height:170px;border:2px solid var(--water);border-radius:12px 12px 22px 22px;position:relative;overflow:hidden;background:var(--water-soft)}
+.tube .fill{position:absolute;left:0;right:0;bottom:0;background:var(--water);transition:height .5s ease}
+.tube .marks{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:6px 0}
+.tube .marks span{height:1px;background:color-mix(in srgb,var(--surface) 55%,transparent);margin-left:auto;width:40%}
+.water .big{font-family:var(--font-display);font-size:2rem;font-weight:700;color:var(--water);line-height:1}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Habitudes */
+.habits{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.habits button{width:100%;display:flex;gap:12px;align-items:center;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;cursor:pointer}
+.habits button .box{width:22px;height:22px;border-radius:6px;border:2px solid var(--muted);flex:none;display:grid;place-items:center}
+.habits button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.habits button[aria-pressed="true"] .box{background:var(--accent);border-color:var(--accent)}
+.habits button[aria-pressed="true"] .box::after{content:"";width:6px;height:11px;border:solid var(--accent-ink);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.meter{height:8px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.meter span{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .4s}
+
+/* Respiration */
+.breath{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:760px){.breath{grid-template-columns:1fr}}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.orb-wrap{width:min(78vw,300px);aspect-ratio:1;max-width:100%;display:grid;place-items:center;position:relative}
+.orb-ring{position:absolute;inset:0;border-radius:50%;border:2px dashed var(--line)}
+.orb{width:100%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 38% 34%,color-mix(in srgb,var(--accent) 45%,var(--surface)),var(--accent) 70%);transform:scale(.55);display:grid;place-items:center;color:var(--accent-ink);text-align:center;will-change:transform}
+.orb .ph{font-family:var(--font-display);font-size:1.5rem;font-weight:700;line-height:1.1}
+.orb .sec{font-size:2.6rem;font-family:var(--font-display);font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.patterns{display:flex;flex-direction:column;gap:8px}
+.pattern{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:12px 14px;border:1px solid var(--line);background:var(--surface);border-radius:12px;cursor:pointer;text-align:left;width:100%}
+.pattern[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.pattern b{font-family:var(--font-display);font-size:1.02rem}
+.pattern small{color:var(--muted)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 13px;cursor:pointer;font-weight:700;font-size:.9rem}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.timeline{width:100%;height:6px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.timeline span{display:block;height:100%;background:var(--accent);width:0}
+
+/* Assiette */
+.gauge{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center}
+@media (max-width:520px){.gauge{grid-template-columns:1fr;justify-items:center;text-align:center}}
+.gauge svg{width:150px;height:150px}
+.meals{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.meals li{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line)}
+.meals li:last-child{border-bottom:0}
+.meals .m{font-size:.75rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700;width:5.5rem;flex:none}
+.meals .n{flex:1;min-width:0;overflow-wrap:anywhere}
+.del{background:none;border:0;color:var(--muted);cursor:pointer;font-size:1.2rem;line-height:1;padding:2px 6px;border-radius:6px}
+.del:hover{color:var(--pain);background:var(--surface-2)}
+.recipes{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:14px}
+.recipe{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:15px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.recipe h3{font-size:1rem}
+.recipe .meta{display:flex;gap:10px;font-size:.85rem;color:var(--muted)}
+.recipe .meta b{color:var(--ink);font-variant-numeric:tabular-nums}
+.recipe details{font-size:.9rem;color:var(--muted)}
+.recipe summary{cursor:pointer;color:var(--accent);font-weight:700}
+.recipe .btn{margin-top:auto;align-self:flex-start}
+.recipe.pick{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);animation:fadein .4s ease}
+.tags{display:flex;gap:5px;flex-wrap:wrap}
+.tags span{font-size:.74rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--muted)}
+.star{background:none;border:0;cursor:pointer;color:var(--muted);padding:2px;border-radius:6px;flex:none}
+.star svg path{fill:none}
+.star[aria-pressed="true"]{color:var(--energy)}
+.star[aria-pressed="true"] svg path{fill:var(--energy)}
+.rtools{display:flex;flex-direction:column;gap:10px}
+.rtools input[type=search]{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:10px 16px;width:100%}
+.rtools .btn{align-self:flex-start}
+.chip.small{padding:5px 11px;font-size:.84rem}
+.hands{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:10px}
+.hands div{border-left:3px solid var(--accent);padding:2px 0 2px 10px;font-size:.9rem}
+.hands b{display:block}
+.addfree{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px;align-items:end}
+@media (max-width:620px){.addfree{grid-template-columns:1fr 1fr}}
+
+/* Suivi */
+.chart{width:100%;overflow-x:auto}
+.chart svg{display:block;width:100%;min-width:520px;height:auto}
+.chart text{fill:var(--muted);font-size:11px;font-family:var(--font-body)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.86rem}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:3px;border-radius:2px;display:inline-block}
+.avg{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.avg div{border-top:3px solid var(--c);padding-top:6px}
+.avg b{font-family:var(--font-display);font-size:1.35rem;font-variant-numeric:tabular-nums;display:block}
+.avg small{color:var(--muted)}
+.empty-state{border:1px dashed var(--line);border-radius:var(--r);padding:22px;text-align:center;color:var(--muted)}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(84px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-weight:700;z-index:30;opacity:0;transition:opacity .25s;pointer-events:none;max-width:calc(100% - 32px)}
+.toast.on{opacity:1}
+@media (min-width:701px){.toast{bottom:28px}}
+
+/* Prépa et courses */
+.seg{display:flex;gap:4px;background:var(--surface-2);border-radius:999px;padding:4px;overflow-x:auto}
+.seg a,.seg button{border:0;background:none;cursor:pointer;font:inherit;flex:1;text-align:center;padding:8px 14px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:700;white-space:nowrap;font-size:.92rem}
+.seg a[aria-selected="true"],.seg button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.plat{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.plat.on{border-color:var(--accent);background:var(--accent-soft)}
+.stepper{display:flex;align-items:center;gap:4px;flex:none;background:var(--surface);border-radius:999px;border:1px solid var(--line);padding:2px}
+.stepper button{width:32px;height:32px;border-radius:50%;border:0;background:none;cursor:pointer;font-size:1.2rem;font-weight:700;color:var(--accent)}
+.stepper button:hover{background:var(--surface-2)}
+.stepper span{min-width:2ch;text-align:center;font-weight:700}
+.week{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:10px}
+.jourcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:6px}
+.jourcard.today{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.jt{font-family:var(--font-display);font-weight:700;text-transform:capitalize}
+.slot{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;font-size:.88rem;padding:5px 0;border-top:1px dashed var(--line)}
+.slot .sm{width:4.6rem;flex:none;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;font-weight:700;color:var(--muted)}
+.slot .sn{flex:1;min-width:0;display:inline-flex;align-items:center;gap:4px}
+.slot.libre .sn{color:var(--muted);font-style:italic}
+.slot.mange .sn{text-decoration:line-through;color:var(--muted)}
+.flake{width:14px;height:14px;color:var(--water);flex:none}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px}
+.steps ul{margin:4px 0 0;padding-left:1.1em;color:var(--muted);font-size:.92rem}
+.shop .q{color:var(--muted);font-size:.88rem;white-space:nowrap}
+.shop button[aria-pressed="true"] .lbl,.shop button[aria-pressed="true"] .q{text-decoration:line-through;opacity:.6}
+/* Accueil */
+.hero{position:relative;border-radius:22px;overflow:hidden;margin-top:16px;padding:22px 22px 20px;background:var(--surface);border:1px solid var(--line);isolation:isolate}
+.hero::before,.hero::after{content:"";position:absolute;z-index:-1;border-radius:50%;filter:blur(40px);opacity:.55}
+.hero::before{width:320px;height:320px;right:-80px;top:-140px;background:var(--accent);animation:drift 16s ease-in-out infinite alternate}
+.hero::after{width:260px;height:260px;right:120px;bottom:-190px;background:var(--water);opacity:.32;animation:drift 21s ease-in-out infinite alternate-reverse}
+@keyframes drift{to{transform:translate(-60px,40px) scale(1.15)}}
+.hero-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.hero h1{font-size:clamp(1.9rem,6vw,2.7rem);font-weight:700;line-height:1.02}
+.hero .date{color:var(--muted);margin-top:6px;text-transform:capitalize}
+.hero .phrase{font-family:var(--font-display);font-weight:500;font-size:1.08rem;margin:14px 0 0;max-width:46ch;line-height:1.35}
+.hero-actions{display:flex;gap:8px;align-items:center}
+.iconbtn{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 80%,transparent);color:var(--ink);text-decoration:none}
+.iconbtn:hover{background:var(--surface-2)}
+.iconbtn svg{width:20px;height:20px}
+.sos{background:var(--stress);color:#fff;border:0;border-radius:999px;padding:10px 16px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:8px;box-shadow:0 6px 18px -8px var(--stress)}
+:root[data-theme="dark"] .sos{color:#1A1022}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sos{color:#1A1022}}
+.sos:hover{filter:brightness(1.08)}
+.hero-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.plant-link{flex:none;width:84px;display:block;border-radius:14px}
+.plant-link:hover{background:color-mix(in srgb,var(--surface) 60%,transparent)}
+@media (max-width:520px){.plant-link{width:62px}}
+.sway{transform-origin:50px 86px;animation:sway 6s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-2.5deg)}to{transform:rotate(2.5deg)}}
+.pixels{display:grid;grid-template-rows:repeat(7,11px);grid-auto-flow:column;grid-auto-columns:11px;gap:3px;width:max-content}
+.pixels i{border-radius:3px;background:var(--surface-2)}
+.pixels i.f{background:transparent;border:1px dashed var(--line)}
+.pixels i.today{outline:2px solid var(--ink);outline-offset:1px}
+.pixels i[data-m="soleil"]{background:var(--energy)}
+.pixels i[data-m="eclaircie"]{background:color-mix(in srgb,var(--energy) 45%,var(--surface-2))}
+.pixels i[data-m="nuage"]{background:color-mix(in srgb,var(--muted) 55%,var(--surface-2))}
+.pixels i[data-m="orage"]{background:var(--stress)}
+.months{display:flex;font-size:.72rem;color:var(--muted);margin-bottom:4px;width:max-content}
+.pxlegend{display:flex;gap:12px;flex-wrap:wrap;font-size:.84rem;color:var(--muted)}
+.pxlegend span{display:inline-flex;align-items:center;gap:5px}
+.pxlegend i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;background:color-mix(in srgb,var(--surface) 75%,transparent);border:1px solid var(--line);font-size:.88rem;font-weight:700}
+.pill svg{width:18px;height:18px}
+.sync{font-size:.82rem;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+#view{animation:fadein .35s ease}
+@keyframes fadein{from{opacity:.4;transform:translateY(6px)}}
+
+/* Prendre soin */
+.sosband{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;background:color-mix(in srgb,var(--stress) 14%,var(--surface));border:1px solid color-mix(in srgb,var(--stress) 35%,var(--line));border-radius:var(--r);padding:16px 18px}
+.grat{display:flex;flex-direction:column;gap:8px}
+.grat label{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:center;font-weight:400}
+.grat label span{font-family:var(--font-display);font-weight:700;color:var(--accent);text-align:center}
+.deck{perspective:900px}
+.carte{min-height:190px;border-radius:18px;padding:20px;display:flex;flex-direction:column;justify-content:space-between;gap:14px;color:var(--ink);
+  background:linear-gradient(150deg,color-mix(in srgb,var(--c) 22%,var(--surface)),var(--surface) 70%);border:1px solid color-mix(in srgb,var(--c) 40%,var(--line))}
+.carte.flip{animation:flip .55s cubic-bezier(.2,.8,.2,1)}
+@keyframes flip{from{transform:rotateY(90deg) scale(.96);opacity:.3}}
+.carte .cat{font-size:.74rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--c)}
+.carte p{font-family:var(--font-display);font-size:1.3rem;font-weight:500;line-height:1.25;margin:0}
+.carte.dos{display:grid;place-items:center;text-align:center;color:var(--muted);--c:var(--accent);background:repeating-linear-gradient(45deg,var(--accent-soft) 0 10px,var(--surface) 10px 20px)}
+/* À la une */
+.une{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:760px){.une{grid-template-columns:1fr}}
+.obj{border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:14px;border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));
+  background:linear-gradient(140deg,var(--accent-soft),var(--surface) 75%)}
+.obj .intent{font-family:var(--font-display);font-size:clamp(1.25rem,4vw,1.6rem);font-weight:700;line-height:1.15;margin:0;text-wrap:balance}
+.obj .intent::before{content:"\201C";color:var(--accent);margin-right:2px}
+.obj .intent::after{content:"\201D";color:var(--accent);margin-left:2px}
+.obj-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.ring-mini{display:flex;align-items:center;gap:8px;font-weight:700;font-variant-numeric:tabular-nums}
+.ring-mini svg{width:34px;height:34px}
+.obj .habits li{display:flex;gap:6px;align-items:stretch}
+.obj .habits button{background:color-mix(in srgb,var(--surface) 85%,transparent)}
+.obj .habits button[aria-pressed="true"] .lbl{text-decoration:line-through;text-decoration-color:var(--accent);text-decoration-thickness:2px}
+.addrow{display:flex;gap:8px}
+.addrow input{flex:1;min-width:0}
+.pins{display:flex;flex-direction:column;gap:12px}
+.pin{position:relative;padding:14px 38px 14px 16px;border-radius:4px 14px 14px 14px;background:color-mix(in srgb,var(--c) 17%,var(--surface));border:1px solid color-mix(in srgb,var(--c) 35%,var(--line));transform:rotate(var(--rot,0deg))}
+.pin:nth-child(odd){--rot:-.6deg}.pin:nth-child(even){--rot:.5deg}
+.pin .t{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--c)}
+.pin p{margin:4px 0 0;font-family:var(--font-display);font-weight:500;font-size:1.08rem;line-height:1.3;overflow-wrap:anywhere}
+.pin .del{position:absolute;top:6px;right:6px}
+.pinform{display:grid;grid-template-columns:1fr auto;gap:8px}
+.pinform input{grid-column:1 / -1}
+a.pill{text-decoration:none;color:inherit}
+.done-list{display:flex;gap:6px;flex-wrap:wrap}
+.done-list span{background:var(--accent-soft);border-radius:999px;padding:4px 10px;font-size:.84rem}
+.question{font-family:var(--font-display);font-size:1.25rem;font-weight:500;line-height:1.3;margin:0}
+.helpers{display:flex;gap:6px;flex-wrap:wrap}
+.helpers span{font-size:.84rem;border:1px dashed var(--line);border-radius:8px;padding:4px 9px;color:var(--muted)}
+.entries{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.entries li{border-top:1px solid var(--line);padding-top:10px;font-size:.92rem;display:flex;flex-direction:column;gap:3px}
+.entries .arrow{color:var(--accent);font-weight:700}
+
+/* Apaiser */
+.sos-wrap{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.sos-step{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px;display:flex;flex-direction:column;gap:16px}
+.sos-step h2{font-size:1.6rem}
+.tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:480px){.tools{grid-template-columns:1fr}}
+.tool{border:1px solid var(--line);border-radius:16px;padding:16px;background:var(--bg);text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:4px}
+.tool:hover{border-color:var(--stress)}
+.tool b{font-family:var(--font-display);font-size:1.08rem}
+.tool small{color:var(--muted)}
+.ancre{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center}
+.ancre .n{font-family:var(--font-display);font-size:5rem;font-weight:700;line-height:.9;color:var(--stress)}
+.dots{display:flex;gap:6px}
+.dots i{width:28px;height:5px;border-radius:9px;background:var(--surface-2)}
+.dots i.on{background:var(--stress)}
+.big-out{font-family:var(--font-display);font-size:3rem;font-weight:700;color:var(--stress);line-height:1;font-variant-numeric:tabular-nums}
+
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+
+/* ===== Aération (prioritaire) ===== */
+body{font-size:17px;line-height:1.7;padding-block:0 120px}
+.wrap{max-width:760px}
+h2{font-size:1.55rem}
+h3{font-size:1.15rem}
+.stack{gap:40px}
+.grid2{grid-template-columns:1fr;gap:28px}
+.card{padding:28px;gap:24px;border-radius:22px}
+@media (max-width:520px){.card{padding:22px 18px;gap:20px}}
+.card > header{margin-bottom:2px}
+.hero{padding:28px;margin-top:20px;border-radius:26px}
+.hero .phrase{margin-top:18px;font-size:1.15rem}
+.hero-chips{margin-top:18px}
+nav.tabs{margin:26px 0 34px}
+.seg{padding:5px}
+.seg a,.seg button{padding:10px 16px}
+.summary{grid-template-columns:repeat(2,minmax(0,1fr));border-radius:22px}
+.summary > a{padding:20px 22px;gap:4px}
+.summary b{font-size:2rem}
+.metric{gap:6px 14px}
+.habits{gap:10px}
+.habits button{padding:14px 16px;border-radius:14px}
+.field{gap:8px}
+input[type=text],input[type=number],input[type=date],select,textarea{padding:12px 14px;border-radius:12px}
+.btn{padding:10px 20px}
+.btn.small{padding:7px 15px}
+.btnrow{gap:10px}
+.banner{padding:16px 20px;border-radius:18px}
+.sosband{padding:22px 24px;border-radius:22px}
+.recipes{grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:20px}
+.recipe{padding:22px;gap:12px;border-radius:20px}
+.recipe h3{font-size:1.08rem;line-height:1.3}
+.plat{padding:18px 20px;border-radius:18px;align-items:flex-start}
+.week{gap:16px}
+.jourcard{padding:18px;gap:8px;border-radius:18px}
+.slot{padding:8px 0}
+.obj{padding:28px;gap:20px;border-radius:24px}
+.pins{gap:16px}
+.pin{padding:18px 42px 18px 20px}
+.avg{gap:18px}
+.avg div{padding-top:10px}
+.entries{gap:16px}
+.entries li{padding-top:14px}
+.meals li{padding:12px 0}
+.sos-step{padding:30px;gap:20px}
+.tools{gap:14px}
+.tool{padding:20px}
+.chips{gap:8px}
+.deck .carte{min-height:220px;padding:26px}
+
+/* ===== Ergonomie ===== */
+.daynav{display:grid;grid-template-columns:48px 1fr 48px;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:8px}
+.daynav > button{width:48px;height:48px;border-radius:14px;border:0;background:var(--surface-2);color:var(--ink);cursor:pointer;display:grid;place-items:center}
+.daynav > button:disabled{opacity:.3;cursor:default}
+.dn-mid{text-align:center;display:flex;flex-direction:column;line-height:1.3}
+.dn-mid b{font-family:var(--font-display);font-size:1.15rem;text-transform:capitalize}
+.dn-mid .muted{font-size:.86rem;text-transform:capitalize}
+.metric .mlabel{font-weight:700}
+.scale10{grid-column:1 / -1;display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:4px}
+.scale10 button{height:44px;border-radius:10px;border:1px solid var(--line);background:var(--bg);font-weight:700;font-variant-numeric:tabular-nums;cursor:pointer;padding:0;min-width:0;font-size:.95rem}
+.scale10 button:hover{border-color:var(--c)}
+.scale10 button[aria-pressed="true"]{background:var(--c);border-color:var(--c);color:var(--surface)}
+.scale10.h button{font-size:.82rem}
+.chip{min-height:40px}
+.chip.quick{text-decoration:none;color:inherit;display:inline-flex;align-items:center;gap:6px}
+.del{min-width:40px;min-height:40px;display:grid;place-items:center}
+.stepper button{width:40px;height:40px}
+.star{min-width:40px;min-height:40px;display:grid;place-items:center}
+.toast{display:flex;align-items:center;gap:14px}
+.toast.act{pointer-events:auto}
+.toast .undo{background:none;border:0;color:var(--accent-soft);font-weight:700;cursor:pointer;text-decoration:underline;padding:4px;font:inherit;font-weight:700}
+.fab{position:fixed;z-index:25;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(88px + env(safe-area-inset-bottom,0px));width:60px;height:60px;border-radius:50%;border:0;cursor:pointer;
+  background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;box-shadow:0 10px 24px -8px color-mix(in srgb,var(--accent) 70%,transparent);transition:transform .2s}
+.fab[aria-expanded="true"]{transform:rotate(45deg)}
+@media (min-width:701px){.fab{bottom:calc(28px + env(safe-area-inset-bottom,0px));right:calc(28px + env(safe-area-inset-right,0px))}}
+.sheet-bg{position:fixed;inset:0;z-index:40;background:color-mix(in srgb,var(--ink) 35%,transparent)}
+.sheet{position:fixed;z-index:41;left:0;right:0;bottom:0;max-height:85vh;overflow-y:auto;background:var(--surface);border-radius:26px 26px 0 0;
+  padding:12px max(20px,env(safe-area-inset-right,0px)) calc(28px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:24px;animation:up .25s ease}
+@media (min-width:701px){.sheet{left:50%;right:auto;width:560px;transform:translateX(-50%);bottom:24px;border-radius:26px}}
+@keyframes up{from{transform:translateY(40px);opacity:.4}}
+@media (min-width:701px){@keyframes up{from{opacity:.4}}}
+.sheet-grip{width:44px;height:5px;border-radius:9px;background:var(--line);align-self:center}
+.sheet-head{display:flex;justify-content:space-between;align-items:center}
+.qa-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.qa{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:16px;border-radius:18px;border:1px solid var(--line);background:var(--bg);cursor:pointer;text-align:left;min-height:120px}
+.qa:hover{border-color:var(--accent)}
+.qa b{font-family:var(--font-display);font-size:1.02rem;line-height:1.2}
+.qa small{color:var(--muted);font-size:.84rem}
+.qa-i{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--c);background:color-mix(in srgb,var(--c) 15%,var(--surface));margin-bottom:6px}
+.qa-i svg{width:22px;height:22px}
+body.noscroll{overflow:hidden}
+
+/* Lignes de ressenti */
+.metric output{font-size:1rem;font-family:var(--font-display);font-weight:700;color:var(--c);min-width:0;text-align:right}
+input.line{-webkit-appearance:none;appearance:none;grid-column:1 / -1;width:100%;height:44px;background:transparent;margin:0;cursor:pointer;accent-color:var(--c)}
+input.line:focus-visible{outline:none}
+input.line::-webkit-slider-runnable-track{height:10px;border-radius:99px;background:linear-gradient(to right,var(--c) 0 var(--p,0%),var(--surface-2) var(--p,0%) 100%)}
+input.line::-moz-range-track{height:10px;border-radius:99px;background:var(--surface-2)}
+input.line::-moz-range-progress{height:10px;border-radius:99px;background:var(--c)}
+input.line::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:30px;height:30px;margin-top:-10px;border-radius:50%;background:var(--surface);border:4px solid var(--c);box-shadow:0 2px 8px -2px rgba(0,0,0,.25)}
+input.line::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:var(--surface);border:4px solid var(--c);box-shadow:0 2px 8px -2px rgba(0,0,0,.25)}
+input.line:focus-visible::-webkit-slider-thumb{outline:3px solid var(--c);outline-offset:3px}
+input.line:focus-visible::-moz-range-thumb{outline:3px solid var(--c);outline-offset:3px}
+.metric.unset input.line::-webkit-slider-thumb{border-color:var(--line)}
+.metric.unset input.line::-moz-range-thumb{border-color:var(--line)}
+.metric.unset input.line::-moz-range-progress{background:transparent}
+.metric .scale{font-size:.84rem;margin-top:-2px}
+
+/* Mode widget */
+body.widget .hero,body.widget nav.tabs,body.widget .fab{display:none!important}
+.wgt{max-width:460px;margin:24px auto 0;display:flex;flex-direction:column;gap:18px}
+.w-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.w-head > div{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.w-head b{font-family:var(--font-display);font-size:1.6rem;line-height:1.1}
+.w-water{position:relative;overflow:hidden;border:2px solid var(--water);background:var(--water-soft);border-radius:24px;padding:24px;cursor:pointer;text-align:left;color:var(--ink);min-height:110px}
+.w-fill{position:absolute;inset:0 auto 0 0;width:var(--pct);background:color-mix(in srgb,var(--water) 30%,transparent);transition:width .5s}
+.w-txt{position:relative;display:flex;flex-direction:column;gap:4px}
+.w-txt b{font-family:var(--font-display);font-size:1.5rem;color:var(--water)}
+.w-card{padding:22px;gap:16px}
+.w-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.w-actions > a{justify-content:center;text-align:center;padding:14px 8px;font-size:.92rem}
+@media (max-width:420px){.w-actions{grid-template-columns:1fr 1fr}.w-actions .sos{grid-column:1 / -1}}
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="hero-top">
+      <div><h1 id="hello">Bonjour</h1><div class="date" id="today-label"></div></div>
+      <div class="hero-actions">
+        <a class="sos" href="#apaiser"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 12c3-5 6-5 9 0s6 5 9 0"/></svg>Apaiser</a>
+        <a class="iconbtn" href="#reglages" aria-label="Réglages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></a>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <div style="min-width:0">
+        <p class="phrase" id="phrase"></p>
+        <div class="hero-chips"><span class="pill" id="meteo"></span><a class="pill" id="obj-pill" href="#jour" hidden></a><a class="pill" href="#respirer" id="pause-pill" hidden><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg>Pause 90 s</a><span class="pill sync" id="sync" data-s="warn"><i></i><span>Connexion…</span></span></div>
+      </div>
+      <a href="#suivi" class="plant-link" id="plant" aria-label="Mon jardin"></a>
+    </div>
+  </header>
+  <nav class="tabs" aria-label="Sections">
+    <a href="#jour" data-v="jour"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Jour</a>
+    <a href="#respirer" data-v="respirer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9h11a3 3 0 1 0-3-3M3 15h15a3 3 0 1 1-3 3M3 12h7"/></svg>Respirer</a>
+    <a href="#soin" data-v="soin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>Prendre soin</a>
+    <a href="#assiette" data-v="assiette"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="7"/><circle cx="12" cy="13" r="3"/><path d="M12 2v3"/></svg>Assiette</a>
+    <a href="#suivi" data-v="suivi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18M5 16l4-5 4 3 6-8"/></svg>Suivi</a>
+  </nav>
+  <main id="view"></main>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<button type="button" class="fab" id="fab" aria-label="Actions rapides" aria-expanded="false"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+<div class="sheet-bg" id="sheet-bg" hidden></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Actions rapides" hidden></div>
+
+<script>
+/* ---------- Données de référence ---------- */
+const RECETTES = [
+ /* ---------- MATIN ---------- */
+ {id:'oats',m:'matin',n:"Overnight oats pomme-cannelle",k:340,p:13,t:5,g:['veggie','batch'],d:"40 g de flocons d'avoine, 150 ml de lait de soja, ½ pomme râpée, cannelle, 1 c.c. de purée d'amande.",e:"Tout mélanger la veille dans un bocal, au frigo. Le matin, ajouter le reste de pomme en dés."},
+ {id:'skyr',m:'matin',n:"Bol skyr, fruits rouges et granola",k:260,p:20,t:3,g:['rapide','veggie'],d:"1 pot de skyr vanille, 1 poignée de fruits rouges (surgelés ok), 2 c.s. de granola.",e:"Superposer dans un bol. Les fruits surgelés décongèlent en 10 min et font un coulis."},
+ {id:'tartine',m:'matin',n:"Tartines avocat et œuf mollet",k:380,p:18,t:10,g:['sale','rapide','veggie'],d:"2 tranches de pain complet, ¼ d'avocat écrasé, 1 œuf, citron, piment d'Espelette.",e:"Œuf 6 min dans l'eau bouillante, écaler. Écraser l'avocat sur le pain, poser l'œuf, assaisonner."},
+ {id:'pancakes',m:'matin',n:"Pancakes banane-avoine",k:320,p:16,t:15,g:['veggie','reconfort'],d:"1 banane mûre, 2 œufs, 30 g de flocons d'avoine, 1 pincée de levure.",e:"Mixer, cuire en petits disques à la poêle antiadhésive 2 min par face. Un filet de sirop d'érable."},
+ {id:'porridge',m:'matin',n:"Porridge cacao-noisette",k:330,p:11,t:6,g:['rapide','veggie','reconfort'],d:"40 g de flocons, 200 ml de lait d'avoine, 1 c.c. de cacao, ½ banane, 5 noisettes concassées.",e:"Cuire flocons + lait + cacao 4 min en remuant. Garnir de banane et noisettes."},
+ {id:'cottage',m:'matin',n:"Cottage cheese, mangue et chia",k:250,p:22,t:3,g:['rapide','veggie'],d:"150 g de cottage cheese, ½ mangue en dés, 1 c.c. de graines de chia, citron vert.",e:"Assembler, zester un peu de citron vert dessus."},
+ {id:'bircher',m:'matin',n:"Bircher muesli pomme-noisette",k:330,p:12,t:5,g:['veggie','batch'],d:"40 g de flocons, 100 ml de lait d'avoine, 1 yaourt nature, 1 pomme râpée, 5 noisettes.",e:"Mélanger la veille. Le matin, c'est crémeux et prêt."},
+ {id:'cacahuete',m:'matin',n:"Tartine beurre de cacahuète et banane",k:350,p:12,t:3,g:['rapide','veggie'],d:"1 grande tranche de pain complet, 1 c.s. de beurre de cacahuète, ½ banane, cannelle.",e:"Tartiner, rondelles de banane, cannelle. Avec un café au lait de soja."},
+ {id:'roulee',m:'matin',n:"Omelette roulée épinards-feta",k:360,p:24,t:10,g:['sale','rapide','veggie'],d:"2 œufs, 1 poignée d'épinards, 20 g de feta, 1 tranche de pain complet.",e:"Omelette fine, épinards et feta au centre, rouler. Pain grillé à côté."},
+ {id:'muffinsoeuf',m:'matin',n:"Muffins aux œufs et légumes",k:300,p:20,t:25,g:['sale','veggie','batch'],d:"Pour 6 : 6 œufs, poivron, oignon nouveau, tomates séchées, 30 g d'emmental. Portion : 2 muffins + 1 fruit.",e:"Battre, répartir dans un moule à muffins, 20 min à 180 °C. Se gardent 4 jours au frigo."},
+ {id:'smoothiebowl',m:'matin',n:"Smoothie bowl banane-épinards",k:310,p:18,t:5,g:['rapide','veggie'],d:"1 banane congelée, 1 poignée d'épinards, 1 skyr, 50 ml de lait de soja, 1 c.s. de granola.",e:"Mixer épais, verser dans un bol, granola dessus. On ne sent pas les épinards."},
+ {id:'chiapud',m:'matin',n:"Pudding chia coco-mangue",k:290,p:9,t:5,g:['veggie','batch'],d:"2 c.s. de graines de chia, 150 ml de lait de soja, 1 c.s. de lait de coco, ½ mangue.",e:"Mélanger la veille, au frigo. Mangue en dés au moment de servir."},
+ {id:'toastsaumon',m:'matin',n:"Toast saumon fumé et fromage frais",k:320,p:20,t:5,g:['sale','rapide'],d:"1 tranche de pain de seigle, 1 c.s. de fromage frais, 1 tranche de saumon fumé, aneth, citron.",e:"Tartiner, saumon, aneth, poivre. Version brunch du dimanche."},
+ {id:'painperdu',m:'matin',n:"Pain perdu léger aux fruits rouges",k:380,p:15,t:12,g:['veggie','reconfort'],d:"2 tranches de pain complet rassis, 1 œuf, 80 ml de lait d'avoine, cannelle, fruits rouges.",e:"Tremper le pain dans œuf + lait + cannelle, dorer 2 min par face. Fruits rouges chauds dessus."},
+ {id:'sarrasin',m:'matin',n:"Galette de sarrasin œuf-épinards",k:340,p:18,t:10,g:['sale','rapide','veggie'],d:"1 galette de sarrasin du commerce, 1 œuf, épinards, 15 g d'emmental.",e:"Galette à la poêle, épinards et fromage, casser l'œuf au centre, plier les bords."},
+
+ {id:'brouilles',m:'matin',n:"Œufs brouillés, avocat et tomates rôties",k:360,p:20,t:10,g:['sale','rapide','veggie'],d:"2 œufs brouillés crémeux, ¼ d'avocat, tomates cerises poêlées, 1 tranche de pain complet.",e:"Tomates à la poêle 3 min, puis œufs à feu doux en remuant sans arrêt."},
+ {id:'bagel',m:'matin',n:"Bagel complet saumon fumé-concombre",k:380,p:22,t:5,g:['sale','rapide'],d:"1 bagel complet, fromage frais, 1 tranche de saumon fumé, concombre en lamelles, aneth.",e:"Toaster le bagel, monter, poivrer. Brunch express."},
+ {id:'dukkah',m:'matin',n:"Tartine houmous, œuf mollet et graines",k:350,p:18,t:8,g:['sale','rapide','veggie'],d:"Pain complet, 2 c.s. de houmous, 1 œuf mollet, graines de sésame et de courge, paprika.",e:"Œuf 6 min, couper en deux sur la tartine pour que le jaune coule."},
+ {id:'croquedej',m:'matin',n:"Croque du matin dinde-emmental",k:340,p:24,t:8,g:['sale','rapide'],d:"2 tranches de pain complet, 1 tranche de blanc de dinde, 20 g d'emmental, moutarde douce.",e:"À la poêle avec un couvercle, 3 min par face."},
+ {id:'donburi',m:'matin',n:"Bol de riz, œuf et avocat à la japonaise",k:400,p:18,t:10,g:['sale','veggie'],d:"½ poing de riz tiède, 1 œuf au plat, ¼ d'avocat, sésame, quelques gouttes de sauce soja, nori.",e:"Petit-déjeuner chaud et rassasiant, idéal avant une longue matinée de patients."},
+ {id:'muffinanglais',m:'matin',n:"Muffin anglais œuf-épinards",k:320,p:19,t:8,g:['sale','rapide','veggie'],d:"1 muffin anglais complet, 1 œuf au plat, épinards poêlés, 1 tranche de fromage.",e:"Œuf cuit dans un emporte-pièce rond pour qu'il ait la taille du muffin."},
+ {id:'cottagetoast',m:'matin',n:"Toast cottage cheese, tomate et basilic",k:260,p:18,t:4,g:['sale','rapide','veggie'],d:"1 grande tranche de pain de campagne, 100 g de cottage cheese, tomate, basilic, huile d'olive.",e:"Simple, frais, riche en protéines."},
+ {id:'rancheros',m:'matin',n:"Tortilla, œuf au plat et salsa",k:380,p:18,t:10,g:['sale','rapide','veggie'],d:"1 tortilla de maïs grillée, 2 c.s. de haricots noirs, 1 œuf au plat, salsa, coriandre.",e:"Inspiré des huevos rancheros, en version légère."},
+ {id:'socca',m:'matin',n:"Crêpe de pois chiche aux légumes",k:330,p:14,t:15,g:['sale','veggie'],d:"50 g de farine de pois chiche, eau, oignon nouveau, poivron, cumin, yaourt nature.",e:"Pâte liquide reposée 10 min, cuire comme une grosse crêpe épaisse."},
+ {id:'radis',m:'matin',n:"Tartine fromage frais, radis et œuf dur",k:300,p:16,t:10,g:['sale','veggie'],d:"Pain de seigle, fromage frais aux herbes, radis en rondelles, 1 œuf dur, fleur de sel.",e:"Les œufs durs se préparent d'avance pour 4 jours."},
+ {id:'misomatin',m:'matin',n:"Soupe miso du matin et riz",k:300,p:16,t:8,g:['sale','rapide','veggie'],d:"Bouillon miso, tofu soyeux, épinards, ½ poing de riz, oignon nouveau.",e:"Le petit-déjeuner japonais : chaud, doux, et il tient jusqu'à midi."},
+ {id:'galettepdt',m:'matin',n:"Galettes de pommes de terre et œuf",k:370,p:16,t:20,g:['sale','veggie','alsace'],d:"2 petites galettes de pommes de terre râpées, 1 œuf au plat, salade verte, ciboulette.",e:"Pommes de terre râpées et pressées, 1 cuillère d'huile, 4 min par face."},
+
+ /* ---------- MIDI : les plats plus copieux ---------- */
+ {id:'poke',m:'midi',n:"Poke bowl saumon-mangue",k:560,p:32,t:15,g:['rapide'],d:"1 pavé de saumon (cru ou mi-cuit), 1 poing de riz, edamame, mangue, concombre, sauce soja-sésame.",e:"Saumon en dés mariné 5 min dans la sauce soja. Disposer en quartiers sur le riz tiède."},
+ {id:'wrap',m:'midi',n:"Wrap thon et sauce yaourt-citron",k:450,p:30,t:8,g:['rapide'],d:"1 galette complète, 1 boîte de thon au naturel, crudités, 2 c.s. de yaourt grec, citron, aneth.",e:"Mélanger thon, yaourt, citron et aneth. Garnir, rouler serré, couper en deux."},
+ {id:'lentilles',m:'midi',n:"Salade tiède lentilles et feta",k:480,p:24,t:10,g:['veggie','batch'],d:"1 poing de lentilles vertes cuites, 30 g de feta, tomates cerises, oignon rouge, persil, vinaigrette moutarde.",e:"Se prépare la veille, encore meilleure le lendemain. Feta et herbes au dernier moment."},
+ {id:'buddha',m:'midi',n:"Buddha bowl patate douce et houmous",k:520,p:18,t:30,g:['veggie','batch'],d:"½ patate douce rôtie, pois chiches rôtis au paprika, épinards, 2 c.s. de houmous, graines de courge.",e:"Rôtir patate douce et pois chiches 25 min à 200 °C. Assembler sur les épinards crus."},
+ {id:'crevettes',m:'midi',n:"Crevettes ail-citron, quinoa et courgettes",k:470,p:33,t:15,g:['rapide'],d:"150 g de crevettes, 1 poing de quinoa cuit, 1 courgette, ail, citron, 1 c.c. d'huile d'olive.",e:"Saisir crevettes et ail 3 min, réserver. Sauter la courgette en dés, mélanger, citronner."},
+ {id:'croque',m:'midi',n:"Croque complet et grande salade",k:430,p:27,t:10,g:['rapide','reconfort'],d:"2 tranches de pain complet, 1 tranche de jambon, 20 g d'emmental, moutarde, salade verte.",e:"Four ou poêle 4 min par face. La salade fait le volume pour pas grand-chose."},
+ {id:'curry',m:'midi',n:"Curry de pois chiches coco",k:510,p:17,t:25,g:['veggie','batch','reconfort'],d:"1 boîte de pois chiches, 100 ml de lait de coco allégé, tomates concassées, épinards, curry, riz basmati.",e:"Revenir oignon et curry, ajouter tomates, pois chiches et coco, 15 min. Épinards à la fin."},
+ {id:'tikka',m:'midi',n:"Poulet tikka au yaourt",k:520,p:40,t:20,g:[],d:"1 blanc de poulet, 2 c.s. de yaourt, épices tikka, riz, concombre-menthe.",e:"Mariner le poulet dans yaourt + épices (20 min suffisent), poêler 10 min. Raïta à côté."},
+ {id:'bolo',m:'midi',n:"Pâtes complètes, bolognaise de lentilles corail",k:500,p:24,t:20,g:['veggie','batch','reconfort'],d:"1 poing de pâtes complètes cuites, 40 g de lentilles corail, coulis de tomate, carotte, oignon, basilic.",e:"Cuire les lentilles dans le coulis 15 min avec la carotte râpée. Elles fondent comme une viande hachée."},
+ {id:'flammekueche',m:'midi',n:"Tarte flambée allégée maison",k:480,p:26,t:20,g:['reconfort','alsace'],d:"1 pâte fine (ou tortilla), 100 g de fromage blanc 0 %, 1 oignon émincé, 40 g de lardons allumettes, muscade.",e:"Fromage blanc salé-poivré-muscadé, oignons et lardons dessus. Four au maximum, 10 min."},
+ {id:'burger',m:'midi',n:"Burger maison steak 5 %",k:560,p:36,t:15,g:['reconfort'],d:"1 pain burger complet, 1 steak haché 5 %, 1 tranche de cheddar, tomate, oignon rouge, salade, cornichons.",e:"Toaster le pain, steak à feu vif. Pour le week-end, avec une salade plutôt que des frites."},
+ {id:'nicoise',m:'midi',n:"Salade niçoise au thon",k:450,p:32,t:15,g:['rapide'],d:"1 boîte de thon, 1 œuf dur, haricots verts, tomates, olives noires, 2 pommes de terre, vinaigrette.",e:"Tout sur un grand plat, vinaigrette au dernier moment."},
+ {id:'bowlfume',m:'midi',n:"Bowl quinoa, saumon fumé et avocat",k:520,p:30,t:10,g:['rapide'],d:"1 poing de quinoa, 2 tranches de saumon fumé, ½ avocat, concombre, radis, sésame, sauce soja.",e:"Sans cuisson si le quinoa est prêt. Parfait en boîte au cabinet."},
+ {id:'taboule',m:'midi',n:"Taboulé de chou-fleur et pois chiches",k:400,p:16,t:15,g:['veggie','batch'],d:"½ chou-fleur cru mixé en semoule, pois chiches, tomates, concombre, menthe, persil, citron, huile d'olive.",e:"Mixer le chou-fleur grossièrement, mélanger le reste. Se garde 3 jours."},
+ {id:'cesar',m:'midi',n:"Wrap poulet César allégé",k:480,p:36,t:12,g:['rapide'],d:"1 galette complète, 1 blanc de poulet grillé, romaine, 10 g de parmesan, sauce yaourt-moutarde-citron.",e:"La sauce au yaourt remplace la mayonnaise. Rouler serré dans du papier."},
+ {id:'rizsaute',m:'midi',n:"Riz sauté aux crevettes et petits pois",k:510,p:30,t:15,g:['rapide'],d:"1 poing de riz cuit de la veille, 120 g de crevettes, petits pois, 1 œuf, oignon nouveau, sauce soja.",e:"Wok bien chaud : crevettes, puis riz, petits pois, œuf brouillé, soja. 6 minutes."},
+ {id:'pastasalad',m:'midi',n:"Salade de pâtes pesto-mozzarella",k:520,p:22,t:15,g:['veggie','batch'],d:"1 poing de pâtes complètes, 1 c.s. de pesto, tomates cerises, ½ boule de mozzarella light, roquette.",e:"Se prépare la veille, roquette au moment de manger."},
+ {id:'onigiri',m:'midi',n:"Bento onigiri au thon",k:470,p:28,t:20,g:['batch'],d:"1 poing de riz à sushi, ½ boîte de thon, 1 c.c. de mayonnaise, nori, edamame, concombre.",e:"Former des triangles de riz avec le thon au centre, entourer de nori."},
+ {id:'quesadilla',m:'midi',n:"Quesadilla haricots rouges et maïs",k:500,p:24,t:10,g:['rapide','veggie'],d:"2 tortillas complètes, ½ boîte de haricots rouges, maïs, 30 g de cheddar, salsa, coriandre.",e:"Garnir, refermer, dorer 3 min par face. Couper en quatre."},
+ {id:'saladepdt',m:'midi',n:"Salade de pommes de terre à l'alsacienne",k:430,p:18,t:20,g:['veggie','alsace'],d:"3 pommes de terre tièdes, 1 œuf dur, cornichons, oignon rouge, ciboulette, vinaigrette moutarde.",e:"Arroser les pommes de terre tièdes de vinaigrette pour qu'elles l'absorbent."},
+ {id:'tofulaque',m:'midi',n:"Bowl tofu laqué et brocoli",k:520,p:26,t:20,g:['veggie'],d:"150 g de tofu ferme, sauce soja-miel-gingembre, brocoli, riz, sésame.",e:"Dorer le tofu en cubes, laquer avec la sauce. Brocoli vapeur 5 min."},
+ {id:'choucroute',m:'midi',n:"Choucroute de la mer saumon-crevettes",k:520,p:38,t:30,g:['alsace','reconfort'],d:"200 g de choucroute cuite, 1 pavé de saumon, 80 g de crevettes, 2 pommes de terre, sauce au fromage blanc et aneth.",e:"Réchauffer la choucroute au vin blanc, poser saumon et crevettes dessus, couvrir 10 min."},
+ {id:'spatzle',m:'midi',n:"Spätzle et poêlée de champignons",k:520,p:20,t:25,g:['veggie','alsace','reconfort'],d:"1 poing de spätzle, champignons de Paris, échalote, 2 c.s. de crème légère, persil.",e:"Poêler les champignons, ajouter les spätzle pour les dorer, crème au dernier moment."},
+ {id:'chili',m:'midi',n:"Chili sin carne",k:480,p:22,t:30,g:['veggie','batch','reconfort'],d:"Haricots rouges, maïs, poivron, tomates, cumin, paprika fumé, riz, 1 c.s. de yaourt grec.",e:"Mijoter 20 min. Encore meilleur réchauffé, se congèle très bien."},
+ {id:'parmentier',m:'midi',n:"Parmentier de patate douce au bœuf 5 %",k:510,p:32,t:40,g:['batch','reconfort'],d:"150 g de bœuf haché 5 %, oignon, carotte, purée de patate douce, 10 g de parmesan.",e:"Faire revenir la viande et les légumes, couvrir de purée, gratiner 15 min."},
+ {id:'basquaise',m:'midi',n:"Poulet basquaise et riz",k:500,p:38,t:35,g:['batch'],d:"1 cuisse de poulet sans peau, poivrons, tomates, oignon, piment d'Espelette, riz.",e:"Dorer le poulet, ajouter les légumes, mijoter 25 min à couvert."},
+ {id:'dahl',m:'midi',n:"Dahl de lentilles corail",k:490,p:20,t:25,g:['veggie','batch','reconfort'],d:"60 g de lentilles corail, 100 ml de lait de coco allégé, tomate, curcuma, gingembre, riz basmati.",e:"Tout cuire ensemble 20 min jusqu'à ce que les lentilles fondent."},
+ {id:'tacos',m:'midi',n:"Tacos poulet, salsa et chou rouge",k:520,p:34,t:20,g:[],d:"3 petites tortillas de maïs, 1 blanc de poulet épicé, chou rouge émincé, salsa, citron vert, yaourt.",e:"Poulet en lanières, poêlé avec paprika et cumin. Chacun garnit."},
+ {id:'risotto',m:'midi',n:"Risotto au potiron",k:520,p:16,t:30,g:['veggie','reconfort'],d:"70 g de riz arborio, 200 g de potiron en dés, bouillon de légumes, échalote, 15 g de parmesan.",e:"Ajouter le bouillon louche par louche 18 min. Le potiron fond et rend le tout crémeux."},
+ {id:'pizza',m:'midi',n:"Pizza pâte fine aux légumes rôtis",k:520,p:24,t:25,g:['veggie','reconfort'],d:"1 pâte fine, coulis de tomate, courgette, poivron, oignon rouge, ½ mozzarella light, roquette.",e:"Rôtir les légumes 10 min avant de garnir. Four très chaud 10 min."},
+ {id:'tartiflette',m:'midi',n:"Tartiflette allégée du dimanche",k:560,p:28,t:40,g:['reconfort'],d:"250 g de pommes de terre, 30 g de reblochon, oignon, 30 g de lardons allégés, 1 c.s. de crème légère, grande salade.",e:"Pour le froid de novembre : moins de fromage, plus de salade, et c'est le midi."},
+
+ /* ---------- SOIR : léger, sans viande rouge ni porc, 400 kcal max ---------- */
+ {id:'saumon',m:'soir',n:"Saumon vapeur, haricots verts et quelques grenailles",k:400,p:32,t:20,g:[],d:"1 petit pavé de saumon (100 g), haricots verts à volonté, 4 pommes de terre grenaille, aneth, citron.",e:"Tout à la vapeur ou en papillote 15 min. Un filet de citron et de l'aneth."},
+ {id:'omelette',m:'soir',n:"Omelette champignons-épinards",k:300,p:20,t:10,g:['rapide','veggie'],d:"2 œufs, champignons, 1 poignée d'épinards, ciboulette, salade verte.",e:"Poêler les légumes, verser les œufs battus, plier dès que le dessus est encore baveux."},
+ {id:'velouté',m:'soir',n:"Velouté de potiron et tartine chèvre",k:340,p:12,t:25,g:['veggie','batch','reconfort'],d:"300 g de potiron, 1 petite pomme de terre, bouillon, 1 petite tranche de pain de campagne, 15 g de chèvre frais.",e:"Cuire 20 min dans le bouillon, mixer. Tartine grillée à côté."},
+ {id:'papillote',m:'soir',n:"Papillote de saumon aux poireaux",k:360,p:28,t:25,g:[],d:"100 g de saumon, 2 poireaux émincés, 1 c.s. de crème légère, citron, aneth.",e:"Poireaux au fond du papier, saumon dessus, fermer, 20 min à 190 °C. Rien à surveiller."},
+ {id:'shakshuka',m:'soir',n:"Shakshuka légère",k:340,p:20,t:20,g:['veggie','reconfort'],d:"2 œufs, tomates concassées, 1 poivron, oignon, cumin, paprika, coriandre.",e:"Mijoter la sauce 10 min, creuser deux puits, y casser les œufs, couvrir 6 min. Sans pain le soir."},
+ {id:'gratincourg',m:'soir',n:"Gratin de courgettes au chèvre",k:340,p:20,t:30,g:['veggie'],d:"2 courgettes, 1 œuf, 50 ml de lait de soja, 25 g de chèvre, thym.",e:"Courgettes en rondelles dans un plat, œuf + lait versé dessus, chèvre émietté, 25 min à 190 °C."},
+ {id:'currycrev',m:'soir',n:"Crevettes au curry vert, petite portion de riz",k:390,p:28,t:15,g:['rapide'],d:"120 g de crevettes, 80 ml de lait de coco allégé, pâte de curry vert, haricots verts, ½ poing de riz.",e:"Délayer la pâte de curry dans le coco, ajouter légumes puis crevettes 4 min."},
+ {id:'miso',m:'soir',n:"Soupe miso, tofu et légumes",k:280,p:18,t:10,g:['rapide','veggie'],d:"1 c.s. de pâte miso, 100 g de tofu soyeux, champignons, épinards, oignon nouveau, algues wakame.",e:"Délayer le miso dans l'eau chaude (pas bouillante), ajouter le reste 3 min. Réconfortant et léger."},
+ {id:'spaghcrev',m:'soir',n:"Spaghettis de courgette aux crevettes",k:300,p:26,t:12,g:['rapide'],d:"2 courgettes en spirales, 120 g de crevettes, ail, tomates cerises, basilic, 1 c.c. d'huile d'olive.",e:"Sauter les crevettes et l'ail, ajouter courgettes et tomates 2 min. Pas plus, elles doivent rester croquantes."},
+ {id:'tartare',m:'soir',n:"Tartare de saumon à l'avocat",k:380,p:24,t:10,g:['rapide'],d:"100 g de saumon très frais, ¼ d'avocat, citron vert, échalote, ciboulette, salade de concombre.",e:"Tout couper en petits dés, citronner au dernier moment. Sans cuisson."},
+ {id:'wok',m:'soir',n:"Wok de légumes et tofu",k:340,p:20,t:15,g:['rapide','veggie'],d:"100 g de tofu ferme, brocoli, carotte, poivron, pak choï, sauce soja, gingembre.",e:"Wok très chaud, légumes croquants en 5 min. Sans riz le soir, ou une petite cuillère."},
+ {id:'bouillon',m:'soir',n:"Bouillon thaï aux crevettes",k:320,p:24,t:15,g:['rapide','reconfort'],d:"Bouillon, citronnelle, gingembre, 100 g de crevettes, champignons, 30 g de vermicelles de riz, coriandre, citron vert.",e:"Infuser citronnelle et gingembre 5 min, ajouter le reste 4 min."},
+ {id:'courgespag',m:'soir',n:"Courge spaghetti, tomate et parmesan",k:300,p:12,t:45,g:['veggie','reconfort'],d:"½ courge spaghetti, coulis de tomate maison, basilic, 15 g de parmesan.",e:"Courge 40 min au four, effilocher à la fourchette, napper de sauce."},
+ {id:'cocotte',m:'soir',n:"Œufs cocotte aux épinards",k:310,p:20,t:15,g:['veggie','rapide'],d:"2 œufs, épinards, 1 c.s. de crème légère, muscade, salade verte.",e:"Épinards et crème au fond des ramequins, l'œuf dessus, 10 min au bain-marie au four."},
+ {id:'brocoli',m:'soir',n:"Velouté de brocoli et œuf mollet",k:300,p:18,t:20,g:['veggie','batch'],d:"1 brocoli, 1 petite pomme de terre, bouillon, 1 œuf, graines de courge.",e:"Cuire et mixer le velouté. Œuf mollet 6 min posé dessus, il s'écoule dans la soupe."},
+ {id:'pouletcitron',m:'soir',n:"Poulet au citron et légumes vapeur",k:360,p:34,t:20,g:[],d:"1 petit blanc de poulet, citron, thym, carottes, courgettes, fenouil.",e:"Poulet en papillote avec citron et thym, légumes vapeur à côté. Viande blanche, digestion facile."},
+ {id:'saladetiede',m:'soir',n:"Salade tiède de lentilles corail et carottes",k:360,p:18,t:20,g:['veggie'],d:"40 g de lentilles corail, carottes rôties au cumin, mâche, 10 g de feta, vinaigrette citron.",e:"Lentilles 10 min, carottes rôties 15 min, servir tiède sur la mâche."},
+ {id:'thonsalade',m:'soir',n:"Salade de haricots blancs au thon",k:370,p:30,t:8,g:['rapide'],d:"½ boîte de thon, ½ boîte de haricots blancs, tomates, oignon rouge, persil, vinaigrette.",e:"Mélanger, laisser reposer 5 min. Prêt en rentrant du cabinet."},
+ {id:'soupelegumes',m:'soir',n:"Soupe de légumes d'hiver",k:250,p:8,t:30,g:['veggie','batch','reconfort'],d:"Poireau, carotte, navet, céleri, 1 petite pomme de terre, bouillon, 1 c.s. de crème légère.",e:"Une grande marmite le dimanche, cinq dîners légers dans la semaine."},
+
+ /* ---------- COLLATION ---------- */
+ {id:'pomme',m:'collation',n:"Pomme et 10 amandes",k:160,p:4,t:1,g:['rapide','veggie'],d:"Croquant + gras de qualité, tient jusqu'au dîner.",e:""},
+ {id:'skyrmiel',m:'collation',n:"Skyr nature et miel",k:120,p:15,t:1,g:['rapide','veggie'],d:"1 pot de skyr nature, 1 c.c. de miel.",e:""},
+ {id:'choco',m:'collation',n:"2 carrés de chocolat noir et thé",k:140,p:2,t:3,g:['rapide','veggie','reconfort'],d:"Chocolat 70 %, thé avec un nuage de lait d'avoine.",e:""},
+ {id:'galette',m:'collation',n:"Galettes de riz et beurre de cacahuète",k:150,p:5,t:2,g:['rapide','veggie'],d:"2 galettes de riz, 1 c.c. de beurre de cacahuète, rondelles de banane.",e:""},
+ {id:'houmous',m:'collation',n:"Bâtonnets de carotte et houmous",k:120,p:4,t:5,g:['rapide','veggie'],d:"2 carottes en bâtonnets, 2 c.s. de houmous.",e:""},
+ {id:'latte',m:'collation',n:"Latte au lait de soja",k:90,p:6,t:3,g:['rapide','veggie'],d:"Café allongé, 200 ml de lait de soja moussé, cannelle.",e:""},
+ {id:'mugcake',m:'collation',n:"Mug cake chocolat-banane",k:220,p:9,t:3,g:['rapide','veggie','reconfort'],d:"½ banane écrasée, 1 œuf, 2 c.s. de flocons d'avoine, 1 c.c. de cacao.",e:"Mélanger dans une tasse, 90 secondes au micro-ondes."},
+ {id:'energyballs',m:'collation',n:"Energy balls dattes-cacao (2)",k:160,p:4,t:15,g:['veggie','batch'],d:"Pour 12 : 150 g de dattes, 60 g d'amandes, 2 c.s. de cacao, 1 c.s. de flocons.",e:"Mixer, rouler en billes. Une semaine au frigo, dans le sac du cabinet."},
+ {id:'pommefour',m:'collation',n:"Pomme au four cannelle et skyr",k:180,p:10,t:20,g:['veggie','reconfort'],d:"1 pomme, cannelle, 1 c.c. de miel, 3 c.s. de skyr.",e:"Pomme évidée, 20 min à 180 °C ou 4 min au micro-ondes. Skyr froid dessus."},
+ {id:'edamame',m:'collation',n:"Edamame à la fleur de sel",k:150,p:12,t:5,g:['rapide','veggie'],d:"1 bol d'edamame surgelés, fleur de sel, piment.",e:"5 min dans l'eau bouillante. Riche en protéines."},
+ {id:'fromageblanc',m:'collation',n:"Fromage blanc, compote et granola",k:170,p:12,t:2,g:['rapide','veggie'],d:"150 g de fromage blanc 0 %, 1 compote sans sucre ajouté, 1 c.s. de granola.",e:""},
+ {id:'popcorn',m:'collation',n:"Pop-corn maison",k:110,p:3,t:5,g:['rapide','veggie'],d:"25 g de maïs, une pointe d'huile, sel ou cannelle.",e:"Dans une casserole couverte, 3 min. Un grand bol pour peu de calories."},
+ {id:'chocochaud',m:'collation',n:"Chocolat chaud au lait d'avoine",k:140,p:4,t:5,g:['rapide','veggie','reconfort'],d:"200 ml de lait d'avoine, 1 c.s. de cacao non sucré, 1 c.c. de sirop d'érable.",e:""},
+ {id:'muffinmyrt',m:'collation',n:"Muffin banane-myrtilles léger",k:160,p:5,t:30,g:['veggie','batch'],d:"Pour 8 : 2 bananes, 2 œufs, 120 g de farine complète, 80 ml de lait de soja, myrtilles.",e:"25 min à 180 °C. Se congèlent un par un."},
+ {id:'betterave',m:'collation',n:"Crackers et houmous de betterave",k:150,p:5,t:5,g:['rapide','veggie'],d:"3 crackers complets, 2 c.s. de houmous mixé avec ½ betterave cuite.",e:""},
+ {id:'mangueyaourt',m:'collation',n:"Mangue et yaourt grec 0 %",k:150,p:10,t:3,g:['rapide','veggie'],d:"½ mangue, 1 yaourt grec 0 %, citron vert.",e:""},
+ {id:'quetsches',m:'collation',n:"Part fine de tarte aux quetsches",k:210,p:4,t:40,g:['veggie','alsace','reconfort'],d:"Pâte fine, quetsches coupées en deux, cannelle, très peu de sucre.",e:"Les quetsches font tout le travail. Une part fine, avec un thé."},
+];
+const MOMENTS = [['matin','Matin'],['midi','Midi'],['soir','Soir'],['collation','Collation']];
+const ACTIVITES = [[1.2,'Sédentaire'],[1.375,'Légère — peu de sport'],[1.55,'Active — kiné debout + sport 3-4×/sem'],[1.725,'Très active — sport quasi quotidien']];
+const RESPI = {
+  coherence:{n:'Cohérence cardiaque',s:'6 respirations par minute, 5 s / 5 s. La base du « 365 » : 3 fois par jour, 6/min, 5 min.',ph:[['Inspire',5,'in'],['Expire',5,'out']]},
+  carree:{n:'Respiration carrée',s:'4 s à chaque temps. Recentre avant un patient difficile.',ph:[['Inspire',4,'in'],['Retiens',4,'hold'],['Expire',4,'out'],['Pause',4,'low']]},
+  r478:{n:'4-7-8',s:'Expiration longue, active le parasympathique. Idéal au coucher.',ph:[['Inspire',4,'in'],['Retiens',7,'hold'],['Expire',8,'out']]},
+  pause:{n:'Pause entre deux patients',s:'90 secondes chrono : épaules, nuque, ouverture thoracique, puis deux respirations lentes.',fixe:1.5,habit:/pause/i,
+    ph:[['Roule les épaules vers l’arrière',15,'hold'],['Oreille vers l’épaule droite',15,'hold'],['Oreille vers l’épaule gauche',15,'hold'],['Mains dans le dos, ouvre la poitrine',15,'hold'],['Inspire',5,'in'],['Expire',5,'out'],['Inspire',5,'in'],['Expire',5,'out']]},
+  soupir:{n:'Soupir physiologique',s:'Double inspiration par le nez, longue expiration bouche. Décharge le stress en 1 à 2 min.',ph:[['Inspire',2,'in'],['Encore un peu',1,'top'],['Expire',6,'out']]},
+};
+const PHRASES = [
+ "Tu soignes les autres toute la journée. Ce soir, c'est ton tour.",
+ "Une respiration lente vaut mieux que dix pensées rapides.",
+ "Fait vaut mieux que parfait, y compris pour prendre soin de toi.",
+ "Ton corps te parle avant de crier. Écoute-le quand il parle bas.",
+ "Tu as le droit de faire une pause sans l'avoir méritée.",
+ "Une journée moyenne reste une journée vécue.",
+ "Ce que tu ressens est une information, pas un verdict.",
+ "Les petites habitudes tiennent mieux que les grandes résolutions.",
+ "Tu n'as pas à tout porter aujourd'hui.",
+ "Un verre d'eau aussi, c'est prendre soin de toi.",
+ "Tes limites protègent ta douceur.",
+ "Ralentir n'est pas reculer.",
+ "Ce que tu répètes chaque jour compte plus que ce que tu fais de temps en temps.",
+ "Sois pour toi la thérapeute que tu es pour tes patients.",
+];
+const SOINS = [
+ {id:'trap',c:'Corps',d:5,t:"Auto-massage des trapèzes avec une balle contre le mur, 3 minutes."},
+ {id:'pieds',c:'Corps',d:15,t:"Bain de pieds chaud avec une poignée de gros sel."},
+ {id:'psoas',c:'Corps',d:2,t:"Étirement du psoas en fente, une minute de chaque côté."},
+ {id:'marche',c:'Corps',d:10,t:"Marcher 10 minutes dehors, téléphone dans la poche."},
+ {id:'mur',c:'Corps',d:5,t:"Allongée jambes contre le mur, 5 minutes, yeux fermés."},
+ {id:'douche',c:'Corps',d:5,t:"Douche chaude, et deux minutes de plus que d'habitude."},
+ {id:'vider',c:'Tête',d:5,t:"Écrire les trois choses qui tournent en boucle, puis fermer le carnet."},
+ {id:'tiroir',c:'Tête',d:10,t:"Ranger un seul tiroir. Juste un."},
+ {id:'lire',c:'Tête',d:15,t:"Lire 10 pages d'un livre, pour le plaisir, pas pour apprendre."},
+ {id:'notifs',c:'Tête',d:2,t:"Couper les notifications jusqu'à demain matin."},
+ {id:'non',c:'Tête',d:2,t:"Choisir une chose à laquelle dire non cette semaine."},
+ {id:'fierte',c:'Tête',d:2,t:"Noter une chose dont tu es fière aujourd'hui, même petite."},
+ {id:'msg',c:'Lien',d:2,t:"Envoyer un message gentil à quelqu'un, sans raison."},
+ {id:'appel',c:'Lien',d:15,t:"Appeler une amie juste pour parler, sans sujet précis."},
+ {id:'aide',c:'Lien',d:5,t:"Demander un coup de main pour une chose qui te pèse."},
+ {id:'calin',c:'Lien',d:5,t:"Un vrai câlin, de ceux qui durent plus de 20 secondes."},
+ {id:'the',c:'Plaisir',d:5,t:"Une tasse de thé chaud, assise, sans rien faire d'autre."},
+ {id:'chanson',c:'Plaisir',d:4,t:"Une chanson que tu adores, le son bien fort."},
+ {id:'creme',c:'Plaisir',d:5,t:"Mettre une crème que tu aimes, en prenant ton temps."},
+ {id:'fleurs',c:'Plaisir',d:15,t:"Acheter des fleurs pour toi."},
+ {id:'choco',c:'Plaisir',d:2,t:"Un carré de chocolat, dégusté lentement, jusqu'au bout."},
+ {id:'danse',c:'Plaisir',d:5,t:"Danser seule dans le salon, une chanson entière."},
+ {id:'lit',c:'Plaisir',d:30,t:"Au lit 30 minutes plus tôt ce soir, avec un livre."},
+ {id:'bain',c:'Corps',d:30,t:"Un bain, ou une longue douche, lumière tamisée."},
+];
+const CAT_COLOR = {Corps:'--accent',Tête:'--sleep',Lien:'--pain',Plaisir:'--energy'};
+const QUESTIONS = [
+ "Qu'est-ce qui m'a donné de l'énergie cette semaine, et comment en avoir un peu plus ?",
+ "Dans quelle situation ai-je dit oui alors que je pensais non ?",
+ "Qu'est-ce que je ferais si je n'avais pas peur de décevoir ?",
+ "Quelle compétence ai-je envie de développer cette année ?",
+ "Quelle limite ai-je besoin de poser au cabinet ?",
+ "De quoi suis-je fière, même si personne ne l'a vu ?",
+ "Quelle habitude me coûte plus qu'elle ne me rapporte ?",
+ "Comment ai-je envie de me sentir le dimanche soir ?",
+ "Qu'est-ce que je repousse depuis trop longtemps, et quel serait le plus petit premier pas ?",
+ "Qui me fait du bien, et quand l'ai-je vu pour la dernière fois ?",
+ "À quoi ressemblerait une journée de travail idéale pour moi ?",
+ "Qu'est-ce que je me reproche et que je pardonnerais tout de suite à une amie ?",
+];
+const EMOTIONS = ['Anxiété','Tristesse','Colère','Culpabilité','Honte','Frustration','Fatigue'];
+const ANCRAGE = [[5,'choses que tu vois','Nomme-les à voix basse, avec leur couleur.'],[4,'choses que tu peux toucher','La texture de ton vêtement, la table, tes pieds bien posés au sol.'],[3,'sons que tu entends','Les plus lointains d’abord, puis les plus proches.'],[2,'odeurs','Si rien ne vient, pense à deux odeurs que tu aimes.'],[1,'chose bonne en toi','Une qualité, un souvenir, une personne qui compte.']];
+const BOUGER = ["Secoue les mains et les bras, 20 secondes.","Pousse fort les paumes contre un mur, 3 fois 10 secondes.","Enroule les épaules vers l'arrière, 10 fois, lentement.","Expire longuement en laissant tomber les épaules.","Une main sur le sternum, une sur le ventre : sens le mouvement de 5 respirations."];
+const DEFAULT_SETTINGS = {prenom:'Judi',accent:'eucalyptus',semaines:{},epingles:[],capsules:[],sexe:'F',age:null,taille:null,poids:null,activite:1.55,deficit:15,eau:2000,
+  habitudes:['Étirements 10 min','Pause active entre deux patients','5 fruits et légumes','Respiration','Sport ou marche 30 min','Écrans coupés 30 min avant le coucher']};
+const DAY_DEFAULT = {energie:null,stress:null,douleur:null,zone:'',sommeilH:null,sommeilQ:null,eau:0,eauM:[],eauX:null,habitudes:[],repas:[],respi:0,pauses:0,note:'',grat:['','',''],victoire:'',lache:'',soins:[],apaise:[],recadrages:[]};
+const EAU_MOMENTS = [['reveil','Au réveil'],['cabinet','En arrivant au cabinet'],['matinee','Entre deux patients, le matin'],['dej','Au déjeuner'],['aprem','Entre deux patients, l’après-midi'],['fin','En fin de journée'],['diner','Au dîner'],['soiree','Dans la soirée']];
+const verre = ()=>Math.max(100,Math.round(store.settings.eau/EAU_MOMENTS.length/50)*50);
+function eauTotal(d){const x=d.eauX==null?(d.eauM.length?0:d.eau):d.eauX;return d.eauM.length*verre()+x;}
+
+/* ---------- Utilitaires ---------- */
+const $ = (s,r=document)=>r.querySelector(s);
+const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const esc = s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad = n=>String(n).padStart(2,'0');
+const keyOf = d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const todayKey = ()=>keyOf(new Date());
+const lastKeys = n=>{const out=[];const d=new Date();for(let i=n-1;i>=0;i--){const x=new Date(d);x.setDate(d.getDate()-i);out.push(keyOf(x));}return out;};
+const fmtL = n=>(n/1000).toLocaleString('fr-FR',{minimumFractionDigits:1,maximumFractionDigits:2})+' L';
+let toastT; function toast(msg,undo){const t=$('#toast');t.innerHTML='';const sp=document.createElement('span');sp.textContent=msg;t.appendChild(sp);
+  if(undo){const b=document.createElement('button');b.type='button';b.textContent='Annuler';b.className='undo';b.onclick=()=>{undo();t.classList.remove('on');toast('Annulé');};t.appendChild(b);}
+  t.classList.toggle('act',!!undo);t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),undo?5000:2400);}
+/* Annulation : on garde l'état d'avant et on le remet si besoin */
+function undoDay(k){const prev=store.days[k]?JSON.parse(JSON.stringify(store.days[k])):null;return ()=>{store.days[k]=prev||{...DAY_DEFAULT};queue(k);render();};}
+function undoSettings(){const prev=JSON.parse(JSON.stringify(store.settings));return ()=>{store.settings=prev;queue('reglages');render();};}
+
+/* ---------- Stockage ---------- */
+const store = {mode:'loading',days:{},settings:{...DEFAULT_SETTINGS},col:null};
+const timers={}, chains={};
+function setSync(s,txt){const el=$('#sync');el.dataset.s=s;el.lastElementChild.textContent=txt;el.hidden=(s==='ok');}
+function day(k){return {...DAY_DEFAULT,...(store.days[k]||{})};}
+function editDay(k,fn){const d=day(k);fn(d);store.days[k]=d;queue(k);}
+function editSettings(fn){const s=JSON.parse(JSON.stringify(store.settings));fn(s);store.settings=s;queue('reglages');}
+function queue(k){clearTimeout(timers[k]);setSync('warn','Enregistrement…');timers[k]=setTimeout(()=>flush(k),600);}
+function flush(k){
+  delete timers[k];
+  const data = JSON.parse(JSON.stringify(k==='reglages'?store.settings:store.days[k]));
+  if(store.mode==='db'){
+    chains[k]=(chains[k]||Promise.resolve()).then(()=>store.col.doc(k).set(data))
+      .then(()=>{ if(!Object.keys(timers).length) setSync('ok','Enregistré'); })
+      .catch(()=>setSync('err','Échec d’enregistrement — réessaie dans un instant'));
+  } else {
+    try{localStorage.setItem('ressource-v1',JSON.stringify({days:store.days,settings:store.settings}));setSync('warn','Enregistré sur cet appareil uniquement');}
+    catch(e){setSync('err','Stockage indisponible — rien n’est conservé');}
+  }
+}
+async function initStore(){
+  let db=null,user=null;
+  try{ if(window.claude?.use){ [db,user]=await Promise.all([window.claude.use('db'),window.claude.use('user')]); } }catch(e){}
+  if(db && user){
+    try{
+      const id = await user.id();
+      store.col = db.collection('data/users/'+id);
+      store.mode='db';
+      const slow=setTimeout(()=>setSync('warn','Connexion lente — les données arrivent…'),10000);
+      store.col.onSnapshot(snap=>{
+        if(!snap.metadata.fromCache){clearTimeout(slow); if(!Object.keys(timers).length) setSync('ok','Synchronisé');}
+        let changed=false;
+        for(const doc of snap.docs){
+          if(timers[doc.id]) continue;
+          const data=doc.data(); if(!data) continue;
+          if(doc.id==='reglages'){
+            const next={...DEFAULT_SETTINGS,...data};
+            if(JSON.stringify(next)!==JSON.stringify(store.settings)){store.settings=next;changed=true;}
+          } else if(/^\d{4}-\d{2}-\d{2}$/.test(doc.id)){
+            if(JSON.stringify(data)!==JSON.stringify(store.days[doc.id])){store.days[doc.id]=data;changed=true;}
+          }
+        }
+        if(changed) render(true);
+      },()=>{clearTimeout(slow);setSync('err','Données inaccessibles pour le moment');});
+      return;
+    }catch(e){}
+  }
+  store.mode='local';
+  try{const raw=localStorage.getItem('ressource-v1'); if(raw){const o=JSON.parse(raw);store.days=o.days||{};store.settings={...DEFAULT_SETTINGS,...(o.settings||{})};}}catch(e){}
+  setSync('warn','Enregistré sur cet appareil uniquement');
+  render(true);
+}
+
+/* ---------- Calculs ---------- */
+function besoins(s=store.settings){
+  const {age,taille,poids,activite,deficit,sexe}=s;
+  if(!age||!taille||!poids) return null;
+  const mb = 10*poids + 6.25*taille - 5*age + (sexe==='H'?5:-161);
+  const dej = mb*activite;
+  const plancher = Math.max(Math.round(mb), sexe==='H'?1500:1200);
+  const obj = Math.max(Math.round(dej*(1-deficit/100)/10)*10, plancher);
+  return {mb:Math.round(mb),dej:Math.round(dej),obj,plancher:obj===plancher};
+}
+const kcalOf = d=>d.repas.reduce((a,r)=>a+(+r.k||0),0);
+const protOf = d=>d.repas.reduce((a,r)=>a+(+r.p||0),0);
+
+/* ---------- Vues ---------- */
+const VIEWS=['rapide','jour','respirer','soin','assiette','suivi','reglages','apaiser','prepa','courses','recettes'];
+const sub=(()=>{try{return JSON.parse(localStorage.getItem('ressource-sub')||'{}')||{};}catch(e){return {};}})();
+let jourSel=null;
+const jk=()=>jourSel||todayKey();
+function dayNavHTML(){
+  const k=jk(),t=todayKey(),hier=addDays(t,-1);
+  const lab=k===t?'Aujourd\u2019hui':k===hier?'Hier':new Date(k+'T12:00').toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  return `<div class="daynav"><button type="button" data-dn="-1" aria-label="Jour précédent"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="dn-mid"><b>${lab}</b>${k!==t?`<button type="button" class="linkbtn" data-dn="0">Revenir à aujourd\u2019hui</button>`:`<span class="muted">${new Date(k+'T12:00').toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})}</span>`}</div>
+    <button type="button" data-dn="1" aria-label="Jour suivant" ${k===t?'disabled':''}><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button></div>`;
+}
+let current='jour';
+function render(fromData){
+  const v = VIEWS.includes(location.hash.slice(1))?location.hash.slice(1):'jour';
+  renderHero();
+  document.body.classList.toggle('widget',v==='rapide');
+  if(fromData && v==='respirer' && breath.running) return;
+  if(fromData && v==='apaiser') return;
+  if(fromData && (pointerDown || document.activeElement?.matches?.('#view input[type=text],#view input[type=search],#view textarea'))){ pendingRender=true; return; }
+  const animate = v!==current || !fromData && !$('#view').childElementCount;
+  current=v;
+  const navV=['prepa','courses','recettes'].includes(v)?'assiette':v;
+  $$('nav.tabs a').forEach(a=>{ if(a.dataset.v===navV) a.setAttribute('aria-current','page'); else a.removeAttribute('aria-current'); });
+  const view=$('#view');
+  const y=window.scrollY;
+  view.innerHTML = ({jour:vJour,respirer:vRespirer,soin:vSoin,rapide:vRapide,assiette:()=>vAssiette('jour'),recettes:()=>vAssiette('recettes'),suivi:vSuivi,reglages:vReglages,apaiser:vApaiser,prepa:vPrepa,courses:vCourses})[v]();
+  ({jour:bJour,respirer:bRespirer,soin:bSoin,rapide:bRapide,assiette:bAssiette,recettes:bAssiette,suivi:()=>{},reglages:bReglages,apaiser:bApaiser,prepa:bPrepa,courses:bCourses})[v](view);
+  if(animate){view.style.animation='none';void view.offsetWidth;view.style.animation='';}
+  else view.style.animation='none';
+  if(fromData || !animate) window.scrollTo(0,y);
+}
+addEventListener('focusout',()=>setTimeout(()=>{if(pendingRender&&!pointerDown&&!document.activeElement?.matches?.('#view input[type=text],#view input[type=search],#view textarea')){pendingRender=false;render(true);}},0));
+
+/* --- En-tête : salutation, phrase du jour, météo intérieure --- */
+function dayOfYear(d=new Date()){return Math.floor((d-new Date(d.getFullYear(),0,0))/864e5);}
+function weekKey(d=new Date()){const t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));const n=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-n);
+  const y0=new Date(Date.UTC(t.getUTCFullYear(),0,1));return `${t.getUTCFullYear()}-S${pad(Math.ceil(((t-y0)/864e5+1)/7))}`;}
+const METEO_ICONS={
+  soleil:'<svg viewBox="0 0 24 24" fill="none" stroke="var(--energy)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5" fill="var(--energy)"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+  eclaircie:'<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-width="2"><circle cx="9" cy="9" r="4" fill="var(--energy)" stroke="var(--energy)"/><path d="M8 19h9a4 4 0 0 0 0-8 5 5 0 0 0-9.6 1.5A3.3 3.3 0 0 0 8 19z" fill="var(--surface)" stroke="var(--muted)"/></svg>',
+  nuage:'<svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-linecap="round"><path d="M7 18h10a4 4 0 0 0 0-8 5.5 5.5 0 0 0-10.5 1.6A3.3 3.3 0 0 0 7 18z" fill="var(--surface-2)"/></svg>',
+  orage:'<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-width="2"><path d="M7 15h10a4 4 0 0 0 0-8 5.5 5.5 0 0 0-10.5 1.6A3.3 3.3 0 0 0 7 15z" fill="var(--surface-2)" stroke="var(--stress)"/><path d="M12 15l-2 4h3l-2 4" stroke="var(--energy)"/></svg>',
+  vide:'<svg viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="3 3"><circle cx="12" cy="12" r="8"/></svg>'};
+function meteo(d){
+  if(d.energie==null&&d.stress==null) return ['vide','Météo intérieure à noter'];
+  const s=(d.energie??5)-(d.stress??5)-((d.douleur??0)>=6?2:0);
+  return s>=3?['soleil','Météo intérieure : grand soleil']:s>=0?['eclaircie','Météo intérieure : éclaircies']:s>=-3?['nuage','Météo intérieure : nuageux']:['orage','Météo intérieure : orageux, sois douce avec toi'];
+}
+/* --- Mon jardin : une plante qui pousse avec ce que tu fais pour toi --- */
+const STADES=[[0,'Graine'],[6,'Pousse'],[16,'Jeune tige'],[30,'Feuillage'],[48,'En bouton'],[70,'En fleur']];
+function pointsJour(d){
+  return d.habitudes.length+d.soins.length+(d.grat.some(Boolean)||d.victoire?1:0)+(d.respi>0?1:0)+(d.eau>=store.settings.eau?1:0)+(d.pauses||0)+d.apaise.length+(d.energie!=null?1:0);
+}
+function jardin(){
+  const pts=lastKeys(14).map(day).reduce((a,d)=>a+pointsJour(d),0);
+  let stage=0;STADES.forEach(([s],i)=>{if(pts>=s)stage=i;});
+  const next=STADES[stage+1];
+  return {pts,stage,nom:STADES[stage][1],reste:next?next[0]-pts:0,suivant:next?.[1]};
+}
+function planteSVG(stage,small){
+  const H=[0,14,28,40,50,56][stage],top=84-H;
+  let g='';
+  if(stage===0) g+=`<ellipse cx="50" cy="83" rx="5" ry="3.5" fill="var(--energy)"/>`;
+  else{
+    g+=`<path d="M50 85 Q${stage>2?46:48} ${84-H/2} 50 ${top}" stroke="var(--accent)" stroke-width="3.2" fill="none" stroke-linecap="round"/>`;
+    const nl=Math.min(stage,4);
+    for(let j=0;j<nl;j++){const y=84-H*(.28+.17*j),side=j%2?1:-1,len=13-j*1.5;
+      g+=`<path d="M50 ${y} q${side*len*.6} ${-len*.75} ${side*len} ${-len*.25} q${-side*len*.25} ${len*.5} ${-side*len} ${len*.25}z" fill="var(--accent)" opacity="${.75+j*.06}"/>`;}
+    if(stage===1) g+=`<path d="M50 ${top} q-7 -4 -9 2 q5 2 9 -2z M50 ${top} q7 -4 9 2 q-5 2 -9 -2z" fill="var(--accent)"/>`;
+    if(stage===4) g+=`<ellipse cx="50" cy="${top-4}" rx="5" ry="7" fill="var(--pain)" opacity=".85"/><path d="M45 ${top} q5 -5 10 0" stroke="var(--accent)" stroke-width="2.5" fill="none"/>`;
+    if(stage===5){for(let p=0;p<6;p++){const a=p*Math.PI/3;g+=`<ellipse cx="${(50+Math.cos(a)*7).toFixed(1)}" cy="${(top-6+Math.sin(a)*7).toFixed(1)}" rx="5.5" ry="4" transform="rotate(${p*60} ${(50+Math.cos(a)*7).toFixed(1)} ${(top-6+Math.sin(a)*7).toFixed(1)})" fill="var(--pain)" opacity=".88"/>`;}
+      g+=`<circle cx="50" cy="${top-6}" r="4.5" fill="var(--energy)"/>`;}
+  }
+  return `<svg viewBox="0 0 100 112" role="img" aria-label="${STADES[stage][1]}" style="width:100%;height:auto;display:block">
+    <g class="sway">${g}</g>
+    <ellipse cx="50" cy="86" rx="26" ry="5" fill="var(--ink)" opacity=".18"/>
+    <path d="M24 86 h52 l-6 22 q-1 3 -4 3 h-32 q-3 0 -4 -3z" fill="var(--pain)" opacity=".75"/>
+    <rect x="22" y="84" width="56" height="7" rx="2.5" fill="var(--pain)"/>
+  </svg>`;
+}
+function renderHero(){
+  const h=new Date().getHours(), p=store.settings.prenom?.trim();
+  $('#hello').textContent=(h<5||h>=18?'Bonsoir':'Bonjour')+(p?`, ${p}`:'');
+  $('#phrase').textContent=PHRASES[dayOfYear()%PHRASES.length];
+  const [ic,txt]=meteo(day(todayKey()));
+  $('#meteo').innerHTML=METEO_ICONS[ic]+esc(txt);
+  const j=jardin();$('#plant').innerHTML=planteSVG(j.stage,true);$('#plant').title=`Mon jardin : ${j.nom}, ${j.pts} point${j.pts>1?"s":""} sur 14 jours`;
+  const ob=semaine().objectifs||[], op=$('#obj-pill');
+  op.hidden=!ob.length;
+  if(ob.length){const ok=ob.filter(o=>o.ok).length;op.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1" fill="var(--accent)"/></svg>${ok===ob.length?'Objectifs de la semaine atteints':`Semaine : ${ok}/${ob.length} objectifs`}`;}
+  const a=store.settings.accent;
+  if(a&&a!=='eucalyptus') document.documentElement.dataset.accent=a; else delete document.documentElement.dataset.accent;
+}
+let pointerDown=false,pendingRender=false;
+addEventListener('pointerdown',()=>pointerDown=true);
+addEventListener('pointerup',()=>{pointerDown=false;if(pendingRender){pendingRender=false;render(true);}});
+
+const MOTS={
+  energie:['À plat','Fatiguée','Moyenne','En forme','Pleine forme'],
+  stress:['Sereine','Calme','Un peu tendue','Tendue','Sous pression'],
+  douleur:['Aucune douleur','Légère','Modérée','Forte','Très forte'],
+  sommeilQ:['Très agitée','Agitée','Moyenne','Bonne','Réparatrice'],
+};
+function motDe(f,v){
+  if(f==='sommeilH'){const h=Math.floor(v),m=v%1?'30':'';const q=v<6?'Courte nuit':v<7?'Nuit un peu courte':v<=8.5?'Bonne nuit':'Longue nuit';return `${q} · ${h} h ${m}`.trim();}
+  const t=MOTS[f];if(!t)return '';return t[v<=1?0:v<=3?1:v<=6?2:v<=8?3:4];
+}
+const METRICS=[
+  {f:'energie',l:'Énergie',c:'--energy',lo:'à plat',hi:'pleine forme'},
+  {f:'stress',l:'Stress',c:'--stress',lo:'serein',hi:'sous pression'},
+  {f:'douleur',l:'Douleur (EVA)',c:'--pain',lo:'aucune',hi:'maximale'},
+  {f:'sommeilQ',l:'Qualité du sommeil',c:'--sleep',lo:'agité',hi:'réparateur'},
+];
+
+/* --- À la une : objectifs de la semaine et épinglés --- */
+const PIN_TYPES=[['mois','Objectif du mois','--energy'],['projet','Projet en cours','--accent'],['rappel','Rappel','--water'],['mantra','Mantra','--stress']];
+function semaine(wk=weekKey()){return store.settings.semaines?.[wk]||{};}
+function prevWeekKey(){const d=new Date();d.setDate(d.getDate()-7);return weekKey(d);}
+function editSemaine(fn,wk=weekKey()){editSettings(s=>{s.semaines=s.semaines||{};const w={...(s.semaines[wk]||{})};w.objectifs=[...(w.objectifs||[])];fn(w);s.semaines[wk]=w;});}
+function uneHTML(){
+  const sem=semaine(), ob=sem.objectifs||[], ok=ob.filter(o=>o.ok).length;
+  const reste=7-(new Date().getDay()||7);
+  const prev=(semaine(prevWeekKey()).objectifs||[]).filter(o=>!o.ok&&!ob.some(x=>x.t===o.t));
+  const R=14,C=2*Math.PI*R,pct=ob.length?ok/ob.length:0;
+  const pins=store.settings.epingles||[];
+  return `<section class="une" aria-label="À la une">
+    <div class="obj">
+      <div class="obj-head">
+        <div><span class="eyebrow">Ma semaine · ${reste?`encore ${reste} jour${reste>1?'s':''}`:'dernier jour'}</span><h2 style="font-size:1.25rem">Mes objectifs</h2></div>
+        ${ob.length?`<div class="ring-mini"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="${R}" fill="none" stroke="var(--surface-2)" stroke-width="4"/><circle cx="17" cy="17" r="${R}" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="${C*pct} ${C}" transform="rotate(-90 17 17)"/></svg>${ok}/${ob.length}</div>`:''}
+      </div>
+      ${sem.intention?`<p class="intent">${esc(sem.intention)}</p>`:`<button class="linkbtn" id="go-intent" style="align-self:flex-start">+ Choisir une intention pour la semaine</button>`}
+      ${ob.length?`<ul class="habits">${ob.map((o,i)=>`<li><button aria-pressed="${!!o.ok}" data-ob="${i}"><span class="box"></span><span class="lbl">${esc(o.t)}</span></button><button class="del" data-obdel="${i}" aria-label="Supprimer ${esc(o.t)}">×</button></li>`).join('')}</ul>`
+        :`<div class="muted">Deux ou trois objectifs concrets suffisent. Ils restent affichés ici toute la semaine.</div>`}
+      ${prev.length?`<button class="btn small" id="report">Reporter ${prev.length} objectif${prev.length>1?'s':''} non atteint${prev.length>1?'s':''} de la semaine dernière</button>`:''}
+      <form class="addrow" id="ob-add"><input type="text" id="ob-t" maxlength="90" placeholder="ex. 3 séances de sport, finir mes bilans" aria-label="Nouvel objectif"><button class="btn primary small" type="submit">Ajouter</button></form>
+    </div>
+    <div class="stack" style="gap:12px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><h2 style="font-size:1.25rem">Épinglés</h2><span class="muted" style="font-size:.88rem">toujours sous les yeux</span></div>
+      ${pins.length?`<div class="pins">${pins.map((p,i)=>{const ty=PIN_TYPES.find(t=>t[0]===p.type)||PIN_TYPES[2];return `<div class="pin" style="--c:var(${ty[2]})"><span class="t">${ty[1]}</span><p>${esc(p.t)}</p><button class="del" data-pindel="${i}" aria-label="Désépingler">×</button></div>`;}).join('')}</div>`
+        :`<div class="empty-state" style="padding:16px">Épingle un objectif du mois, un projet, un rappel ou une phrase qui te porte.</div>`}
+      <form class="pinform" id="pin-add">
+        <input type="text" id="pin-t" maxlength="140" placeholder="ex. Courir 10 km en décembre" aria-label="Texte à épingler">
+        <select id="pin-type" aria-label="Type">${PIN_TYPES.map(([v,l])=>`<option value="${v}">${l}</option>`).join('')}</select>
+        <button class="btn small primary" type="submit">Épingler</button>
+      </form>
+    </div>
+  </section>`;
+}
+function bindUne(v){
+  $$('[data-ob]',v).forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.ob;
+    editSemaine(w=>{w.objectifs[i]={...w.objectifs[i],ok:!w.objectifs[i].ok};});
+    const ob=semaine().objectifs;if(ob[i].ok)toast(ob.every(o=>o.ok)?'Tous tes objectifs de la semaine sont atteints. Bravo !':'Objectif atteint');render();}));
+  $$('[data-obdel]',v).forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.obdel,u=undoSettings();editSemaine(w=>w.objectifs.splice(i,1));toast('Objectif supprimé',u);render();}));
+  $('#ob-add',v).addEventListener('submit',e=>{e.preventDefault();const t=$('#ob-t').value.trim();if(!t)return;
+    if((semaine().objectifs||[]).length>=7){toast('7 objectifs maximum : garde l’essentiel');return;}
+    editSemaine(w=>w.objectifs.push({t,ok:false}));render();$('#ob-t')?.focus();});
+  $('#report',v)?.addEventListener('click',()=>{const cur=semaine().objectifs||[];
+    const prev=(semaine(prevWeekKey()).objectifs||[]).filter(o=>!o.ok&&!cur.some(x=>x.t===o.t));
+    editSemaine(w=>prev.forEach(o=>w.objectifs.push({t:o.t,ok:false})));toast('Objectifs reportés');render();});
+  $('#go-intent',v)?.addEventListener('click',()=>{location.hash='soin';setTimeout(()=>$('#intention')?.focus(),50);});
+  $('#pin-add',v).addEventListener('submit',e=>{e.preventDefault();const t=$('#pin-t').value.trim();if(!t)return;
+    editSettings(s=>s.epingles=[...(s.epingles||[]),{t,type:$('#pin-type').value}]);render();});
+  $$('[data-pindel]',v).forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.pindel,u=undoSettings();editSettings(s=>s.epingles=(s.epingles||[]).filter((_,j)=>j!==i));toast('Désépinglé',u);render();}));
+}
+
+function vJour(){
+  const k=jk(), d=day(k), b=besoins(), kc=kcalOf(d), isT=k===todayKey();
+  const nH=store.settings.habitudes.length, okH=d.habitudes.filter(h=>store.settings.habitudes.includes(h)).length;
+  const pctEau=Math.min(100,Math.round(d.eau/store.settings.eau*100));
+  const metric=m=>{const v=d[m.f];return `
+    <div class="metric ${v==null?'unset':''}" style="--c:var(${m.c})">
+      <label class="mlabel" for="m-${m.f}">${m.l}</label>
+      <output id="o-${m.f}" class="${v==null?'empty':''}">${v==null?'glisse sur la ligne':motDe(m.f,v)}</output>
+      <input type="range" class="line" id="m-${m.f}" data-f="${m.f}" min="0" max="10" step="1" value="${v??5}" style="--p:${v==null?0:v*10}%" aria-valuetext="${v==null?'non renseigné':motDe(m.f,v)}">
+      <div class="scale"><span>${m.lo}</span><span>${m.hi}</span></div>
+    </div>`;};
+  const jt=sub.jour||(d.energie==null?'checkin':'eau');
+  return `<div class="stack">
+    ${dayNavHTML()}
+    ${!b?`<div class="banner"><span>Renseigne ton âge, ta taille et ton poids pour obtenir ton objectif calorique.</span><a class="btn small primary" href="#reglages">Ouvrir les réglages</a></div>`:''}
+    <div class="summary">
+      <a href="#assiette"><span class="eyebrow">Calories</span><b>${b?Math.max(0,b.obj-kc):kc}</b><small>${b?`restantes sur ${b.obj} kcal`:'kcal consommées'}</small></a>
+      <a href="#jour" data-sub="jour|eau"><span class="eyebrow">Eau</span><b>${fmtL(d.eau)}</b><small>${pctEau} % de ${fmtL(store.settings.eau)}</small></a>
+      <a href="#jour" data-sub="jour|eau"><span class="eyebrow">Habitudes</span><b>${okH}/${nH}</b><small>cochées${isT?' aujourd\u2019hui':''}</small></a>
+      <a href="#respirer"><span class="eyebrow">Respiration</span><b>${d.respi}</b><small>min de respiration</small></a>
+    </div>
+    ${subHTML('jour',[['checkin','Mon check-in'],['eau','Eau et habitudes'],['objectifs','Objectifs']],jt)}
+    ${jt==='checkin'?`<div class="grid2">
+      <section class="card">
+        <header><h2>Comment je vais</h2><span class="muted">Ressenti du jour</span></header>
+        ${METRICS.slice(0,3).map(metric).join('')}
+        <div class="field"><label for="zone">Zone douloureuse</label><input type="text" id="zone" placeholder="ex. trapèzes, lombaires après la journée" value="${esc(d.zone)}"></div>
+      </section>
+      <section class="card">
+        <header><h2>Sommeil</h2><span class="muted">Nuit dernière</span></header>
+        <div class="metric" style="--c:var(--sleep)">
+          <label class="mlabel" for="m-sommeilH">Durée</label>
+          <output id="o-sommeilH" class="${d.sommeilH==null?'empty':''}">${d.sommeilH==null?'glisse sur la ligne':motDe('sommeilH',d.sommeilH)}</output>
+          <input type="range" class="line" id="m-sommeilH" data-f="sommeilH" min="4" max="11" step="0.5" value="${d.sommeilH??7.5}" style="--p:${d.sommeilH==null?0:(d.sommeilH-4)/7*100}%" aria-valuetext="${d.sommeilH==null?'non renseigné':motDe('sommeilH',d.sommeilH)}">
+          <div class="scale"><span>courte nuit</span><span>longue nuit</span></div>
+        </div>
+        ${metric(METRICS[3])}
+        <div class="field"><label for="note">Note du jour</label><textarea id="note" placeholder="Ce qui m'a ressourcée, ce qui m'a vidée…">${esc(d.note)}</textarea></div>
+      </section>
+    </div>`:jt==='eau'?`<div class="grid2">
+      <section class="card" id="eau">
+        <header><h2>Hydratation</h2><span class="muted num">objectif ${fmtL(store.settings.eau)}</span></header>
+        <div class="water">
+          <div class="tube" aria-hidden="true"><div class="fill" style="height:${pctEau}%"></div><div class="marks"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+          <div class="stack" style="gap:6px;min-width:0">
+            <div class="big num">${d.eau} mL</div>
+            <div class="muted">${pctEau>=100?'Objectif atteint.':`Coche les moments où tu as bu un verre (${verre()} mL), même ce soir après coup.`}</div>
+          </div>
+        </div>
+        <ul class="habits">${EAU_MOMENTS.map(([id,l])=>`<li><button aria-pressed="${d.eauM.includes(id)}" data-em="${id}" style="--accent:var(--water);--accent-soft:var(--water-soft)"><span class="box"></span>${l}</button></li>`).join('')}</ul>
+        <div class="btnrow" style="align-items:center"><span class="muted" style="font-size:.88rem">En plus :</span>
+          <button class="btn small" data-eau="250">+ 250 mL</button>
+          <button class="btn small" data-eau="500">+ gourde 500 mL</button>
+          <button class="btn small" data-eau="-250" ${(d.eauX||0)<=0?'disabled':''}>− 250</button>
+        </div>
+      </section>
+      <section class="card" id="hab">
+        <header><h2>Habitudes</h2><span class="muted num">${okH}/${nH}</span></header>
+        <div class="meter"><span style="width:${nH?okH/nH*100:0}%"></span></div>
+        <ul class="habits">${store.settings.habitudes.map(h=>`<li><button aria-pressed="${d.habitudes.includes(h)}" data-h="${esc(h)}"><span class="box"></span>${esc(h)}</button></li>`).join('')}</ul>
+        <a class="linkbtn" href="#reglages">Modifier la liste</a>
+      </section>
+    </div>`:uneHTML()}
+  </div>`;
+}
+function bJour(v){
+  const k=jk();
+  if($('#ob-add',v)) bindUne(v);
+  $$('input.line',v).forEach(inp=>{
+    const f=inp.dataset.f,min=+inp.min,max=+inp.max;
+    const show=()=>{const val=+inp.value,o=$('#o-'+f,v);inp.style.setProperty('--p',((val-min)/(max-min)*100)+'%');
+      o.textContent=motDe(f,val);o.classList.remove('empty');inp.closest('.metric').classList.remove('unset');inp.setAttribute('aria-valuetext',motDe(f,val));};
+    inp.addEventListener('input',show);
+    inp.addEventListener('change',()=>{show();editDay(k,d=>d[f]=+inp.value);renderHero();});
+  });
+  $('#zone',v)?.addEventListener('input',e=>editDay(k,d=>d.zone=e.target.value));
+  $('#note',v)?.addEventListener('input',e=>editDay(k,d=>d.note=e.target.value));
+  const eauEdit=fn=>{const avant=day(k).eau;editDay(k,d=>{if(d.eauX==null)d.eauX=d.eauM.length?0:d.eau;fn(d);d.eau=eauTotal(d);});
+    const apres=day(k).eau;if(apres>=store.settings.eau&&avant<store.settings.eau)toast('Objectif hydratation atteint');render();};
+  $$('[data-eau]',v).forEach(b=>b.addEventListener('click',()=>eauEdit(d=>d.eauX=Math.max(0,d.eauX+(+b.dataset.eau)))));
+  $$('[data-em]',v).forEach(b=>b.addEventListener('click',()=>eauEdit(d=>{const id=b.dataset.em;d.eauM=d.eauM.includes(id)?d.eauM.filter(x=>x!==id):[...d.eauM,id];})));
+  $$('[data-h]',v).forEach(b=>b.addEventListener('click',()=>{const h=b.dataset.h;editDay(k,d=>{d.habitudes=d.habitudes.includes(h)?d.habitudes.filter(x=>x!==h):[...d.habitudes,h];});
+    const d=day(k);if(d.habitudes.includes(h)&&store.settings.habitudes.every(x=>d.habitudes.includes(x)))toast('Toutes tes habitudes du jour sont cochées. Bravo.');render();}));
+}
+
+/* --- Respiration --- */
+const breath={pattern:'coherence',duree:5,running:false,start:0,raf:0,lock:null,son:'silence',guide:true};
+const dureeEff=()=>RESPI[breath.pattern].fixe||breath.duree;
+/* Sons d'ambiance générés sur place (aucun fichier externe) */
+const audio={ctx:null,nodes:[]};
+function sonStart(){
+  if(breath.son==='silence'&&!breath.guide) return;
+  try{
+    audio.ctx=audio.ctx||new (window.AudioContext||window.webkitAudioContext)();audio.ctx.resume?.();
+    const ctx=audio.ctx; if(breath.son==='silence') return;
+    const len=ctx.sampleRate*4,buf=ctx.createBuffer(1,len,ctx.sampleRate),data=buf.getChannelData(0);
+    let last=0;for(let i=0;i<len;i++){const w=Math.random()*2-1;
+      if(breath.son==='vagues'){last=(last+0.02*w)/1.02;data[i]=last*3.2;} else data[i]=w*0.5;}
+    const src=ctx.createBufferSource();src.buffer=buf;src.loop=true;
+    const g=ctx.createGain();g.gain.value=0;
+    const f=ctx.createBiquadFilter();
+    if(breath.son==='vagues'){f.type='lowpass';f.frequency.value=600;
+      const lfo=ctx.createOscillator(),lg=ctx.createGain();lfo.frequency.value=0.09;lg.gain.value=0.16;lfo.connect(lg).connect(g.gain);lfo.start();audio.nodes.push(lfo);
+      g.gain.setValueAtTime(0,ctx.currentTime);g.gain.linearRampToValueAtTime(0.22,ctx.currentTime+3);}
+    else {f.type='bandpass';f.frequency.value=2500;f.Q.value=0.4;g.gain.setValueAtTime(0,ctx.currentTime);g.gain.linearRampToValueAtTime(0.09,ctx.currentTime+3);}
+    src.connect(f).connect(g).connect(ctx.destination);src.start();audio.nodes.push(src,g);
+  }catch(e){}
+}
+function carillon(kind){
+  if(!breath.guide||!audio.ctx) return;
+  try{const ctx=audio.ctx,o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';
+    o.frequency.value=kind==='in'?528:kind==='out'?396:440;
+    g.gain.setValueAtTime(0.0001,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.12,ctx.currentTime+0.02);g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+1.4);
+    o.connect(g).connect(ctx.destination);o.start();o.stop(ctx.currentTime+1.5);}catch(e){}
+}
+function sonStop(){
+  const ctx=audio.ctx;if(!ctx)return;
+  audio.nodes.forEach(n=>{try{if(n.gain){n.gain.cancelScheduledValues(ctx.currentTime);n.gain.setTargetAtTime(0,ctx.currentTime,0.5);}else n.stop(ctx.currentTime+2);}catch(e){}});
+  audio.nodes=[];
+}
+function vRespirer(){
+  const p=RESPI[breath.pattern], d=day(todayKey());
+  return `<div class="breath">
+    <section class="stage">
+      <div class="orb-wrap"><div class="orb-ring"></div><div class="orb" id="orb"><div><div class="ph" id="ph">Prête ?</div><div class="sec" id="sec">${p.ph.map(x=>x[1]).join('·')}</div></div></div></div>
+      <div class="timeline" aria-hidden="true"><span id="tl"></span></div>
+      <div class="num muted" id="remain">${p.fixe?'90 secondes':breath.duree+' min'} · ${d.respi} min déjà faites aujourd'hui</div>
+      <div class="btnrow"><button class="btn primary" id="go">Commencer</button><button class="btn" id="stop" hidden>Arrêter</button></div>
+    </section>
+    <section class="stack">
+      <div class="patterns" role="group" aria-label="Technique">${Object.entries(RESPI).map(([id,r])=>`<button class="pattern" data-p="${id}" aria-pressed="${id===breath.pattern}"><b>${r.n}</b><small>${r.s}</small></button>`).join('')}</div>
+      ${p.fixe?'':`<div class="field"><span class="eyebrow">Durée</span><div class="chips" role="group" aria-label="Durée">${[1,3,5,10].map(m=>`<button class="chip" data-d="${m}" aria-pressed="${m===breath.duree}">${m} min</button>`).join('')}</div></div>`}
+      <div class="field"><span class="eyebrow">Ambiance sonore</span><div class="chips" role="group" aria-label="Ambiance">${[['silence','Silence'],['vagues','Vagues'],['pluie','Pluie fine']].map(([v,l])=>`<button class="chip" data-son="${v}" aria-pressed="${breath.son===v}">${l}</button>`).join('')}</div>
+        <label style="display:flex;gap:8px;align-items:center;font-weight:400;margin-top:4px"><input type="checkbox" id="guide" ${breath.guide?'checked':''}> Un carillon doux à chaque changement</label></div>
+      <p class="muted" style="margin:0">${p.habit?'Une pause terminée coche l’habitude « Pause active ».':'Une séance terminée coche automatiquement l’habitude « Respiration » et s’ajoute à ton suivi.'}</p>
+    </section>
+  </div>`;
+}
+function bRespirer(v){
+  $$('[data-p]',v).forEach(b=>b.addEventListener('click',()=>{if(breath.running)return;breath.pattern=b.dataset.p;render();}));
+  $$('[data-d]',v).forEach(b=>b.addEventListener('click',()=>{if(breath.running)return;breath.duree=+b.dataset.d;render();}));
+  $$('[data-son]',v).forEach(b=>b.addEventListener('click',()=>{if(breath.running)return;breath.son=b.dataset.son;render();}));
+  $('#guide',v).addEventListener('change',e=>breath.guide=e.target.checked);
+  $('#go',v).addEventListener('click',startBreath);
+  $('#stop',v).addEventListener('click',()=>endBreath(false));
+  if(breath.autostart){breath.autostart=false;startBreath();}
+}
+const reduce=!!window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+async function startBreath(){
+  breath.running=true;breath.start=performance.now();
+  $('#go').hidden=true;$('#stop').hidden=false;$$('[data-p],[data-d]').forEach(b=>b.disabled=true);
+  sonStart();
+  try{breath.lock=await navigator.wakeLock?.request('screen');}catch(e){}
+  const p=RESPI[breath.pattern],cycle=p.ph.reduce((a,x)=>a+x[1],0),total=dureeEff()*60;
+  let lastPh=-1;
+  const orb=$('#orb'),ph=$('#ph'),sec=$('#sec'),tl=$('#tl'),rem=$('#remain');
+  const S0=.55,S1=1,STOP=.92;
+  const tick=now=>{
+    const t=(now-breath.start)/1000;
+    if(t>=total){endBreath(true);return;}
+    let c=t%cycle,i=0;while(c>=p.ph[i][1]){c-=p.ph[i][1];i++;}
+    const [lab,len,kind]=p.ph[i],f=c/len;
+    let s;
+    if(kind==='in') s=p.ph[i+1]?.[2]==='top'?S0+(STOP-S0)*f:S0+(S1-S0)*f;
+    else if(kind==='top') s=STOP+(S1-STOP)*f;
+    else if(kind==='out') s=S1-(S1-S0)*f;
+    else if(kind==='hold') s=S1; else s=S0;
+    orb.style.transform=reduce?'scale(.8)':`scale(${s})`;
+    if(i!==lastPh){lastPh=i;ph.textContent=lab;ph.style.fontSize=lab.length>14?'1.05rem':'';ph.style.maxWidth='9em';ph.style.margin='0 auto';carillon(kind);}
+    sec.textContent=Math.ceil(len-c);
+    tl.style.width=(t/total*100)+'%';
+    const r=Math.ceil(total-t);rem.textContent=`${Math.floor(r/60)}:${pad(r%60)} restantes`;
+    breath.raf=requestAnimationFrame(tick);
+  };
+  breath.raf=requestAnimationFrame(tick);
+}
+function endBreath(done){
+  cancelAnimationFrame(breath.raf);sonStop();
+  const p=RESPI[breath.pattern];
+  const mins=done?Math.round(dureeEff()):Math.floor((performance.now()-breath.start)/60000);
+  breath.running=false;try{breath.lock?.release();}catch(e){}breath.lock=null;
+  if(done&&p.fixe&&p.habit){
+    editDay(todayKey(),d=>{d.pauses=(d.pauses||0)+1;const h=store.settings.habitudes.find(x=>p.habit.test(x));if(h&&!d.habitudes.includes(h))d.habitudes=[...d.habitudes,h];});
+    toast('Pause terminée. Prête pour le patient suivant.');
+  } else if(mins>=1){
+    editDay(todayKey(),d=>{d.respi+=mins;const h=store.settings.habitudes.find(x=>/respir/i.test(x));if(h&&!d.habitudes.includes(h))d.habitudes=[...d.habitudes,h];});
+    toast(done?`Séance terminée · ${mins} min ajoutées`:`${mins} min ajoutées`);
+  } else toast('Séance arrêtée');
+  if(breath.fromSos){breath.fromSos=false;sos.step='apres';location.hash='apaiser';return;}
+  render();
+}
+
+/* --- Prendre soin --- */
+let tirage={id:null,max:10,anim:false};
+function vSoin(){
+  const k=todayKey(),d=day(k),wk=weekKey(),sem=store.settings.semaines?.[wk]||{};
+  const q=QUESTIONS[parseInt(wk.slice(-2),10)%QUESTIONS.length];
+  const carte=SOINS.find(s=>s.id===tirage.id);
+  const faits=d.soins.map(id=>SOINS.find(s=>s.id===id)).filter(Boolean);
+  const ot=sub.soin||'soins';
+  return `<div class="stack">
+    <div class="sosband">
+      <div><h2 style="font-size:1.2rem">Ça monte ? Angoisse, stress, trop-plein</h2><div class="muted">Un parcours guidé de 2 à 5 minutes, étape par étape.</div></div>
+      <a class="sos" href="#apaiser">M'apaiser maintenant</a>
+    </div>
+    ${subHTML('soin',[['soins','Soins'],['journal','Journal'],['pensees','Pensées'],['semaine','Ma semaine']],ot)}
+    ${ot==='soins'?`<div class="solo">
+      <section class="card">
+        <header><h2>Boîte à soins</h2><span class="muted">tire une carte, fais-la</span></header>
+        <div class="chips" role="group" aria-label="Temps disponible">${[[2,'2 min'],[10,'10 min'],[30,'30 min']].map(([m,l])=>`<button class="chip" data-max="${m}" aria-pressed="${tirage.max===m}">J'ai ${l}</button>`).join('')}</div>
+        <div class="deck">${carte?`
+          <div class="carte ${tirage.anim?'flip':''}" style="--c:var(${CAT_COLOR[carte.c]})">
+            <div style="display:flex;justify-content:space-between"><span class="cat">${carte.c}</span><span class="muted num">${carte.d} min</span></div>
+            <p>${esc(carte.t)}</p>
+            <div class="btnrow">${d.soins.includes(carte.id)?'<span class="muted">Fait aujourd’hui</span>':`<button class="btn small primary" id="faire">C'est fait</button>`}<button class="btn small" id="tirer">Une autre</button></div>
+          </div>`:`<div class="carte dos"><div><p style="color:var(--ink)">Un petit soin pour toi</p><button class="btn primary" id="tirer" style="margin-top:12px">Tirer une carte</button></div></div>`}
+        </div>
+        ${faits.length?`<div class="done-list">${faits.map(s=>`<span>${esc(s.t.split(/[,.]/)[0])}</span>`).join('')}</div>`:''}
+      </section>
+    </div>`:ot==='journal'?`<div class="grid2">
+      <section class="card">
+        <header><h2>Journal du soir</h2><span class="muted">2 minutes avant de dormir</span></header>
+        <div class="field"><span class="eyebrow">Trois choses qui m'ont fait du bien</span>
+          <div class="grat">${[0,1,2].map(i=>`<label><span>${i+1}</span><input type="text" id="g${i}" data-g="${i}" value="${esc(d.grat[i]||'')}" placeholder="${['Un sourire de patiente','Le soleil sur le trajet','Le thé de 16 h'][i]}"></label>`).join('')}</div></div>
+        <div class="field"><label for="victoire">Ma victoire du jour, même minuscule</label><input type="text" id="victoire" value="${esc(d.victoire)}"></div>
+        <div class="field"><label for="lache">Ce que je laisse au cabinet ce soir</label><input type="text" id="lache" value="${esc(d.lache)}" placeholder="Une phrase, un dossier, une inquiétude"></div>
+      </section>
+      ${bocalHTML()}
+    </div>`:ot==='pensees'?`<div class="solo">
+    <section class="card">
+      <header><h2>Recadrer une pensée</h2><span class="muted">inspiré des TCC</span></header>
+      <form id="recadre" class="stack" style="gap:12px">
+        <div class="grid2" style="gap:12px">
+          <div class="field"><label for="r-sit">La situation</label><input type="text" id="r-sit" required placeholder="ex. Une patiente annule au dernier moment"></div>
+          <div class="field"><label for="r-pen">La pensée qui arrive</label><input type="text" id="r-pen" required placeholder="ex. Elle n'est pas satisfaite de moi"></div>
+          <div class="field"><label for="r-emo">L'émotion</label><select id="r-emo">${EMOTIONS.map(e=>`<option>${e}</option>`).join('')}</select></div>
+          <div class="field"><label for="r-av">Intensité avant : <b id="r-av-o">6</b>/10</label><input type="range" id="r-av" min="0" max="10" value="6" style="accent-color:var(--stress)"></div>
+        </div>
+        <div class="helpers"><span>Quelles preuves pour, quelles preuves contre ?</span><span>Que dirais-je à une amie ?</span><span>Quelle importance dans un an ?</span><span>Quelle autre explication possible ?</span></div>
+        <div class="grid2" style="gap:12px">
+          <div class="field"><label for="r-alt">Une pensée plus juste</label><input type="text" id="r-alt" required placeholder="ex. Elle a eu un imprévu, ça arrive à tout le monde"></div>
+          <div class="field"><label for="r-ap">Intensité après : <b id="r-ap-o">4</b>/10</label><input type="range" id="r-ap" min="0" max="10" value="4" style="accent-color:var(--accent)"></div>
+        </div>
+        <div><button class="btn primary" type="submit">Enregistrer</button></div>
+      </form>
+      ${(()=>{const all=lastKeys(30).reverse().flatMap(k=>day(k).recadrages.map(r=>({...r,k}))).slice(0,4);
+        return all.length?`<ul class="entries">${all.map(r=>`<li><span class="muted" style="font-size:.8rem">${new Date(r.k+'T12:00').toLocaleDateString('fr-FR',{weekday:'long',day:'numeric'})} · ${esc(r.emo)} ${r.av} → ${r.ap}</span><span>« ${esc(r.pen)} »</span><span><span class="arrow">→</span> ${esc(r.alt)}</span></li>`).join('')}</ul>`:'';})()}
+    </section>
+    </div>`:`<div class="stack">
+    <section class="card">
+      <header><h2>Ma semaine</h2><span class="muted num">${wk.replace('-S',' · semaine ')}</span></header>
+      <div class="grid2">
+        <div class="field"><label for="intention">Mon intention pour cette semaine</label><input type="text" id="intention" value="${esc(sem.intention||'')}" placeholder="ex. Finir à l'heure deux soirs sur cinq"></div>
+        <div class="field"><span class="eyebrow">Question de la semaine</span><p class="question">${esc(q)}</p>
+          <textarea id="reponse" placeholder="Écris librement, personne d'autre ne le lit.">${esc(sem.reponse||'')}</textarea></div>
+      </div>
+    </section>
+    ${capsulesHTML()}
+    </div>`}
+  </div>`;
+}
+/* --- Bocal à bonheurs --- */
+const BILLES=['--accent','--energy','--water','--stress','--pain','--sleep'];
+let souvenir=null;
+function bonheurs(){
+  const out=[];
+  for(const [k,d] of Object.entries(store.days).sort()){
+    (d.grat||[]).forEach(g=>{if(g&&g.trim())out.push({k,t:g.trim()});});
+    if(d.victoire&&d.victoire.trim())out.push({k,t:d.victoire.trim(),v:1});
+  }
+  return out;
+}
+function bocalHTML(){
+  const all=bonheurs(),n=all.length,shown=Math.min(n,110);
+  let billes='';
+  const cols=9,r=4.6,x0=27,y0=128;
+  for(let i=0;i<shown;i++){const row=Math.floor(i/cols),col=i%cols,off=row%2?r:0;
+    const jx=((i*37)%7-3)*.35,jy=((i*53)%5-2)*.3;
+    const cx=x0+col*r*2+off+jx,cy=y0-row*r*1.8+jy;
+    if(cx>x0+cols*r*2-1) continue;
+    billes+=`<circle cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="${r}" fill="var(${BILLES[i%BILLES.length]})" opacity=".9"/><circle cx="${(cx-1.4).toFixed(1)}" cy="${(cy-1.6).toFixed(1)}" r="1.3" fill="var(--surface)" opacity=".7"/>`;}
+  const s=souvenir!=null?all[souvenir]:null;
+  return `<section class="card">
+    <header><h2>Bocal à bonheurs</h2><span class="muted num">${n} bille${n>1?'s':''}</span></header>
+    <div style="display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center">
+      <svg viewBox="0 0 120 150" role="img" aria-label="${n} bonnes choses dans le bocal" style="width:120px;height:150px">
+        <rect x="34" y="6" width="52" height="10" rx="3" fill="var(--muted)" opacity=".55"/>
+        <path d="M38 16 h44 v8 q16 6 16 26 v80 q0 14 -14 14 h-48 q-14 0 -14 -14 v-80 q0 -20 16 -26z" fill="var(--surface-2)" opacity=".55" stroke="var(--line)" stroke-width="2"/>
+        <g>${billes}</g>
+        <path d="M30 56 q-3 30 0 66" stroke="var(--surface)" stroke-width="3" stroke-linecap="round" fill="none" opacity=".7"/>
+      </svg>
+      <div class="stack" style="gap:10px;min-width:0">
+        ${n?(s?`<div><span class="eyebrow">${new Date(s.k+'T12:00').toLocaleDateString('fr-FR',{day:'numeric',month:'long'})}${s.v?' · victoire':''}</span><p class="question" style="font-size:1.12rem;overflow-wrap:anywhere">${esc(s.t)}</p></div>`
+          :`<p style="margin:0">Chaque bonne chose notée dans ton journal devient une bille. Les jours gris, pioches-en une.</p>`)
+          +`<div><button class="btn small primary" id="piocher">Piocher un souvenir</button></div>`
+        :`<p class="muted" style="margin:0">Remplis ton journal du soir : chaque gratitude et chaque victoire devient une bille de couleur.</p>`}
+      </div>
+    </div>
+  </section>`;
+}
+/* --- Lettres à moi-même --- */
+function addMonths(m){const d=new Date();d.setMonth(d.getMonth()+m);return keyOf(d);}
+function capsulesHTML(){
+  const caps=store.settings.capsules||[],t=todayKey();
+  const fmtD=k=>new Date(k+'T12:00').toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+  return `<section class="card">
+    <header><h2>Lettre à moi-même</h2><span class="muted">scellée jusqu'à la date choisie</span></header>
+    ${caps.length?`<ul class="entries" style="gap:8px">${caps.map((c,i)=>{const pret=c.ouvre<=t;return `<li style="flex-direction:row;align-items:center;gap:12px">
+      <svg width="36" height="28" viewBox="0 0 36 28" aria-hidden="true" style="flex:none"><rect x="1" y="1" width="34" height="26" rx="3" fill="${pret?'var(--accent-soft)':'var(--surface-2)'}" stroke="var(--line)"/><path d="M2 3l16 12L34 3" fill="none" stroke="${pret?'var(--accent)':'var(--muted)'}" stroke-width="2"/>${pret?'':'<circle cx="18" cy="16" r="4" fill="var(--pain)"/>'}</svg>
+      <div style="flex:1;min-width:0">${c.lu?`<div style="white-space:pre-wrap;overflow-wrap:anywhere">${esc(c.t)}</div><span class="muted" style="font-size:.82rem">Écrite le ${fmtD(c.le)}</span>`
+        :`<b>${pret?'Ta lettre est arrivée':'Scellée'}</b><div class="muted" style="font-size:.86rem">Écrite le ${fmtD(c.le)} · ${pret?'prête à être ouverte':`s'ouvre le ${fmtD(c.ouvre)}`}</div>`}</div>
+      ${pret&&!c.lu?`<button class="btn small primary" data-ouvrir="${i}">Ouvrir</button>`:''}${c.lu?`<button class="del" data-capdel="${i}" aria-label="Supprimer la lettre">×</button>`:''}</li>`;}).join('')}</ul>`:''}
+    <form id="cap-add" class="stack" style="gap:8px">
+      <textarea id="cap-t" rows="4" placeholder="Chère moi, en ce moment je vis… j'espère que…" aria-label="Ta lettre"></textarea>
+      <div class="addrow"><select id="cap-d" aria-label="Ouvrir dans">${[[1,'dans 1 mois'],[3,'dans 3 mois'],[6,'dans 6 mois'],[12,'dans 1 an']].map(([m,l])=>`<option value="${m}" ${m===3?'selected':''}>Ouvrir ${l}</option>`).join('')}</select><button class="btn small primary" type="submit">Sceller</button></div>
+    </form>
+  </section>`;
+}
+function bSoin(v){
+  const k=todayKey();
+  $('#piocher',v)?.addEventListener('click',()=>{const n=bonheurs().length;let i;do{i=Math.floor(Math.random()*n);}while(n>1&&i===souvenir);souvenir=i;render();});
+  $('#cap-add',v)?.addEventListener('submit',e=>{e.preventDefault();const t=$('#cap-t').value.trim();if(!t)return;
+    const ouvre=addMonths(+$('#cap-d').value);editSettings(s=>s.capsules=[...(s.capsules||[]),{t,le:k,ouvre}]);
+    toast(`Lettre scellée jusqu'au ${new Date(ouvre+'T12:00').toLocaleDateString('fr-FR',{day:'numeric',month:'long'})}`);render();});
+  $$('[data-ouvrir]',v).forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.ouvrir;editSettings(s=>{s.capsules[i]={...s.capsules[i],lu:true};});render();}));
+  $$('[data-capdel]',v).forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.capdel;editSettings(s=>s.capsules=s.capsules.filter((_,j)=>j!==i));render();}));
+  $$('[data-max]',v).forEach(b=>b.addEventListener('click',()=>{tirage.max=+b.dataset.max;tirer();}));
+  $('#tirer',v)?.addEventListener('click',tirer);
+  $('#faire',v)?.addEventListener('click',()=>{editDay(k,d=>{if(!d.soins.includes(tirage.id))d.soins=[...d.soins,tirage.id];});toast('Noté. Tu as pris soin de toi.');tirage.anim=false;render();});
+  $$('[data-g]',v).forEach(i=>i.addEventListener('input',()=>editDay(k,d=>{const g=[...d.grat];g[+i.dataset.g]=i.value;d.grat=g;})));
+  $('#victoire',v)?.addEventListener('input',e=>editDay(k,d=>d.victoire=e.target.value));
+  $('#lache',v)?.addEventListener('input',e=>editDay(k,d=>d.lache=e.target.value));
+  const wk=weekKey();
+  const semEdit=(f,val)=>editSettings(s=>{s.semaines=s.semaines||{};s.semaines[wk]={...(s.semaines[wk]||{}),[f]:val};});
+  $('#intention',v)?.addEventListener('input',e=>semEdit('intention',e.target.value));
+  $('#reponse',v)?.addEventListener('input',e=>semEdit('reponse',e.target.value));
+  ['r-av','r-ap'].forEach(id=>$('#'+id,v)?.addEventListener('input',e=>$('#'+id+'-o').textContent=e.target.value));
+  $('#recadre',v)?.addEventListener('submit',e=>{e.preventDefault();
+    const r={sit:$('#r-sit').value.trim(),pen:$('#r-pen').value.trim(),emo:$('#r-emo').value,av:+$('#r-av').value,alt:$('#r-alt').value.trim(),ap:+$('#r-ap').value};
+    editDay(k,d=>d.recadrages=[...d.recadrages,r]);
+    toast(r.ap<r.av?`Enregistré · ${r.av-r.ap} point${r.av-r.ap>1?'s':''} de moins`:'Enregistré');render();});
+}
+function tirer(){
+  const done=day(todayKey()).soins;
+  let pool=SOINS.filter(s=>s.d<=tirage.max&&s.id!==tirage.id&&!done.includes(s.id));
+  if(!pool.length) pool=SOINS.filter(s=>s.d<=tirage.max&&s.id!==tirage.id);
+  tirage.id=pool[Math.floor(Math.random()*pool.length)].id;tirage.anim=true;render();
+}
+
+/* --- Apaiser : parcours guidé --- */
+const sos={step:'avant',avant:6,apres:null,outil:null,i:0,coches:[],ecrit:''};
+function vApaiser(){
+  const dots=n=>`<div class="dots">${ANCRAGE.map((_,j)=>`<i class="${j<=n?'on':''}"></i>`).join('')}</div>`;
+  let body='';
+  if(sos.step==='avant') body=`
+    <span class="eyebrow">Étape 1</span><h2>Là, maintenant, c'est à combien ?</h2>
+    <p class="muted" style="margin:0">Pas besoin d'être précise. C'est juste pour voir si ça bouge.</p>
+    <div class="big-out" id="sos-o">${sos.avant}<span style="font-size:1.2rem" class="muted">/10</span></div>
+    <input type="range" id="sos-r" min="0" max="10" value="${sos.avant}" style="accent-color:var(--stress);width:100%" aria-label="Intensité de l'angoisse">
+    <div><button class="btn primary" id="sos-next">Continuer</button></div>`;
+  else if(sos.step==='outil') body=`
+    <span class="eyebrow">Étape 2</span><h2>Qu'est-ce qui te tente ?</h2>
+    <div class="tools">
+      <button class="tool" data-o="respirer"><b>Respirer, 1 minute</b><small>Le soupir physiologique, guidé. Le plus rapide.</small></button>
+      <button class="tool" data-o="ancrage"><b>Revenir ici</b><small>L'ancrage 5-4-3-2-1 avec tes cinq sens.</small></button>
+      <button class="tool" data-o="bouger"><b>Bouger le corps</b><small>Décharger la tension par les épaules et les bras.</small></button>
+      <button class="tool" data-o="ecrire"><b>Vider ma tête</b><small>Tout écrire, sans trier, puis le poser.</small></button>
+    </div>`;
+  else if(sos.step==='ancrage'){const [n,l,h]=ANCRAGE[sos.i];body=`
+    ${dots(sos.i)}
+    <div class="ancre"><div class="n">${n}</div><div><h2>${l}</h2><p class="muted" style="margin:4px 0 0">${h}</p></div></div>
+    <p class="muted" style="margin:0">Prends ton temps. Passe à la suite quand c'est fait.</p>
+    <div class="btnrow"><button class="btn primary" id="sos-next">${sos.i<ANCRAGE.length-1?'Suivant':'Terminé'}</button></div>`;}
+  else if(sos.step==='bouger') body=`
+    <span class="eyebrow">Bouger le corps</span><h2>Un mouvement après l'autre</h2>
+    <ul class="habits">${BOUGER.map((b,j)=>`<li><button aria-pressed="${sos.coches.includes(j)}" data-b="${j}" style="--accent:var(--stress);--accent-soft:color-mix(in srgb,var(--stress) 16%,var(--surface))"><span class="box"></span>${b}</button></li>`).join('')}</ul>
+    <div><button class="btn primary" id="sos-next">C'est fait</button></div>`;
+  else if(sos.step==='ecrire') body=`
+    <span class="eyebrow">Vider ma tête</span><h2>Écris tout, sans trier</h2>
+    <p class="muted" style="margin:0">Les phrases n'ont pas besoin d'être justes ni complètes. Ce texte n'est pas enregistré.</p>
+    <textarea id="sos-t" rows="7" placeholder="Ce qui m'inquiète, c'est…">${esc(sos.ecrit)}</textarea>
+    <div class="field"><label for="sos-rdv">Je m'autorise à y repenser…</label><select id="sos-rdv"><option>ce soir, 10 minutes, puis je ferme</option><option>demain matin, à tête reposée</option><option>en en parlant à quelqu'un</option></select></div>
+    <div><button class="btn primary" id="sos-next">Je pose tout ça</button></div>`;
+  else if(sos.step==='apres') body=`
+    <span class="eyebrow">Dernière étape</span><h2>Et maintenant, c'est à combien ?</h2>
+    <div class="big-out" id="sos-o">${sos.apres??sos.avant}<span style="font-size:1.2rem" class="muted">/10</span></div>
+    <input type="range" id="sos-r" min="0" max="10" value="${sos.apres??sos.avant}" style="accent-color:var(--accent);width:100%" aria-label="Intensité après">
+    <div><button class="btn primary" id="sos-next">Valider</button></div>`;
+  else { const diff=sos.avant-sos.apres; body=`
+    <h2>${diff>0?`Ça a baissé de ${diff} point${diff>1?'s':''}.`:'Ça prend parfois plus de temps.'}</h2>
+    <p style="margin:0">${diff>0?'Ton système nerveux sait redescendre. Tu viens de le lui rappeler.':'Ce n’est pas un échec. Tu peux essayer un autre outil, ou simplement rester là quelques minutes.'}</p>
+    <div class="btnrow"><button class="btn" id="sos-again">Essayer un autre outil</button><a class="btn primary" href="#jour">Revenir à ma journée</a></div>
+    <p class="muted" style="margin:0;font-size:.88rem">Si l'angoisse est très forte ou revient souvent, en parler à ton médecin ou à un·e psychologue aide vraiment. Tu n'as pas à gérer ça seule.</p>`; }
+  return `<div class="sos-wrap"><div class="sos-step">${body}</div>${sos.step!=='fin'?`<a class="linkbtn" href="#jour" id="sos-quit" style="align-self:center">Quitter le parcours</a>`:''}</div>`;
+}
+function bApaiser(v){
+  const r=$('#sos-r',v);
+  if(r) r.addEventListener('input',()=>{$('#sos-o',v).firstChild.textContent=r.value; if(sos.step==='avant')sos.avant=+r.value; else sos.apres=+r.value;});
+  $$('[data-o]',v).forEach(b=>b.addEventListener('click',()=>{sos.outil=b.dataset.o;
+    if(sos.outil==='respirer'){breath.pattern='soupir';breath.duree=1;breath.fromSos=true;breath.autostart=true;location.hash='respirer';return;}
+    sos.step=sos.outil;sos.i=0;sos.coches=[];render();}));
+  $$('[data-b]',v).forEach(b=>b.addEventListener('click',()=>{const j=+b.dataset.b;sos.coches=sos.coches.includes(j)?sos.coches.filter(x=>x!==j):[...sos.coches,j];render();}));
+  $('#sos-t',v)?.addEventListener('input',e=>sos.ecrit=e.target.value);
+  $('#sos-again',v)?.addEventListener('click',()=>{sos.avant=sos.apres;sos.apres=null;sos.step='outil';render();});
+  $('#sos-quit',v)?.addEventListener('click',()=>{sos.step='avant';sos.apres=null;});
+  $('#sos-next',v)?.addEventListener('click',()=>{
+    if(sos.step==='avant') sos.step='outil';
+    else if(sos.step==='ancrage'){ if(sos.i<ANCRAGE.length-1){sos.i++;} else sos.step='apres'; }
+    else if(sos.step==='bouger') sos.step='apres';
+    else if(sos.step==='ecrire'){sos.ecrit='';sos.step='apres';}
+    else if(sos.step==='apres'){ if(sos.apres==null)sos.apres=sos.avant;
+      const now=new Date();editDay(todayKey(),d=>d.apaise=[...d.apaise,{h:`${pad(now.getHours())}:${pad(now.getMinutes())}`,av:sos.avant,ap:sos.apres,o:sos.outil}]);
+      sos.step='fin'; }
+    render();window.scrollTo(0,0);
+  });
+}
+
+/* --- Assiette --- */
+let filtreMoment=null;
+function momentAuto(){const h=new Date().getHours();return h<10?'matin':h<15?'midi':h<18?'collation':'soir';}
+function vAssiette(mode){
+  const d=day(jk()),b=besoins(),kc=kcalOf(d),pr=protOf(d);
+  const fm=filtreMoment||momentAuto();
+  const pct=b?Math.min(1,kc/b.obj):0, over=b&&kc>b.obj;
+  const R=60,C=2*Math.PI*R;
+  if(mode==='recettes') return `<div class="stack">${segHTML('recettes')}${recettesSection(fm,b)}</div>`;
+  const recents=repasRecents().filter(r=>!d.repas.some(x=>x.n===r.n)).slice(0,6);
+  return `<div class="stack">
+    ${segHTML('assiette')}
+    ${dayNavHTML()}
+    <section class="card">
+      <div class="gauge">
+        <svg viewBox="0 0 150 150" role="img" aria-label="${kc} kcal consommées">
+          <circle cx="75" cy="75" r="${R}" fill="none" stroke="var(--surface-2)" stroke-width="13"/>
+          <circle cx="75" cy="75" r="${R}" fill="none" stroke="${over?'var(--energy)':'var(--accent)'}" stroke-width="13" stroke-linecap="round" stroke-dasharray="${C*pct} ${C}" transform="rotate(-90 75 75)"/>
+          <text x="75" y="72" text-anchor="middle" style="font-family:var(--font-display);font-size:28px;font-weight:700" fill="var(--ink)">${b?Math.abs(b.obj-kc):kc}</text>
+          <text x="75" y="94" text-anchor="middle" style="font-size:12px" fill="var(--muted)">${b?(over?'kcal au-dessus':'kcal restantes'):'kcal'}</text>
+        </svg>
+        <div class="stack" style="gap:8px;min-width:0">
+          <h2>Aujourd'hui</h2>
+          <div class="num">${kc} kcal consommées${b?` · objectif ${b.obj} kcal`:''} · ${pr} g de protéines</div>
+          ${b?`<div class="muted" style="font-size:.9rem">Dépense estimée ${b.dej} kcal, déficit de ${store.settings.deficit} %. ${over?'Un dépassement ponctuel ne change rien sur la semaine : regarde la moyenne dans Suivi.':''}</div>`:`<div><a class="btn small primary" href="#reglages">Calculer mon objectif</a></div>`}
+          ${d.repas.length?`<ul class="meals">${d.repas.map((r,i)=>`<li><span class="m">${esc(r.m)}</span><span class="n">${esc(r.n)}</span><span class="num muted">${r.k}</span><button class="del" data-del="${i}" aria-label="Retirer ${esc(r.n)}">×</button></li>`).join('')}</ul>`:`<div class="muted">Rien de noté pour l'instant. Choisis une recette ci-dessous ou ajoute un repas librement.</div>`}
+        </div>
+      </div>
+    </section>
+    ${recents.length?`<section class="card"><header><h3>Remanger un repas récent</h3><span class="muted">un toucher pour l'ajouter</span></header>
+      <div class="chips">${recents.map((r,i)=>`<button type="button" class="chip quick" data-rec="${i}">${esc(r.n)} <span class="muted num">${r.k}</span></button>`).join('')}</div></section>`:''}
+    <section class="card">
+      <header><h3>Ajouter un repas libre</h3><span class="muted">au restaurant, chez des amis…</span></header>
+      <form class="addfree" id="free">
+        <div class="field"><label for="f-n">Plat</label><input type="text" id="f-n" required placeholder="ex. Salade niçoise du midi"></div>
+        <div class="field"><label for="f-k">kcal estimées</label><input type="number" id="f-k" min="0" max="3000" step="10" required placeholder="500"></div>
+        <div class="field"><label for="f-m">Moment</label><select id="f-m">${MOMENTS.map(([v,l])=>`<option value="${v}" ${v===fm?'selected':''}>${l}</option>`).join('')}</select></div>
+        <button class="btn primary" type="submit">Ajouter</button>
+      </form>
+      <div class="hands">
+        <div><b>1 paume</b>viande, poisson, tofu ≈ 150 à 200 kcal</div>
+        <div><b>1 poing</b>féculents cuits ≈ 150 kcal</div>
+        <div><b>1 pouce</b>huile, beurre, fromage ≈ 90 kcal</div>
+        <div><b>2 mains ouvertes</b>légumes, à volonté</div>
+      </div>
+    </section>
+    <a class="card linkcard" href="#recettes"><div><h3>Une idée de repas ?</h3><span class="muted">${RECETTES.length} recettes, à filtrer selon ton envie et ton reste de calories.</span></div><span class="arrow" aria-hidden="true">→</span></a>
+  </div>`;
+}
+function repasRecents(){
+  const seen=new Map();
+  for(const k of Object.keys(store.days).sort().reverse()) for(const r of [...(store.days[k].repas||[])].reverse()){ if(r&&r.n&&!seen.has(r.n)) seen.set(r.n,r); if(seen.size>=12) break; }
+  return [...seen.values()];
+}
+function recettesSection(fm,b){
+  return `    <section class="stack" style="gap:14px">
+      <header style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap"><h2>Idées gourmandes</h2><span class="muted num">${RECETTES.length} recettes</span></header>
+      <div class="chips" role="group" aria-label="Moment">${MOMENTS.map(([v,l])=>`<button class="chip" data-fm="${v}" aria-pressed="${v===fm}">${l}</button>`).join('')}</div>
+      ${fm==='soir'?`<div class="banner" style="padding:10px 14px"><span>Le soir : léger, sans viande rouge ni porc, 400 kcal maximum.</span></div>`:''}
+      <div class="rtools">
+        <input type="search" id="r-q" placeholder="Chercher : saumon, potiron, tofu…" value="${esc(rf.q)}" aria-label="Chercher une recette">
+        <div class="chips" role="group" aria-label="Filtres">${RTAGS.map(([v,l])=>`<button class="chip small" data-tag="${v}" aria-pressed="${rf.tag===v}">${l}</button>`).join('')}
+          ${b?`<button class="chip small" id="r-fit" aria-pressed="${rf.fit}">Rentre dans mon reste</button>`:''}</div>
+        <button class="btn small" id="r-surprise"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/></svg>Surprends-moi</button>
+      </div>
+      <div class="recipes" id="recipes">${recettesHTML()}</div>
+    </section>`;
+}
+const RTAGS=[['','Toutes'],['fav','Mes favorites'],['sale','Salé'],['rapide','Rapide'],['veggie','Végétarien'],['batch','À préparer d\u2019avance'],['reconfort','Réconfort'],['alsace','Alsace']];
+const rf={q:'',tag:'',fit:false,surprise:null};
+const norm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+function recettesFiltrees(){
+  const fm=filtreMoment||momentAuto(),b=besoins(),reste=b?b.obj-kcalOf(day(todayKey())):Infinity,fav=store.settings.favoris||[],q=norm(rf.q.trim());
+  return RECETTES.filter(r=>r.m===fm
+    &&(!rf.tag||(rf.tag==='fav'?fav.includes(r.id):(r.g||[]).includes(rf.tag)))
+    &&(!rf.fit||r.k<=reste)
+    &&(!q||norm(r.n+' '+r.d).includes(q)));
+}
+function recetteCard(r){
+  const b=besoins(),fav=(store.settings.favoris||[]).includes(r.id);
+  const TL={sale:'Salé',rapide:'Rapide',veggie:'Végé',batch:'D\u2019avance',reconfort:'Réconfort',alsace:'Alsace'};
+  return `<article class="recipe ${rf.surprise===r.id?'pick':''}">
+    <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><h3>${esc(r.n)}</h3>
+      <button class="star" data-fav="${r.id}" aria-pressed="${fav}" aria-label="${fav?'Retirer des favorites':'Ajouter aux favorites'}"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 3.5l2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></button></div>
+    <div class="meta"><span><b>${r.k}</b> kcal</span><span><b>${r.p}</b> g prot.</span>${r.t?`<span><b>${r.t}</b> min</span>`:''}${b?`<span>${Math.round(r.k/b.obj*100)} %</span>`:''}</div>
+    ${(r.g||[]).length?`<div class="tags">${r.g.map(g=>`<span>${TL[g]||g}</span>`).join('')}</div>`:''}
+    <details><summary>Ingrédients${r.e?' et préparation':''}</summary><p style="margin:.5em 0 0;color:var(--ink)">${esc(r.d)}</p>${r.e?`<p style="margin:.5em 0 0">${esc(r.e)}</p>`:''}</details>
+    <button class="btn small primary" data-add="${r.id}">J'ai mangé ça</button>
+  </article>`;
+}
+function recettesHTML(){
+  let list=recettesFiltrees();
+  if(rf.surprise){const i=list.findIndex(r=>r.id===rf.surprise);if(i>0)list=[list[i],...list.slice(0,i),...list.slice(i+1)];}
+  return list.length?list.map(recetteCard).join(''):`<div class="empty-state" style="grid-column:1 / -1">Aucune recette avec ces filtres. Essaie d'en retirer un.</div>`;
+}
+function bAssiette(v){
+  const k=jk();
+  const rec=repasRecents().filter(r=>!day(k).repas.some(x=>x.n===r.n)).slice(0,6);
+  $$('[data-rec]',v).forEach(b=>b.addEventListener('click',()=>{const r=rec[+b.dataset.rec],u=undoDay(k);
+    editDay(k,d=>d.repas=[...d.repas,{n:r.n,k:r.k,p:r.p||0,m:momentAuto()}]);toast(`${r.n} ajouté`,u);render();}));
+  $$('[data-fm]',v).forEach(b=>b.addEventListener('click',()=>{filtreMoment=b.dataset.fm;rf.surprise=null;render();}));
+  const grid=$('#recipes',v);
+  const bindGrid=()=>{ if(!grid) return;
+    $$('[data-add]',grid).forEach(b=>b.addEventListener('click',()=>{const r=RECETTES.find(x=>x.id===b.dataset.add);
+      const u=undoDay(k);editDay(k,d=>d.repas=[...d.repas,{n:r.n,k:r.k,p:r.p,m:r.m}]);toast(`${r.n} ajouté · ${r.k} kcal`,u);rf.surprise=null;render(); }));
+    $$('[data-fav]',grid).forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.fav;
+      editSettings(s=>{const f=s.favoris||[];s.favoris=f.includes(id)?f.filter(x=>x!==id):[...f,id];});
+      const on=(store.settings.favoris||[]).includes(id);b.setAttribute('aria-pressed',on);toast(on?'Ajoutée à tes favorites':'Retirée des favorites');}));
+  };
+  const refresh=()=>{grid.innerHTML=recettesHTML();bindGrid();};
+  if(grid) bindGrid();
+  $('#r-q',v)?.addEventListener('input',e=>{rf.q=e.target.value;rf.surprise=null;refresh();});
+  $$('[data-tag]',v).forEach(b=>b.addEventListener('click',()=>{rf.tag=b.dataset.tag;rf.surprise=null;render();}));
+  $('#r-fit',v)?.addEventListener('click',()=>{rf.fit=!rf.fit;render();});
+  $('#r-surprise',v)?.addEventListener('click',()=>{const l=recettesFiltrees().filter(r=>r.id!==rf.surprise);
+    if(!l.length){toast('Aucune recette avec ces filtres');return;}
+    rf.surprise=l[Math.floor(Math.random()*l.length)].id;refresh();grid.scrollIntoView({behavior:'smooth',block:'start'});});
+  $$('[data-del]',v).forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.del,n=day(k).repas[i]?.n,u=undoDay(k);editDay(k,d=>d.repas=d.repas.filter((_,j)=>j!==i));toast(`${n} retiré`,u);render();}));
+  $('#free',v)?.addEventListener('submit',e=>{e.preventDefault();const n=$('#f-n').value.trim(),kc=Math.round(+$('#f-k').value),m=$('#f-m').value;
+    if(!n||!(kc>=0))return;const u=undoDay(k);editDay(k,d=>d.repas=[...d.repas,{n,k:kc,p:0,m}]);toast(`${n} ajouté`,u);render();});
+}
+
+/* ===== Prépa de la semaine (batch cooking) et liste de courses ===== */
+const CATS=[['fl','Fruits et légumes'],['prot','Viandes, poissons, œufs'],['frais','Crèmerie et frais'],['fec','Féculents et légumineuses'],['epi','Épicerie'],['boul','Boulangerie']];
+const I=(n,q,u,c)=>({n,q,u,c});
+const P=n=>({n,q:null,u:'placard',c:'placard'});
+const PLATS=[
+ {id:'chili',n:"Chili sin carne",d:"Haricots rouges, maïs et poivrons mijotés aux épices douces, avec du riz.",base:4,k:480,m:['midi'],frigo:4,cong:true,t:40,
+  ing:[I('Haricots rouges',2,'boîte','epi'),I('Maïs',1,'boîte','epi'),I('Tomates concassées',2,'boîte','epi'),I('Poivron',2,'pc','fl'),I('Oignon',2,'pc','fl'),I('Riz basmati',240,'g','fec'),I('Yaourt grec',1,'pot','frais'),P('Cumin'),P('Paprika fumé')],
+  s:["Faire revenir oignons et poivrons 5 min.","Ajouter tomates, haricots, maïs et épices, mijoter 25 min.","Cuire le riz à part et répartir en boîtes."]},
+ {id:'curry',n:"Curry de pois chiches coco",d:"Pois chiches fondants dans une sauce tomate-coco parfumée, épinards et riz.",base:4,k:510,m:['midi'],frigo:4,cong:true,t:30,
+  ing:[I('Pois chiches',2,'boîte','epi'),I('Lait de coco allégé',1,'boîte','epi'),I('Tomates concassées',1,'boîte','epi'),I('Épinards frais',200,'g','fl'),I('Oignon',1,'pc','fl'),I('Riz basmati',240,'g','fec'),P('Pâte ou poudre de curry')],
+  s:["Revenir oignon et curry 3 min.","Ajouter tomates, pois chiches et coco, mijoter 15 min.","Épinards à la fin, riz à part."]},
+ {id:'dahl',n:"Dahl de lentilles corail",d:"Lentilles corail cuites jusqu'à devenir crémeuses, curcuma et gingembre.",base:4,k:490,m:['midi'],frigo:4,cong:true,t:25,
+  ing:[I('Lentilles corail',240,'g','fec'),I('Lait de coco allégé',1,'boîte','epi'),I('Tomates concassées',1,'boîte','epi'),I('Oignon',1,'pc','fl'),I('Gingembre frais',1,'pc','fl'),I('Riz basmati',200,'g','fec'),P('Curcuma')],
+  s:["Tout cuire ensemble 20 min en remuant.","Riz à part, répartir en boîtes."]},
+ {id:'bolo',n:"Bolognaise de lentilles corail",d:"La bolognaise sans viande : les lentilles corail fondent dans la tomate.",base:4,k:500,m:['midi'],frigo:4,cong:true,t:30,
+  ing:[I('Lentilles corail',160,'g','fec'),I('Coulis de tomate',1400,'g','epi'),I('Carotte',2,'pc','fl'),I('Oignon',1,'pc','fl'),I('Pâtes complètes',320,'g','fec'),P('Basilic séché, origan')],
+  s:["Revenir oignon et carotte râpée.","Ajouter coulis et lentilles, 15 min à petit feu.","Pâtes cuites al dente à part."]},
+ {id:'basquaise',n:"Poulet basquaise",d:"Poulet mijoté avec poivrons et tomates, une pointe d'Espelette.",base:4,k:500,m:['midi'],frigo:3,cong:true,t:45,
+  ing:[I('Cuisses de poulet sans peau',4,'pc','prot'),I('Poivron',3,'pc','fl'),I('Oignon',2,'pc','fl'),I('Tomates concassées',1,'boîte','epi'),I('Riz basmati',240,'g','fec'),P("Piment d'Espelette")],
+  s:["Dorer le poulet, réserver.","Revenir oignons et poivrons, ajouter tomates et poulet, 30 min à couvert.","Riz à part."]},
+ {id:'lentilles',n:"Salade de lentilles et feta",d:"Lentilles vertes tièdes, feta, tomates cerises et persil, en boîte.",base:4,k:480,m:['midi'],frigo:4,cong:false,t:25,
+  ing:[I('Lentilles vertes',320,'g','fec'),I('Feta',150,'g','frais'),I('Tomates cerises',250,'g','fl'),I('Oignon rouge',1,'pc','fl'),I('Persil',1,'botte','fl'),P('Moutarde, vinaigre, huile')],
+  s:["Cuire les lentilles 20 min, égoutter, assaisonner tièdes.","Feta et herbes ajoutées dans la boîte le matin même."]},
+ {id:'rizcrev',n:"Riz sauté aux crevettes",d:"Riz sauté au wok avec crevettes, petits pois et œuf brouillé.",base:3,k:510,m:['midi'],frigo:2,cong:false,t:20,
+  ing:[I('Crevettes décortiquées',360,'g','prot'),I('Riz basmati',180,'g','fec'),I('Petits pois surgelés',300,'g','fl'),I('Œufs',3,'pc','prot'),I('Oignon nouveau',1,'botte','fl'),P('Sauce soja')],
+  s:["Cuire le riz et le laisser refroidir.","Wok : crevettes, riz, petits pois, œufs brouillés, soja.","Crevettes cuites : 2 jours au frigo maximum."]},
+ {id:'soupe',n:"Soupe de légumes d'hiver",d:"Poireau, carotte, navet, céleri : la grande marmite qui réchauffe.",base:6,k:250,m:['soir','midi'],frigo:4,cong:true,t:40,
+  ing:[I('Poireau',2,'pc','fl'),I('Carotte',4,'pc','fl'),I('Navet',2,'pc','fl'),I('Céleri-rave',1,'pc','fl'),I('Pommes de terre',2,'pc','fl'),I('Crème légère',20,'cl','frais'),P('Bouillon de légumes')],
+  s:["Éplucher et couper tous les légumes.","Couvrir de bouillon, 30 min, mixer.","Crème légère au moment de servir."]},
+ {id:'potiron',n:"Velouté de potiron",d:"Velouté doux et orangé, servi avec une petite tartine de chèvre.",base:4,k:340,m:['soir'],frigo:4,cong:true,t:35,
+  ing:[I('Potiron',1200,'g','fl'),I('Pommes de terre',2,'pc','fl'),I('Oignon',1,'pc','fl'),I('Chèvre frais',1,'pc','frais'),I('Pain de campagne',1,'pc','boul'),P('Bouillon de légumes'),P('Muscade')],
+  s:["Cuire potiron, pommes de terre et oignon 25 min dans le bouillon.","Mixer. Tartine chèvre préparée au moment."]},
+ {id:'brocoli',n:"Velouté de brocoli",d:"Velouté vert et léger, un œuf mollet posé dessus au dernier moment.",base:4,k:300,m:['soir'],frigo:3,cong:true,t:30,
+  ing:[I('Brocoli',2,'pc','fl'),I('Pommes de terre',2,'pc','fl'),I('Œufs',4,'pc','prot'),I('Graines de courge',1,'sachet','epi'),P('Bouillon de légumes')],
+  s:["Cuire brocoli et pommes de terre 20 min, mixer.","Œuf mollet 6 min au moment du repas."]},
+ {id:'gratin',n:"Gratin de courgettes au chèvre",d:"Courgettes fondantes, chèvre et œufs, gratinées au four.",base:4,k:340,m:['soir'],frigo:3,cong:false,t:40,
+  ing:[I('Courgette',8,'pc','fl'),I('Œufs',4,'pc','prot'),I('Lait de soja',200,'ml','frais'),I('Bûche de chèvre',100,'g','frais'),P('Thym')],
+  s:["Courgettes en rondelles dans 2 plats.","Œufs battus avec le lait, verser, chèvre émietté.","25 min à 190 °C, laisser refroidir avant de couvrir."]},
+ {id:'pouletplaque',n:"Poulet citron et légumes rôtis",d:"Poulet, carottes, fenouil et courgettes rôtis sur une seule plaque, citron et thym.",base:4,k:360,m:['soir','midi'],frigo:3,cong:false,t:40,
+  ing:[I('Blancs de poulet',4,'pc','prot'),I('Carotte',4,'pc','fl'),I('Courgette',2,'pc','fl'),I('Fenouil',2,'pc','fl'),I('Citron',2,'pc','fl'),P('Thym, huile d’olive')],
+  s:["Tout sur une plaque, citron et thym.","35 min à 200 °C, une seule plaque à laver."]},
+ {id:'papillotes',n:"Papillotes saumon-poireaux",d:"Saumon sur un lit de poireaux fondus, cuit dans son papier, sans rien surveiller.",base:4,k:360,m:['soir'],frigo:2,cong:true,t:20,
+  ing:[I('Pavés de saumon',4,'pc','prot'),I('Poireau',6,'pc','fl'),I('Crème légère',20,'cl','frais'),I('Citron',1,'pc','fl'),I('Aneth',1,'botte','fl')],
+  s:["Faire fondre les poireaux 10 min.","Monter les papillotes crues : poireaux, saumon, crème, citron.","Au frigo 2 jours, congeler les autres. Cuisson 20 min à 190 °C le soir même."]},
+ {id:'taboule',n:"Taboulé de chou-fleur et pois chiches",d:"Semoule de chou-fleur crue, pois chiches, menthe et citron : frais et croquant.",base:4,k:380,m:['soir','midi'],frigo:3,cong:false,t:20,
+  ing:[I('Chou-fleur',1,'pc','fl'),I('Pois chiches',2,'boîte','epi'),I('Tomates',4,'pc','fl'),I('Concombre',1,'pc','fl'),I('Menthe',1,'botte','fl'),I('Persil',1,'botte','fl'),I('Citron',2,'pc','fl')],
+  s:["Mixer le chou-fleur cru en semoule.","Tout mélanger avec citron et huile d'olive."]},
+ {id:'shakshuka',n:"Sauce shakshuka (œufs au moment)",d:"Sauce tomate-poivrons épicée prête d'avance, deux œufs pochés dedans le soir même.",base:4,k:340,m:['soir'],frigo:4,cong:true,t:30,
+  ing:[I('Tomates concassées',2,'boîte','epi'),I('Poivron',2,'pc','fl'),I('Oignon',2,'pc','fl'),I('Œufs',8,'pc','prot'),I('Coriandre',1,'botte','fl'),P('Cumin, paprika')],
+  s:["Mijoter oignons, poivrons, tomates et épices 20 min.","Répartir la sauce en 4 boîtes.","Le soir : réchauffer une boîte, y cuire 2 œufs 6 min."]},
+ {id:'muffinsoeuf',sale:true,n:"Muffins aux œufs et légumes",d:"Petites omelettes aux légumes cuites en moules, à manger froides ou tièdes.",base:6,k:300,m:['matin'],frigo:4,cong:true,t:30,
+  ing:[I('Œufs',12,'pc','prot'),I('Poivron',2,'pc','fl'),I('Oignon nouveau',1,'botte','fl'),I('Emmental râpé',60,'g','frais')],
+  s:["Battre les œufs, ajouter légumes et fromage.","Remplir 12 moules, 20 min à 180 °C. Portion : 2 muffins."]},
+ {id:'oats',n:"Overnight oats pomme-cannelle",d:"Flocons trempés une nuit dans le lait de soja, pomme râpée et cannelle.",base:4,k:340,m:['matin'],frigo:3,cong:false,t:10,
+  ing:[I("Flocons d'avoine",160,'g','fec'),I('Lait de soja',600,'ml','frais'),I('Pomme',3,'pc','fl'),P("Purée d'amande"),P('Cannelle')],
+  s:["4 bocaux : flocons, lait, pomme râpée, cannelle.","Au frigo, prêts pour 3 matins."]},
+ {id:'energy',n:"Energy balls dattes-cacao",d:"Billes de dattes, amandes et cacao, pour le creux de 16 h.",base:6,k:160,m:['collation'],frigo:7,cong:true,t:15,
+  ing:[I('Dattes dénoyautées',150,'g','epi'),I('Amandes',60,'g','epi'),P('Cacao non sucré'),P("Flocons d'avoine")],
+  s:["Mixer, rouler 12 billes. Portion : 2 billes."]},
+ {id:'muffinmyrt',n:"Muffins banane-myrtilles",d:"Muffins moelleux sucrés surtout par la banane, myrtilles en surprise.",base:8,k:160,m:['collation'],frigo:4,cong:true,t:30,
+  ing:[I('Bananes',2,'pc','fl'),I('Œufs',2,'pc','prot'),I('Farine complète',120,'g','epi'),I('Lait de soja',80,'ml','frais'),I('Myrtilles surgelées',125,'g','fl')],
+  s:["Écraser les bananes, mélanger le reste.","8 moules, 25 min à 180 °C. Se congèlent un par un."]},
+
+ /* Petits-déjeuners salés */
+ {id:'cakesale',sale:true,n:"Cake salé courgette-feta",d:"Moelleux et plein de légumes, une tranche épaisse se mange froide ou tiède.",base:6,k:290,m:['matin'],frigo:4,cong:true,t:50,
+  ing:[I('Œufs',3,'pc','prot'),I('Farine complète',150,'g','epi'),I('Lait de soja',100,'ml','frais'),I('Courgette',2,'pc','fl'),I('Feta',100,'g','frais'),P('Levure chimique'),P("Huile d'olive")],
+  s:["Râper les courgettes et les presser.","Mélanger œufs, farine, levure, lait, puis courgettes et feta.","45 min à 180 °C, refroidir, couper 6 tranches."]},
+ {id:'wrapsoeuf',sale:true,n:"Wraps œuf-épinards à congeler",d:"Galettes roulées autour d'œufs brouillés, épinards et fromage. 1 minute au micro-ondes.",base:5,k:330,m:['matin'],frigo:3,cong:true,t:25,
+  ing:[I('Tortillas complètes',5,'pc','epi'),I('Œufs',8,'pc','prot'),I('Épinards frais',200,'g','fl'),I('Emmental râpé',50,'g','frais'),P('Salsa ou piment')],
+  s:["Œufs brouillés baveux avec les épinards.","Garnir chaque tortilla, fromage, rouler serré.","Emballer un par un dans du papier cuisson : frigo ou congélateur."]},
+ {id:'frittata',sale:true,n:"Frittata patate douce-oignon rouge",d:"Omelette épaisse cuite au four, coupée en carrés faciles à emporter.",base:4,k:300,m:['matin'],frigo:4,cong:false,t:35,
+  ing:[I('Œufs',8,'pc','prot'),I('Patate douce',1,'pc','fl'),I('Oignon rouge',1,'pc','fl'),I('Persil',1,'botte','fl'),I('Parmesan',30,'g','frais')],
+  s:["Patate douce en petits dés, poêlée 8 min avec l'oignon.","Verser les œufs battus, parmesan, persil.","Finir 15 min au four à 180 °C, couper en 4."]},
+ {id:'boxsale',sale:true,n:"Box salée œufs durs et houmous",d:"Œufs durs, houmous, crudités et pain pita : le petit-déjeuner à picorer.",base:4,k:320,m:['matin'],frigo:4,cong:false,t:15,
+  ing:[I('Œufs',8,'pc','prot'),I('Houmous',1,'pot','frais'),I('Concombre',1,'pc','fl'),I('Carotte',2,'pc','fl'),I('Pains pita complets',4,'pc','boul')],
+  s:["Œufs durs 9 min, refroidir dans l'eau froide.","Crudités en bâtonnets, répartir dans 4 boîtes avec le houmous."]},
+ {id:'pancakesale',sale:true,n:"Pancakes salés petits pois-menthe",d:"Galettes vertes et moelleuses, servies avec un yaourt citronné.",base:4,k:310,m:['matin'],frigo:3,cong:true,t:25,
+  ing:[I('Petits pois surgelés',300,'g','fl'),I('Œufs',3,'pc','prot'),I('Farine complète',100,'g','epi'),I('Yaourt grec',1,'pot','frais'),I('Menthe',1,'botte','fl'),I('Citron',1,'pc','fl')],
+  s:["Mixer grossièrement petits pois, œufs, farine et menthe.","Cuire en petites galettes 2 min par face.","Yaourt au citron à part."]},
+ {id:'tartinade',sale:true,n:"Tartinade thon-citron et pain de seigle",d:"Une crème au thon et fromage frais à étaler, prête pour 4 matins.",base:4,k:310,m:['matin'],frigo:3,cong:false,t:10,
+  ing:[I('Thon au naturel',2,'boîte','epi'),I('Fromage frais',150,'g','frais'),I('Citron',1,'pc','fl'),I('Ciboulette',1,'botte','fl'),I('Pain de seigle',1,'pc','boul')],
+  s:["Écraser le thon avec le fromage frais, le citron et la ciboulette.","Un bocal au frigo, le pain tranché au congélateur."]},
+ {id:'galettesprep',sale:true,n:"Galettes de sarrasin œuf-fromage",d:"Galettes complètes pliées en carré, à réchauffer 2 minutes à la poêle.",base:4,k:340,m:['matin'],frigo:3,cong:true,t:25,
+  ing:[I('Galettes de sarrasin',4,'pc','frais'),I('Œufs',4,'pc','prot'),I('Emmental râpé',60,'g','frais'),I('Champignons',200,'g','fl')],
+  s:["Poêler les champignons.","Une galette à la fois : fromage, champignons, œuf au centre, plier les bords.","Refroidir sur une grille avant de ranger."]},
+ /* Petits-déjeuners sucrés, pour varier */
+ {id:'bananabread',n:"Banana bread aux flocons",d:"Peu sucré grâce aux bananes très mûres, une tranche avec un café au lait d'avoine.",base:8,k:220,m:['matin','collation'],frigo:5,cong:true,t:55,
+  ing:[I('Bananes',3,'pc','fl'),I('Œufs',2,'pc','prot'),I('Farine complète',150,'g','epi'),I("Flocons d'avoine",50,'g','fec'),I("Lait d'avoine",80,'ml','frais'),I('Cerneaux de noix',40,'g','epi'),P('Levure chimique')],
+  s:["Écraser les bananes, mélanger le reste.","50 min à 175 °C, 8 tranches. Se congèle tranche par tranche."]},
+ {id:'granola',n:"Granola maison et skyr",d:"Granola croustillant noisettes-cannelle, servi sur un skyr nature.",base:7,k:260,m:['matin'],frigo:21,cong:false,t:30,
+  ing:[I("Flocons d'avoine",210,'g','fec'),I('Noisettes',60,'g','epi'),I('Skyr nature',7,'pc','frais'),P('Miel'),P('Cannelle')],
+  s:["Mélanger flocons, noisettes concassées, miel et cannelle.","25 min à 160 °C en remuant à mi-cuisson. 3 semaines en bocal."]},
+ {id:'chiaprep',n:"Puddings chia coco-mangue",d:"Crèmes de chia prêtes en pots, mangue fraîche dessus.",base:4,k:290,m:['matin'],frigo:4,cong:false,t:10,
+  ing:[I('Graines de chia',120,'g','epi'),I('Lait de soja',600,'ml','frais'),I('Lait de coco allégé',1,'boîte','epi'),I('Mangue',2,'pc','fl')],
+  s:["Mélanger chia et laits dans 4 pots, remuer après 10 min.","Mangue en dés au moment de manger."]},
+ /* Midi */
+ {id:'quiche',n:"Quiche sans pâte poireaux-saumon",d:"Comme une quiche, sans la pâte : fondante, avec une grande salade.",base:4,k:420,m:['midi'],frigo:3,cong:true,t:45,
+  ing:[I('Poireau',3,'pc','fl'),I('Pavés de saumon',2,'pc','prot'),I('Œufs',4,'pc','prot'),I('Lait de soja',300,'ml','frais'),I('Emmental râpé',40,'g','frais'),I('Salade verte',1,'pc','fl')],
+  s:["Fondre les poireaux 10 min, saumon en dés.","Œufs battus avec le lait, verser sur poireaux et saumon.","35 min à 180 °C dans un plat huilé."]},
+ {id:'pastathon',n:"Salade de pâtes au thon et légumes croquants",d:"Pâtes complètes, thon, poivron, concombre et vinaigrette citronnée.",base:4,k:480,m:['midi'],frigo:3,cong:false,t:20,
+  ing:[I('Pâtes complètes',280,'g','fec'),I('Thon au naturel',2,'boîte','epi'),I('Poivron',1,'pc','fl'),I('Concombre',1,'pc','fl'),I('Tomates cerises',250,'g','fl'),I('Citron',1,'pc','fl')],
+  s:["Cuire les pâtes, rincer à l'eau froide.","Tout mélanger, vinaigrette citron-moutarde."]},
+ {id:'lasagnes',n:"Lasagnes épinards-ricotta",d:"Couches fondantes d'épinards et ricotta, sauce tomate maison.",base:6,k:480,m:['midi'],frigo:4,cong:true,t:60,
+  ing:[I('Feuilles de lasagnes',250,'g','fec'),I('Épinards surgelés',600,'g','fl'),I('Ricotta',250,'g','frais'),I('Coulis de tomate',700,'g','epi'),I('Mozzarella light',1,'pc','frais'),P('Muscade')],
+  s:["Mélanger épinards égouttés et ricotta, muscade.","Alterner pâtes, sauce, épinards ; mozzarella dessus.","40 min à 180 °C. Couper en 6 parts une fois tiède."]},
+ {id:'boulettes',n:"Boulettes de poulet sauce tomate et semoule",d:"Boulettes tendres au persil, mijotées dans la tomate.",base:4,k:490,m:['midi'],frigo:3,cong:true,t:40,
+  ing:[I('Poulet haché',500,'g','prot'),I('Œufs',1,'pc','prot'),I('Persil',1,'botte','fl'),I('Coulis de tomate',700,'g','epi'),I('Semoule complète',240,'g','fec'),P('Cumin, ail')],
+  s:["Mélanger poulet, œuf, persil et épices, former 20 boulettes.","Dorer, puis mijoter 20 min dans la sauce.","Semoule à part."]},
+ /* Soir : léger, sans viande rouge */
+ {id:'ratatouille',n:"Ratatouille et œuf poché",d:"Légumes du soleil mijotés, un œuf poché posé dessus au moment du repas.",base:6,k:280,m:['soir','midi'],frigo:4,cong:true,t:50,
+  ing:[I('Courgette',3,'pc','fl'),I('Aubergine',2,'pc','fl'),I('Poivron',2,'pc','fl'),I('Tomates',5,'pc','fl'),I('Oignon',2,'pc','fl'),I('Œufs',6,'pc','prot'),P('Herbes de Provence')],
+  s:["Couper tous les légumes en dés.","Mijoter 40 min à couvert.","Le soir : réchauffer et pocher un œuf 3 min."]},
+ {id:'minestrone',n:"Minestrone aux haricots blancs",d:"Soupe italienne épaisse : légumes, haricots blancs et petites pâtes.",base:6,k:300,m:['soir','midi'],frigo:4,cong:true,t:40,
+  ing:[I('Carotte',2,'pc','fl'),I('Courgette',2,'pc','fl'),I('Céleri branche',2,'pc','fl'),I('Haricots blancs',2,'boîte','epi'),I('Tomates concassées',1,'boîte','epi'),I('Petites pâtes',90,'g','fec'),P('Bouillon de légumes'),P('Basilic')],
+  s:["Légumes en petits dés, revenir 5 min.","Ajouter tomates, bouillon, haricots, 25 min.","Les pâtes 8 min à la fin."]},
+ {id:'courgettesfarcies',n:"Courgettes farcies au thon",d:"Courgettes rondes ou longues farcies thon-tomate, gratinées.",base:4,k:330,m:['soir'],frigo:3,cong:false,t:45,
+  ing:[I('Courgette',4,'pc','fl'),I('Thon au naturel',2,'boîte','epi'),I('Tomates',2,'pc','fl'),I('Oignon',1,'pc','fl'),I('Parmesan',30,'g','frais')],
+  s:["Évider les courgettes, hacher la chair.","Revenir chair, oignon, tomate, ajouter le thon.","Farcir, parmesan, 30 min à 180 °C."]},
+ {id:'soupethai',n:"Bouillon thaï coco-crevettes",d:"Bouillon citronnelle-coco léger, crevettes et champignons, coriandre fraîche.",base:4,k:320,m:['soir'],frigo:2,cong:false,t:25,
+  ing:[I('Crevettes décortiquées',400,'g','prot'),I('Lait de coco allégé',1,'boîte','epi'),I('Champignons',250,'g','fl'),I('Citronnelle',2,'pc','fl'),I('Gingembre frais',1,'pc','fl'),I('Coriandre',1,'botte','fl'),I('Citron vert',2,'pc','fl')],
+  s:["Infuser citronnelle et gingembre 10 min dans 1 L d'eau.","Ajouter coco et champignons 5 min.","Crevettes ajoutées en réchauffant chaque portion."]},
+ /* Collations */
+ {id:'houmousmaison',n:"Houmous maison et bâtonnets",d:"Houmous citronné à tremper avec carottes et concombre.",base:6,k:150,m:['collation'],frigo:5,cong:false,t:15,
+  ing:[I('Pois chiches',2,'boîte','epi'),I('Citron',1,'pc','fl'),I('Carotte',4,'pc','fl'),I('Concombre',1,'pc','fl'),P('Tahini, ail, cumin')],
+  s:["Mixer pois chiches, tahini, citron, ail et un peu d'eau.","Bâtonnets prêts en boîte avec un papier humide."]},
+ {id:'compote',n:"Compote pomme-poire cannelle",d:"Compote maison sans sucre ajouté, en petits pots.",base:6,k:90,m:['collation'],frigo:5,cong:true,t:25,
+  ing:[I('Pomme',4,'pc','fl'),I('Poire',3,'pc','fl'),P('Cannelle')],
+  s:["Couper les fruits, 20 min à feu doux avec un fond d'eau.","Écraser à la fourchette, répartir en pots."]},
+];
+const MOM_ORDER=['matin','midi','soir','collation'];
+const MOM_L={matin:'Matin',midi:'Midi',soir:'Soir',collation:'Collation'};
+let prepTab='plan';
+function prepa(){return store.settings.prepa||{debut:null,plats:[],manges:[],coches:[],extras:[]};}
+function editPrepa(fn){editSettings(s=>{const p=s.prepa||{debut:null,plats:[],manges:[],coches:[],extras:[]};fn(p);s.prepa=p;});}
+function debutParDefaut(){const d=new Date(),wd=d.getDay();d.setDate(d.getDate()+(wd===6?2:wd===0?1:1));return keyOf(d);}
+function addDays(k,n){const d=new Date(k+'T12:00');d.setDate(d.getDate()+n);return keyOf(d);}
+/* Répartition automatique : la conservation la plus courte d'abord, de la variété, et le congélateur au-delà du frigo */
+function planifier(p){
+  const debut=p.debut||debutParDefaut();
+  const reste={};p.plats.forEach(x=>reste[x.id]=x.portions);
+  const slots=[];
+  for(let i=0;i<7;i++) for(const m of MOM_ORDER){
+    const cands=p.plats.map(x=>PLATS.find(y=>y.id===x.id)).filter(pl=>pl&&pl.m.includes(m)&&reste[pl.id]>0&&(i<pl.frigo||pl.cong));
+    if(!cands.length){slots.push({i,m,k:addDays(debut,i)});continue;}
+    const hier=slots.find(s=>s.i===i-1&&s.m===m)?.id;
+    const memeJour=new Set(slots.filter(s=>s.i===i&&s.id).map(s=>s.id));
+    cands.sort((a,b)=>(a.m[0]!==m)-(b.m[0]!==m)||memeJour.has(a.id)-memeJour.has(b.id)||(a.id===hier)-(b.id===hier)||a.frigo-b.frigo||reste[b.id]-reste[a.id]);
+    const pl=cands[0];reste[pl.id]--;
+    slots.push({i,m,k:addDays(debut,i),id:pl.id,cong:i>=pl.frigo});
+  }
+  return {debut,slots,restes:reste};
+}
+function qteFmt(q,u){
+  if(u==='g'){return q>=1000?(Math.round(q/100)/10).toLocaleString('fr-FR')+' kg':Math.round(q/10)*10+' g';}
+  if(u==='ml'){return q>=1000?(Math.round(q/100)/10).toLocaleString('fr-FR')+' L':Math.round(q/10)*10+' ml';}
+  if(u==='cl'){return Math.ceil(q/20)*20+' cl';}
+  const n=Math.ceil(q-0.05);
+  const lab={pc:'',boîte:n>1?'boîtes':'boîte',botte:n>1?'bottes':'botte',pot:n>1?'pots':'pot',sachet:n>1?'sachets':'sachet'}[u];
+  return n+(lab?' '+lab:'');
+}
+function courses(p){
+  const agg={},placard=new Set();
+  for(const x of p.plats){const pl=PLATS.find(y=>y.id===x.id);if(!pl)continue;const f=x.portions/pl.base;
+    for(const g of pl.ing){ if(g.c==='placard'){placard.add(g.n);continue;}
+      const key=g.n+'|'+g.u;(agg[key]=agg[key]||{n:g.n,u:g.u,c:g.c,q:0,pour:new Set()});agg[key].q+=g.q*f;agg[key].pour.add(pl.n);}}
+  return {items:Object.values(agg).sort((a,b)=>a.n.localeCompare(b.n,'fr')),placard:[...placard].sort((a,b)=>a.localeCompare(b,'fr'))};
+}
+function subHTML(id,items,cur){
+  return `<div class="seg" role="tablist">${items.map(([k,l])=>`<button type="button" role="tab" data-sub="${id}|${k}" aria-selected="${cur===k}">${l}</button>`).join('')}</div>`;
+}
+function segHTML(cur){
+  return `<div class="seg" role="tablist">${[['assiette','Aujourd’hui'],['recettes','Recettes'],['prepa','Prépa'],['courses','Courses']].map(([h,l])=>`<a href="#${h}" role="tab" aria-selected="${cur===h}">${l}</a>`).join('')}</div>`;
+}
+function vPrepa(){
+  const p=prepa(),plan=planifier(p),t=todayKey(),sel=Object.fromEntries(p.plats.map(x=>[x.id,x.portions]));
+  const nbPortions=p.plats.reduce((a,x)=>a+x.portions,0),couverts=plan.slots.filter(s=>s.id).length,temps=p.plats.reduce((a,x)=>a+(PLATS.find(y=>y.id===x.id)?.t||0),0);
+  const jours=[...Array(7).keys()].map(i=>plan.slots.filter(s=>s.i===i));
+  const pt=sub.prepa||(p.plats.length?'planning':'plats');
+  const vide=`<div class="empty-state">Choisis d'abord tes plats, ou laisse l'app composer ta semaine.</div>`;
+  const choix=(m,f=()=>true)=>PLATS.filter(pl=>pl.m[0]===m&&f(pl)).map(pl=>{const n=sel[pl.id];return `
+    <div class="plat ${n?'on':''}">
+      <div style="min-width:0"><b>${esc(pl.n)}</b>
+        ${pl.d?`<div style="font-size:.9rem;margin:2px 0">${esc(pl.d)}</div>`:''}
+        <div class="muted" style="font-size:.84rem">${pl.k} kcal · ${pl.m.map(x=>MOM_L[x]).join(', ')} · frigo ${pl.frigo} j${pl.cong?' · se congèle':''} · ${pl.t} min</div></div>
+      ${n?`<div class="stepper"><button data-pm="${pl.id}" aria-label="Une portion de moins">−</button><span class="num">${n}</span><button data-pp="${pl.id}" aria-label="Une portion de plus">+</button></div>`
+        :`<button class="btn small" data-padd="${pl.id}">+ ${pl.base} portions</button>`}
+    </div>`;}).join('');
+  return `<div class="stack">
+    ${segHTML('prepa')}
+    <section class="obj" style="gap:10px">
+      <div class="obj-head"><div><span class="eyebrow">Une session de cuisine, toute la semaine</span><h2 style="font-size:1.35rem">Ma prépa</h2></div>
+        <div class="field" style="min-width:170px"><label for="pr-debut" style="font-size:.84rem">Les repas commencent le</label>
+          <input type="date" id="pr-debut" value="${plan.debut}" style="background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:7px 10px"></div></div>
+      ${p.plats.length?`<div class="avg" style="grid-template-columns:repeat(auto-fit,minmax(110px,1fr))">
+        <div style="--c:var(--accent)"><b>${p.plats.length}</b><small>plat${p.plats.length>1?'s':''} à cuisiner</small></div>
+        <div style="--c:var(--energy)"><b>${nbPortions}</b><small>portions</small></div>
+        <div style="--c:var(--water)"><b>${couverts}</b><small>repas couverts sur 7 jours</small></div>
+        <div style="--c:var(--stress)"><b>${Math.round(temps/60*10)/10} h</b><small>en cuisine, moins en parallèle</small></div></div>`
+      :`<p style="margin:0">Choisis tes plats ci-dessous, ou laisse l'app composer une semaine complète : petits-déjeuners surtout salés, midis complets, soirs légers et une collation.</p>`}
+      <div class="btnrow">${p.plats.length?`<a class="btn primary small" href="#courses">Voir ma liste de courses</a>`:''}<button class="btn small ${p.plats.length?'':'primary'}" id="pr-auto">${p.plats.length?'Recomposer ma semaine':'Composer ma semaine pour moi'}</button>${p.plats.length?`<button class="btn small" id="pr-reset">Nouvelle semaine</button>`:''}</div>
+    </section>
+    ${subHTML('prepa',[['planning','Planning'],['plats','Choisir mes plats'],['etapes','Jour de prépa']],pt)}
+    ${pt==='planning'?(p.plats.length?`<section class="stack" style="gap:12px"><h2>Mon planning</h2>
+      <div class="week">${jours.map((sl,i)=>{const k=sl[0].k,isT=k===t;return `<div class="jourcard ${isT?'today':''}">
+        <div class="jt">${new Date(k+'T12:00').toLocaleDateString('fr-FR',{weekday:'long',day:'numeric'})}${isT?' · aujourd’hui':''}</div>
+        ${sl.map(s=>{const pl=PLATS.find(y=>y.id===s.id),key=s.k+'|'+s.m,mange=p.manges.includes(key);return `<div class="slot ${s.id?'':'libre'} ${mange?'mange':''}">
+          <span class="sm">${MOM_L[s.m]}</span>
+          <span class="sn" ${pl?.d?`title="${esc(pl.d)}"`:''}>${pl?esc(pl.n):'libre'}${s.cong?' <svg class="flake" viewBox="0 0 24 24" aria-label="à congeler"><path d="M12 2v20M4 7l16 10M20 7L4 17M9 3l3 3 3-3M9 21l3-3 3 3" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>':''}</span>
+          ${pl&&isT&&!mange?`<button class="btn small" data-eat="${s.m}|${s.id}" style="padding:3px 10px">Je mange ça</button>`:''}${mange?'<span class="muted" style="font-size:.8rem">mangé</span>':''}
+        </div>`;}).join('')}</div>`;}).join('')}</div>
+      ${plan.slots.some(s=>s.cong)?`<p class="muted" style="margin:0;font-size:.88rem">Le flocon indique les portions à congeler dès la prépa : elles dépassent la conservation au frigo. Sors-les la veille au soir.</p>`:''}
+      ${Object.entries(plan.restes).some(([,r])=>r>0)?`<p class="muted" style="margin:0;font-size:.88rem">Portions en trop : ${Object.entries(plan.restes).filter(([,r])=>r>0).map(([id,r])=>`${r} × ${esc(PLATS.find(y=>y.id===id).n)}`).join(', ')}. Elles iront au congélateur pour la semaine suivante.</p>`:''}
+    </section>`:vide):''}
+    ${pt==='etapes'?(p.plats.length?`<section class="card"><header><h2>Le jour de la prépa</h2><span class="muted">dans cet ordre</span></header>
+      <ol class="steps">${[...p.plats].map(x=>PLATS.find(y=>y.id===x.id)).sort((a,b)=>b.t-a.t).map(pl=>`<li><b>${esc(pl.n)}</b> <span class="muted">· ${pl.t} min · ${sel[pl.id]} portions</span><ul>${pl.s.map(st=>`<li>${esc(st)}</li>`).join('')}</ul></li>`).join('')}</ol>
+      <p class="muted" style="margin:0;font-size:.88rem">Commence par les plats les plus longs : pendant qu'ils mijotent, tu prépares les autres. Laisse refroidir avant de fermer les boîtes.</p></section>`:vide):''}
+    ${pt==='plats'?`<section class="stack" style="gap:12px">
+      <h2>Choisir mes plats</h2>
+      ${[['Petit-déjeuner salé','matin',pl=>pl.sale],['Petit-déjeuner sucré, pour varier','matin',pl=>!pl.sale],['Midi · plats complets','midi'],['Soir · léger, sans viande rouge','soir'],['Collation','collation']].map(([l,m,f])=>`<div class="stack" style="gap:8px"><span class="eyebrow">${l}</span>${choix(m,f)}</div>`).join('')}
+    </section>`:''}
+  </div>`;
+}
+function bPrepa(v){
+  const setPortions=(id,delta)=>{editPrepa(p=>{const x=p.plats.find(y=>y.id===id);if(!x)return;x.portions+=delta;if(x.portions<=0)p.plats=p.plats.filter(y=>y.id!==id);});render();};
+  $$('[data-padd]',v).forEach(b=>b.addEventListener('click',()=>{const pl=PLATS.find(y=>y.id===b.dataset.padd);
+    editPrepa(p=>{if(!p.debut)p.debut=debutParDefaut();p.plats=[...p.plats,{id:pl.id,portions:pl.base}];});toast(`${pl.n} ajouté · liste de courses mise à jour`);render();}));
+  $$('[data-pp]',v).forEach(b=>b.addEventListener('click',()=>setPortions(b.dataset.pp,1)));
+  $$('[data-pm]',v).forEach(b=>b.addEventListener('click',()=>setPortions(b.dataset.pm,-1)));
+  $('#pr-auto',v).addEventListener('click',e=>{
+    if(prepa().plats.length&&e.currentTarget.dataset.confirm!=='1'){e.currentTarget.dataset.confirm='1';e.currentTarget.textContent='Confirmer : remplacer mes plats';return;}
+    const pick=(arr,n)=>{const a=[...arr];const out=[];while(out.length<n&&a.length)out.push(a.splice(Math.floor(Math.random()*a.length),1)[0]);return out;};
+    const sales=pick(PLATS.filter(x=>x.m[0]==='matin'&&x.sale),2),sucre=pick(PLATS.filter(x=>x.m[0]==='matin'&&!x.sale),1);
+    const midi=pick(PLATS.filter(x=>x.m[0]==='midi'),2),soir=pick(PLATS.filter(x=>x.m[0]==='soir'),2),coll=pick(PLATS.filter(x=>x.m[0]==='collation'),1);
+    const plats=[[sales[0],3],[sales[1],2],[sucre[0],2],[midi[0],4],[midi[1],3],[soir[0],4],[soir[1],3],[coll[0],Math.min(coll[0].base,6)]].filter(([x])=>x).map(([x,n])=>({id:x.id,portions:n}));
+    editPrepa(p=>{p.plats=plats;p.manges=[];p.coches=[];if(!p.debut)p.debut=debutParDefaut();});
+    sub.prepa='planning';toast('Ta semaine est composée, la liste de courses est prête');render();window.scrollTo(0,0);});
+  $('#pr-debut',v).addEventListener('change',e=>{if(!e.target.value)return;editPrepa(p=>{p.debut=e.target.value;p.manges=[];});render();});
+  $('#pr-reset',v)?.addEventListener('click',e=>{
+    if(e.currentTarget.dataset.confirm!=='1'){e.currentTarget.dataset.confirm='1';e.currentTarget.textContent='Confirmer : tout effacer';return;}
+    editPrepa(p=>{p.plats=[];p.manges=[];p.coches=[];p.extras=[];p.debut=null;});toast('Prête pour une nouvelle semaine');render();});
+  $$('[data-eat]',v).forEach(b=>b.addEventListener('click',()=>{const [m,id]=b.dataset.eat.split('|'),pl=PLATS.find(y=>y.id===id),t=todayKey();
+    const u1=undoDay(t),u2=undoSettings();editDay(t,d=>d.repas=[...d.repas,{n:pl.n,k:pl.k,p:0,m}]);editPrepa(p=>p.manges=[...p.manges,t+'|'+m]);toast(`${pl.n} ajouté · ${pl.k} kcal`,()=>{u2();u1();});render();}));
+}
+function vCourses(){
+  const p=prepa(),{items,placard}=courses(p),co=new Set(p.coches);
+  const extras=p.extras||[];
+  const total=items.length+extras.length,faits=items.filter(it=>co.has(it.n+'|'+it.u)).length+extras.filter(e=>e.ok).length;
+  return `<div class="stack">
+    ${segHTML('courses')}
+    ${!p.plats.length&&!extras.length?`<div class="empty-state">Ta liste se remplit toute seule quand tu choisis tes plats dans <a href="#prepa">Prépa de la semaine</a>.</div>`:`
+    <section class="card">
+      <header><h2>Liste de courses</h2><span class="muted num">${faits}/${total} dans le panier</span></header>
+      <div class="meter"><span style="width:${total?faits/total*100:0}%"></span></div>
+      ${p.plats.length?`<div class="muted" style="font-size:.88rem">Pour : ${p.plats.map(x=>`${esc(PLATS.find(y=>y.id===x.id).n)} (${x.portions})`).join(', ')}</div>`:''}
+      ${CATS.map(([c,l])=>{const its=items.filter(it=>it.c===c);if(!its.length)return '';return `<div class="stack" style="gap:6px"><span class="eyebrow">${l}</span>
+        <ul class="habits shop">${its.map(it=>{const key=it.n+'|'+it.u;return `<li><button aria-pressed="${co.has(key)}" data-co="${esc(key)}"><span class="box"></span><span class="lbl" style="flex:1">${esc(it.n)}</span><span class="q num">${qteFmt(it.q,it.u)}</span></button></li>`;}).join('')}</ul></div>`;}).join('')}
+      <div class="stack" style="gap:6px"><span class="eyebrow">Mes ajouts</span>
+        ${extras.length?`<ul class="habits shop">${extras.map((e,i)=>`<li style="display:flex;gap:6px"><button aria-pressed="${!!e.ok}" data-ex="${i}"><span class="box"></span><span class="lbl">${esc(e.t)}</span></button><button class="del" data-exdel="${i}" aria-label="Retirer ${esc(e.t)}">×</button></li>`).join('')}</ul>`:''}
+        <form class="addrow" id="ex-add"><input type="text" id="ex-t" placeholder="ex. Lait d'avoine, skyr, fruits pour la semaine" aria-label="Ajouter un article"><button class="btn small primary" type="submit">Ajouter</button></form></div>
+      ${placard.length?`<div class="stack" style="gap:6px"><span class="eyebrow">Vérifie ton placard</span><div class="done-list">${placard.map(x=>`<span>${esc(x)}</span>`).join('')}</div></div>`:''}
+      <div class="btnrow"><button class="btn small primary" id="co-copy">Copier la liste</button><button class="btn small" id="co-clear">Tout décocher</button></div>
+    </section>`}
+  </div>`;
+}
+function bCourses(v){
+  $$('[data-co]',v).forEach(b=>b.addEventListener('click',()=>{const key=b.dataset.co;editPrepa(p=>p.coches=p.coches.includes(key)?p.coches.filter(x=>x!==key):[...p.coches,key]);render();}));
+  $$('[data-ex]',v).forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.ex;editPrepa(p=>{p.extras=[...(p.extras||[])];p.extras[i]={...p.extras[i],ok:!p.extras[i].ok};});render();}));
+  $$('[data-exdel]',v).forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.exdel,u=undoSettings();editPrepa(p=>p.extras=(p.extras||[]).filter((_,j)=>j!==i));toast('Article retiré',u);render();}));
+  $('#ex-add',v)?.addEventListener('submit',e=>{e.preventDefault();const t=$('#ex-t').value.trim();if(!t)return;editPrepa(p=>p.extras=[...(p.extras||[]),{t,ok:false}]);render();$('#ex-t')?.focus();});
+  $('#co-clear',v)?.addEventListener('click',()=>{editPrepa(p=>{p.coches=[];p.extras=(p.extras||[]).map(e=>({...e,ok:false}));});render();});
+  $('#co-copy',v)?.addEventListener('click',async()=>{const p=prepa(),{items,placard}=courses(p),co=new Set(p.coches);
+    let txt='Liste de courses\n';
+    for(const [c,l] of CATS){const its=items.filter(it=>it.c===c&&!co.has(it.n+'|'+it.u));if(its.length)txt+=`\n${l}\n`+its.map(it=>`- ${it.n} : ${qteFmt(it.q,it.u)}`).join('\n')+'\n';}
+    const ex=(p.extras||[]).filter(e=>!e.ok);if(ex.length)txt+='\nAutres\n'+ex.map(e=>'- '+e.t).join('\n')+'\n';
+    if(placard.length)txt+='\nÀ vérifier au placard : '+placard.join(', ')+'\n';
+    try{await navigator.clipboard.writeText(txt);toast('Liste copiée, colle-la dans tes notes ou un message');}catch(e){toast('Copie impossible ici');}});
+}
+
+/* --- Suivi --- */
+function lineChart(keys,series,max,ticks){
+  const W=640,H=200,L=30,Rr=10,T=12,B=28,iw=W-L-Rr,ih=H-T-B;
+  const x=i=>L+iw*(keys.length===1?.5:i/(keys.length-1)), y=v=>T+ih*(1-v/max);
+  let g='';
+  for(const t of ticks) g+=`<line x1="${L}" x2="${W-Rr}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)" stroke-width="1"/><text x="${L-6}" y="${y(t)+4}" text-anchor="end">${t}</text>`;
+  keys.forEach((k,i)=>{const d=new Date(k+'T12:00');g+=`<text x="${x(i)}" y="${H-8}" text-anchor="middle">${'DLMMJVS'[d.getDay()]}${d.getDate()}</text>`;});
+  for(const s of series){
+    let path='',pts='';
+    s.vals.forEach((v,i)=>{ if(v==null){return;} const prev=i>0&&s.vals[i-1]!=null; path+=`${prev?'L':'M'}${x(i).toFixed(1)},${y(v).toFixed(1)} `; pts+=`<circle cx="${x(i)}" cy="${y(v)}" r="${i===keys.length-1?4.5:3}" fill="var(${s.c})"/>`;});
+    g+=`<path d="${path}" fill="none" stroke="var(${s.c})" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>${pts}`;
+  }
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img">${g}</svg></div>`;
+}
+function barChart(keys,vals,goal,c,max){
+  const W=640,H=200,L=40,Rr=10,T=12,B=28,iw=W-L-Rr,ih=H-T-B,bw=iw/keys.length;
+  const y=v=>T+ih*(1-Math.min(v,max)/max);
+  let g='';
+  const step=max>2500?1000:max>1000?500:max>3?1:0.5;
+  for(let t=0;t<=max+0.001;t+=step) g+=`<line x1="${L}" x2="${W-Rr}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)" stroke-width="1"/><text x="${L-6}" y="${y(t)+4}" text-anchor="end">${t>=1000?(t/1000)+'k':t}</text>`;
+  keys.forEach((k,i)=>{const d=new Date(k+'T12:00'),v=vals[i];
+    if(v) g+=`<rect x="${L+i*bw+bw*.18}" y="${y(v)}" width="${bw*.64}" height="${T+ih-y(v)}" rx="4" fill="var(${c})" opacity="${i===keys.length-1?1:.72}"/>`;
+    g+=`<text x="${L+i*bw+bw/2}" y="${H-8}" text-anchor="middle">${'DLMMJVS'[d.getDay()]}${d.getDate()}</text>`;});
+  if(goal) g+=`<line x1="${L}" x2="${W-Rr}" y1="${y(goal)}" y2="${y(goal)}" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="5 4"/><text x="${W-Rr}" y="${y(goal)-5}" text-anchor="end" style="fill:var(--ink)">objectif</text>`;
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img">${g}</svg></div>`;
+}
+function pixelsHTML(){
+  const y=new Date().getFullYear(),start=new Date(y,0,1),t=todayKey();
+  const lead=(start.getDay()+6)%7; // lundi en haut
+  let cells='',months='',lastM=-1,col=0;
+  for(let i=0;i<lead;i++) cells+='<i style="visibility:hidden"></i>';
+  for(let d=new Date(start);d.getFullYear()===y;d.setDate(d.getDate()+1)){
+    const k=keyOf(d),idx=lead+Math.round((d-start)/864e5);col=Math.floor(idx/7);
+    if(d.getMonth()!==lastM&&d.getDate()<=7){lastM=d.getMonth();months+=`<span style="position:absolute;left:${col*14}px">${d.toLocaleDateString('fr-FR',{month:'short'}).replace('.','')}</span>`;}
+    if(k>t){cells+=`<i class="f" title="${k}"></i>`;continue;}
+    const dd=store.days[k]?day(k):null,[m,lab]=dd?meteo(dd):['vide',''];
+    cells+=`<i ${m!=='vide'?`data-m="${m}"`:''} class="${k===t?'today':''}" title="${new Date(k+'T12:00').toLocaleDateString('fr-FR',{day:'numeric',month:'long'})}${lab&&m!=='vide'?' · '+lab.replace('Météo intérieure : ',''):''}"></i>`;
+  }
+  return `<div style="overflow-x:auto;padding-bottom:4px"><div class="months" style="position:relative;height:14px;width:${(col+1)*14}px">${months}</div><div class="pixels">${cells}</div></div>
+    <div class="pxlegend"><span><i style="background:var(--energy)"></i>Grand soleil</span><span><i style="background:color-mix(in srgb,var(--energy) 45%,var(--surface-2))"></i>Éclaircies</span><span><i style="background:color-mix(in srgb,var(--muted) 55%,var(--surface-2))"></i>Nuageux</span><span><i style="background:var(--stress)"></i>Orageux</span></div>`;
+}
+function vSuivi(){
+  const keys=lastKeys(14), days=keys.map(day), b=besoins();
+  const filled=days.filter(d=>d.energie!=null||d.repas.length||d.eau||d.sommeilH!=null);
+  const j=jardin();
+  const haut=`<div class="grid2">
+    <section class="card"><header><h3>Mon jardin</h3><span class="muted num">${j.pts} point${j.pts>1?"s":""} · 14 jours</span></header>
+      <div style="display:grid;grid-template-columns:110px 1fr;gap:16px;align-items:center">
+        <div>${planteSVG(j.stage)}</div>
+        <div class="stack" style="gap:6px"><b style="font-family:var(--font-display);font-size:1.3rem">${j.nom}</b>
+          <span class="muted" style="font-size:.92rem">${j.suivant?`Encore ${j.reste} point${j.reste>1?'s':''} pour passer au stade « ${j.suivant} ».`:'Ta plante est en pleine floraison. Garde ce rythme.'}</span>
+          <span class="muted" style="font-size:.84rem">Chaque habitude, soin, séance, verre d'objectif atteint ou soir de journal la fait pousser. Elle ne meurt jamais : les jours sans, elle attend.</span></div>
+      </div></section>
+    <section class="card" style="min-width:0"><header><h3>Mon année en météo</h3><span class="muted">${new Date().getFullYear()}</span></header>${pixelsHTML()}</section>
+  </div>`;
+  const st=sub.suivi||'bilan',ST=[['bilan','Ma semaine'],['courbes','Courbes 14 jours'],['jardin','Jardin et année']];
+  if(filled.length<2) return `<div class="stack">${subHTML('suivi',ST,st)}${st==='jardin'?haut:`<div class="empty-state">Tes courbes apparaîtront ici dès deux jours remplis : ressenti, sommeil, calories et hydratation.<br><a class="btn small primary" href="#jour" style="margin-top:12px">Remplir aujourd'hui</a></div>`}</div>`;
+  const avg=(f,arr=days)=>{const v=arr.map(f).filter(x=>x!=null&&!Number.isNaN(x));return v.length?v.reduce((a,b)=>a+b,0)/v.length:null;};
+  const last7=days.slice(-7);
+  const fmt=(v,dec=1)=>v==null?'—':v.toLocaleString('fr-FR',{maximumFractionDigits:dec});
+  const kcDays=last7.filter(d=>d.repas.length);
+  const kcAvg=kcDays.length?kcDays.reduce((a,d)=>a+kcalOf(d),0)/kcDays.length:null;
+  const kcVals=days.map(kcalOf), maxK=Math.max(2500,...kcVals,b?b.obj:0);
+  const eauVals=days.map(d=>d.eau/1000), maxE=Math.max(2.5,...eauVals);
+  const sleepMax=10;
+  return `<div class="stack">
+    ${subHTML('suivi',ST,st)}
+    ${st==='jardin'?haut:''}
+    ${st==='bilan'?`<section class="card"><header><h3>Moyennes des 7 derniers jours</h3></header>
+      <div class="avg">
+        <div style="--c:var(--energy)"><b>${fmt(avg(d=>d.energie,last7))}</b><small>énergie /10</small></div>
+        <div style="--c:var(--stress)"><b>${fmt(avg(d=>d.stress,last7))}</b><small>stress /10</small></div>
+        <div style="--c:var(--pain)"><b>${fmt(avg(d=>d.douleur,last7))}</b><small>douleur EVA /10</small></div>
+        <div style="--c:var(--sleep)"><b>${fmt(avg(d=>d.sommeilH,last7))} h</b><small>de sommeil</small></div>
+        <div style="--c:var(--accent)"><b>${kcAvg==null?'—':Math.round(kcAvg)}</b><small>kcal/jour${b&&kcAvg!=null?` · ${kcAvg<=b.obj?'dans':'au-dessus de'} l'objectif`:''}</small></div>
+        <div style="--c:var(--water)"><b>${fmt(avg(d=>d.eau?d.eau/1000:null,last7))} L</b><small>d'eau par jour</small></div>
+      </div>
+    </section>
+    ${(()=>{const ap=last7.flatMap(d=>d.apaise),soins=last7.reduce((a,d)=>a+d.soins.length,0),journal=last7.filter(d=>d.grat.some(Boolean)||d.victoire).length,rec=last7.reduce((a,d)=>a+d.recadrages.length,0);
+      const baisse=ap.length?ap.reduce((a,x)=>a+(x.av-x.ap),0)/ap.length:null;
+      return `<section class="card"><header><h3>Prendre soin, 7 derniers jours</h3></header><div class="avg">
+        <div style="--c:var(--stress)"><b>${ap.length}</b><small>moment${ap.length>1?'s':''} d'apaisement${baisse!=null?` · −${fmt(baisse)} pt en moyenne`:''}</small></div>
+        <div style="--c:var(--accent)"><b>${soins}</b><small>soin${soins>1?'s':''} pour toi</small></div>
+        <div style="--c:var(--energy)"><b>${journal}/7</b><small>soirs avec journal</small></div>
+        <div style="--c:var(--sleep)"><b>${rec}</b><small>pensée${rec>1?'s':''} recadrée${rec>1?'s':''}</small></div>
+      </div></section>`;})()}
+    ${(()=>{const notes=days.map((d,i)=>[keys[i],d]).filter(([,d])=>d.note||d.zone).reverse().slice(0,5);
+      return notes.length?`<section class="card"><header><h3>Notes récentes</h3></header><ul class="meals">${notes.map(([k,d])=>`<li><span class="m">${new Date(k+'T12:00').toLocaleDateString('fr-FR',{weekday:'short',day:'numeric'})}</span><span class="n">${d.zone?`<b>Douleur : ${esc(d.zone)}.</b> `:''}${esc(d.note)}</span></li>`).join('')}</ul></section>`:'';})()}`:''}
+    ${st==='courbes'?`<section class="card"><header><h3>Ressenti</h3><div class="legend"><span><i style="background:var(--energy)"></i>Énergie</span><span><i style="background:var(--stress)"></i>Stress</span><span><i style="background:var(--pain)"></i>Douleur</span></div></header>
+      ${lineChart(keys,[{c:'--energy',vals:days.map(d=>d.energie)},{c:'--stress',vals:days.map(d=>d.stress)},{c:'--pain',vals:days.map(d=>d.douleur)}],10,[0,2,4,6,8,10])}</section>
+    <div class="grid2">
+      <section class="card"><header><h3>Sommeil</h3><div class="legend"><span><i style="background:var(--sleep)"></i>Heures</span></div></header>
+        ${lineChart(keys,[{c:'--sleep',vals:days.map(d=>d.sommeilH)}],sleepMax,[0,2,4,6,8,10])}</section>
+      <section class="card"><header><h3>Hydratation</h3><span class="muted">litres</span></header>
+        ${barChart(keys,eauVals,store.settings.eau/1000,'--water',Math.ceil(maxE*2)/2)}</section>
+    </div>
+    <section class="card"><header><h3>Calories</h3><span class="muted">kcal par jour${b?`, objectif ${b.obj}`:''}</span></header>
+      ${barChart(keys,kcVals,b?b.obj:null,'--accent',Math.ceil(maxK/500)*500)}</section>`:''}
+  </div>`;
+}
+
+/* --- Réglages --- */
+function vReglages(){
+  const s=store.settings,b=besoins();
+  const ACC=[['eucalyptus','Eucalyptus','#1E6B58'],['lagon','Lagon','#1D6A97'],['prune','Prune','#7A4786'],['ambre','Ambre','#9E5418']];
+  return `<div class="grid2">
+    <section class="card" style="grid-column:1 / -1">
+      <header><h2>Mon espace</h2></header>
+      <div class="grid2" style="gap:14px">
+        <div class="field"><label for="s-prenom">Prénom affiché</label><input type="text" id="s-prenom" value="${esc(s.prenom||'')}"></div>
+        <div class="field"><span class="eyebrow">Couleur d'ambiance</span><div class="chips" role="group" aria-label="Couleur">${ACC.map(([id,l,c])=>`<button class="chip" data-acc="${id}" aria-pressed="${(s.accent||'eucalyptus')===id}"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${c};margin-right:6px;vertical-align:-1px"></span>${l}</button>`).join('')}</div></div>
+      </div>
+    </section>
+    <section class="card">
+      <header><h2>Mon objectif calorique</h2></header>
+      <div class="grid2" style="gap:12px">
+        <div class="field"><label for="s-sexe">Formule</label><select id="s-sexe"><option value="F" ${s.sexe==='F'?'selected':''}>Femme</option><option value="H" ${s.sexe==='H'?'selected':''}>Homme</option></select></div>
+        <div class="field"><label for="s-age">Âge</label><input type="number" id="s-age" min="15" max="100" value="${s.age??''}" placeholder="ans"></div>
+        <div class="field"><label for="s-taille">Taille (cm)</label><input type="number" id="s-taille" min="120" max="220" value="${s.taille??''}" placeholder="cm"></div>
+        <div class="field"><label for="s-poids">Poids (kg)</label><input type="number" id="s-poids" min="35" max="250" step="0.1" value="${s.poids??''}" placeholder="kg"></div>
+      </div>
+      <div class="field"><label for="s-act">Niveau d'activité</label><select id="s-act">${ACTIVITES.map(([v,l])=>`<option value="${v}" ${v===s.activite?'selected':''}>${l}</option>`).join('')}</select></div>
+      <div class="field"><span class="eyebrow">Déficit</span><div class="chips" role="group" aria-label="Déficit">${[10,15,20].map(p=>`<button class="chip" data-def="${p}" aria-pressed="${p===s.deficit}">−${p} %</button>`).join('')}</div></div>
+      <div class="banner" style="flex-direction:column;align-items:flex-start;gap:4px">
+        ${b?`<div><b class="num" style="font-family:var(--font-display);font-size:1.6rem">${b.obj} kcal</b> par jour</div>
+          <div class="muted num" style="font-size:.9rem">Métabolisme de base (Mifflin-St Jeor) ${b.mb} kcal · dépense estimée ${b.dej} kcal${b.plancher?' · objectif relevé au plancher de sécurité':''}</div>`
+          :`<div>Complète âge, taille et poids pour calculer ton objectif.</div>`}
+      </div>
+      <p class="muted" style="margin:0;font-size:.88rem">L'objectif ne descend jamais sous ton métabolisme de base ni sous 1 200 kcal.</p>
+    </section>
+    <section class="card">
+      <header><h2>Hydratation et habitudes</h2></header>
+      <div class="field"><label for="s-eau">Objectif d'eau (mL)</label><input type="number" id="s-eau" min="1000" max="4000" step="250" value="${s.eau}"></div>
+      <div class="field"><label for="s-hab">Mes habitudes, une par ligne</label><textarea id="s-hab" rows="7">${esc(s.habitudes.join('\n'))}</textarea>
+        <small class="muted">Garde le mot « Respiration » dans une ligne pour qu'elle se coche après une séance.</small></div>
+      <div class="btnrow"><button class="btn primary" id="s-save-hab">Enregistrer la liste</button></div>
+      <hr style="border:0;border-top:1px solid var(--line);width:100%">
+      <div class="field"><span class="eyebrow">Raccourci sur l'écran d'accueil</span>
+        <span style="font-size:.95rem">La version « widget » montre l'essentiel sur un seul écran : eau, ressenti, habitudes, objectifs. Pour l'épingler :</span>
+        <ol style="margin:4px 0 0;padding-left:1.2em;font-size:.95rem;display:flex;flex-direction:column;gap:4px">
+          <li>Copie le lien ci-dessous et ouvre-le dans Safari (iPhone) ou Chrome (Android).</li>
+          <li>Touche Partager puis « Sur l'écran d'accueil » (iPhone), ou le menu ⋮ puis « Ajouter à l'écran d'accueil » (Android).</li>
+        </ol>
+        <div class="addrow"><input type="text" id="s-url" readonly value="${APP_URL}#rapide" aria-label="Lien du widget"><button class="btn small primary" id="s-url-copy">Copier</button></div>
+        <a class="linkbtn" href="#rapide">Voir la version widget</a></div>
+      <hr style="border:0;border-top:1px solid var(--line);width:100%">
+      <div class="field"><span class="eyebrow">Mes données</span>
+        <span class="muted" style="font-size:.9rem">${store.mode==='db'?'Synchronisées avec ton compte, visibles par toi seule, sur tous tes appareils.':'Conservées dans ce navigateur uniquement.'} ${Object.keys(store.days).length} jour(s) enregistré(s).</span>
+        <div class="btnrow"><button class="btn small" id="s-copy">Copier mes données (JSON)</button></div></div>
+    </section>
+  </div>`;
+}
+function bReglages(v){
+  const num=(id,f,parse=Number)=>$('#'+id,v).addEventListener('change',e=>{const x=e.target.value===''?null:parse(e.target.value);editSettings(s=>s[f]=x);render();});
+  num('s-age','age');num('s-taille','taille');num('s-poids','poids');num('s-act','activite');num('s-eau','eau');
+  $('#s-prenom',v).addEventListener('input',e=>{editSettings(s=>s.prenom=e.target.value);renderHero();});
+  $$('[data-acc]',v).forEach(b=>b.addEventListener('click',()=>{editSettings(s=>s.accent=b.dataset.acc);render();}));
+  $('#s-sexe',v).addEventListener('change',e=>{editSettings(s=>s.sexe=e.target.value);render();});
+  $$('[data-def]',v).forEach(b=>b.addEventListener('click',()=>{editSettings(s=>s.deficit=+b.dataset.def);render();}));
+  $('#s-save-hab',v).addEventListener('click',()=>{const list=$('#s-hab').value.split('\n').map(x=>x.trim()).filter(Boolean).slice(0,15);
+    editSettings(s=>s.habitudes=list.length?list:DEFAULT_SETTINGS.habitudes);toast('Liste enregistrée');render();});
+  $('#s-url-copy',v).addEventListener('click',async()=>{const i=$('#s-url');try{await navigator.clipboard.writeText(i.value);toast('Lien copié');}catch(e){i.select();toast('Lien sélectionné : copie-le');}});
+  $('#s-copy',v).addEventListener('click',async()=>{const txt=JSON.stringify({reglages:store.settings,jours:store.days},null,2);
+    try{await navigator.clipboard.writeText(txt);toast('Données copiées');}catch(e){toast('Copie impossible ici');}});
+}
+
+/* ---------- Démarrage ---------- */
+document.addEventListener('click',e=>{const b=e.target.closest('[data-sub]');if(!b)return;const [id,k]=b.dataset.sub.split('|');sub[id]=k;try{localStorage.setItem('ressource-sub',JSON.stringify(sub));}catch(e){}render();});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-dn]');if(!b||b.disabled)return;const n=+b.dataset.dn;
+  if(n===0) jourSel=null; else {const nk=addDays(jk(),n);jourSel=nk>=todayKey()?null:nk;} render();});
+
+/* --- Mode widget : l'essentiel sur un seul écran, à épingler sur l'écran d'accueil --- */
+const APP_URL='https://claude.ai/artifact/XvdWjHPrSvqVwGQWmENCLd';
+function vRapide(){
+  const k=todayKey(),d=day(k),goal=store.settings.eau,pct=Math.min(100,Math.round(d.eau/goal*100));
+  const todo=store.settings.habitudes.filter(h=>!d.habitudes.includes(h)),nH=store.settings.habitudes.length;
+  const ob=semaine().objectifs||[],[ic,met]=meteo(d),p=store.settings.prenom?.trim(),h=new Date().getHours();
+  const line=(f,l,c)=>{const v=d[f];return `<div class="metric ${v==null?'unset':''}" style="--c:var(${c})"><label class="mlabel" for="w-${f}">${l}</label>
+    <output id="wo-${f}" class="${v==null?'empty':''}">${v==null?'glisse sur la ligne':motDe(f,v)}</output>
+    <input type="range" class="line" id="w-${f}" data-wf="${f}" min="0" max="10" step="1" value="${v??5}" style="--p:${v==null?0:v*10}%"></div>`;};
+  return `<div class="wgt">
+    <div class="w-head"><div><b>${(h<5||h>=18?'Bonsoir':'Bonjour')+(p?', '+esc(p):'')}</b><span class="pill">${METEO_ICONS[ic]}${esc(met.replace('Météo intérieure : ',''))}</span></div>
+      <a class="iconbtn" href="#jour" aria-label="Ouvrir l'app complète"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a></div>
+    <button type="button" class="w-water" data-weau="250" style="--pct:${pct}%">
+      <span class="w-fill" aria-hidden="true"></span>
+      <span class="w-txt"><b>+ Un verre d'eau</b><span class="num">${fmtL(d.eau)} sur ${fmtL(goal)}${pct>=100?' · objectif atteint':''}</span></span>
+    </button>
+    <section class="card w-card"><h3>Comment je vais</h3>${line('energie','Énergie','--energy')}${line('stress','Stress','--stress')}</section>
+    <section class="card w-card"><header><h3>Habitudes</h3><span class="muted num">${nH-todo.length}/${nH}</span></header>
+      ${todo.length?`<div class="chips">${todo.map((x,i)=>`<button type="button" class="chip quick" data-wh="${i}">${esc(x)}</button>`).join('')}</div>`:`<p class="muted" style="margin:0">Toutes cochées aujourd'hui.</p>`}</section>
+    ${ob.length?`<section class="card w-card"><header><h3>Mes objectifs</h3><span class="muted num">${ob.filter(o=>o.ok).length}/${ob.length}</span></header>
+      <ul class="habits">${ob.map((o,i)=>`<li><button aria-pressed="${!!o.ok}" data-wob="${i}"><span class="box"></span><span class="lbl">${esc(o.t)}</span></button></li>`).join('')}</ul></section>`:''}
+    <div class="w-actions">
+      <a class="sos" href="#apaiser">M'apaiser</a>
+      <a class="btn" href="#respirer" id="w-pause">Pause 90 s</a>
+      <a class="btn" href="#assiette">Noter un repas</a>
+    </div>
+  </div>`;
+}
+function bRapide(v){
+  const k=todayKey();
+  $('[data-weau]',v).addEventListener('click',()=>{const u=undoDay(k),avant=day(k).eau;editDay(k,d=>{if(d.eauX==null)d.eauX=d.eauM.length?0:d.eau;d.eauX+=250;d.eau=eauTotal(d);});
+    toast(day(k).eau>=store.settings.eau&&avant<store.settings.eau?'Objectif hydratation atteint':'+250 mL',u);render();});
+  $$('input.line',v).forEach(inp=>{const f=inp.dataset.wf;
+    const show=()=>{const val=+inp.value,o=$('#wo-'+f,v);inp.style.setProperty('--p',val*10+'%');o.textContent=motDe(f,val);o.classList.remove('empty');inp.closest('.metric').classList.remove('unset');};
+    inp.addEventListener('input',show);inp.addEventListener('change',()=>{show();editDay(k,d=>d[f]=+inp.value);renderHero();});});
+  const todo=store.settings.habitudes.filter(h=>!day(k).habitudes.includes(h));
+  $$('[data-wh]',v).forEach(b=>b.addEventListener('click',()=>{const h=todo[+b.dataset.wh],u=undoDay(k);editDay(k,d=>d.habitudes=[...d.habitudes,h]);toast(`${h} : cochée`,u);render();}));
+  $$('[data-wob]',v).forEach(b=>b.addEventListener('click',()=>{const i=+b.dataset.wob;editSemaine(w=>{w.objectifs[i]={...w.objectifs[i],ok:!w.objectifs[i].ok};});render();}));
+  $('#w-pause',v).addEventListener('click',()=>{if(!breath.running)breath.pattern='pause';});
+}
+/* --- Actions rapides --- */
+function sheetHTML(){
+  const k=todayKey(),d=day(k),todo=store.settings.habitudes.filter(h=>!d.habitudes.includes(h)),rec=repasRecents().slice(0,4);
+  return `<div class="sheet-grip" aria-hidden="true"></div>
+    <div class="sheet-head"><h2>Rapide</h2><button type="button" class="iconbtn" id="sheet-x" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <div class="qa-grid">
+      <button type="button" class="qa" data-qa="eau"><span class="qa-i" style="--c:var(--water)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg></span><b>Un verre d'eau</b><small class="num">${d.eau} mL aujourd'hui</small></button>
+      <button type="button" class="qa" data-qa="apaiser"><span class="qa-i" style="--c:var(--stress)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12c3-5 6-5 9 0s6 5 9 0"/></svg></span><b>M'apaiser</b><small>parcours guidé</small></button>
+      <button type="button" class="qa" data-qa="pause"><span class="qa-i" style="--c:var(--accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg></span><b>Pause 90 s</b><small>entre deux patients</small></button>
+      <button type="button" class="qa" data-qa="checkin"><span class="qa-i" style="--c:var(--energy)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg></span><b>Mon check-in</b><small>${d.energie==null?'pas encore fait':'énergie '+d.energie+'/10'}</small></button>
+    </div>
+    ${todo.length?`<div class="stack" style="gap:10px"><span class="eyebrow">Cocher une habitude</span><div class="chips">${todo.map((h,i)=>`<button type="button" class="chip quick" data-qh="${i}">${esc(h)}</button>`).join('')}</div></div>`:`<p class="muted" style="margin:0">Toutes tes habitudes du jour sont cochées.</p>`}
+    <div class="stack" style="gap:10px"><span class="eyebrow">J'ai mangé</span><div class="chips">${rec.map((r,i)=>`<button type="button" class="chip quick" data-qr="${i}">${esc(r.n)} <span class="muted num">${r.k}</span></button>`).join('')}<a class="chip quick" href="#recettes" data-close>Autre chose…</a></div></div>`;
+}
+function openSheet(){const sh=$('#sheet');sh.innerHTML=sheetHTML();sh.hidden=false;$('#sheet-bg').hidden=false;$('#fab').setAttribute('aria-expanded','true');document.body.classList.add('noscroll');bindSheet();$('#sheet-x').focus();}
+function closeSheet(){$('#sheet').hidden=true;$('#sheet-bg').hidden=true;$('#fab').setAttribute('aria-expanded','false');document.body.classList.remove('noscroll');}
+function bindSheet(){
+  const sh=$('#sheet'),k=todayKey();
+  $('#sheet-x').onclick=closeSheet;
+  $$('[data-close]',sh).forEach(a=>a.addEventListener('click',closeSheet));
+  $$('[data-qa]',sh).forEach(b=>b.addEventListener('click',()=>{const a=b.dataset.qa;
+    if(a==='eau'){const u=undoDay(k);editDay(k,d=>{if(d.eauX==null)d.eauX=d.eauM.length?0:d.eau;d.eauX+=250;d.eau=eauTotal(d);});toast(`+250 mL · ${day(k).eau} mL aujourd'hui`,u);sh.innerHTML=sheetHTML();bindSheet();if(current==='jour')render();return;}
+    closeSheet();
+    if(a==='apaiser') location.hash='apaiser';
+    if(a==='pause'){if(!breath.running)breath.pattern='pause';if(location.hash==='#respirer')render();else location.hash='respirer';}
+    if(a==='checkin'){jourSel=null;sub.jour='checkin';if(location.hash==='#jour')render();else location.hash='jour';}
+  }));
+  const todo=store.settings.habitudes.filter(h=>!day(k).habitudes.includes(h));
+  $$('[data-qh]',sh).forEach(b=>b.addEventListener('click',()=>{const h=todo[+b.dataset.qh],u=undoDay(k);editDay(k,d=>d.habitudes=[...d.habitudes,h]);toast(`${h} : cochée`,u);sh.innerHTML=sheetHTML();bindSheet();render(true);}));
+  const rec=repasRecents().slice(0,4);
+  $$('[data-qr]',sh).forEach(b=>b.addEventListener('click',()=>{const r=rec[+b.dataset.qr],u=undoDay(k);editDay(k,d=>d.repas=[...d.repas,{n:r.n,k:r.k,p:r.p||0,m:momentAuto()}]);toast(`${r.n} ajouté · ${r.k} kcal`,u);closeSheet();render();}));
+}
+$('#fab').addEventListener('click',()=>$('#sheet').hidden?openSheet():closeSheet());
+$('#sheet-bg').addEventListener('click',closeSheet);
+addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#sheet').hidden)closeSheet();});
+addEventListener('hashchange',()=>{if(!$('#sheet').hidden)closeSheet();$('#fab').hidden=['apaiser'].includes(location.hash.slice(1));});
+$('#pause-pill').addEventListener('click',()=>{if(breath.running)return;breath.pattern='pause';if(location.hash==='#respirer')render();});
+$('#today-label').textContent=new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+addEventListener('hashchange',()=>{
+  const h=location.hash.slice(1);
+  if(breath.running){ breath.fromSos=false; endBreath(false); }
+  if(h==='apaiser' && sos.step==='fin'){sos.step='avant';sos.apres=null;}
+  if(h!=='respirer') breath.fromSos=breath.autostart=false;
+  render(); window.scrollTo(0,0);
+});
+render();
+initStore();
+</script>
+
+</body></html>
